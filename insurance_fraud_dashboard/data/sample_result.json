@@ -1,0 +1,209 @@
+{
+  "schema_version": "claim-review-demo-v1",
+  "purpose": "prototype_demonstration",
+  "case_id": "DEMO-001",
+  "source_row": 0,
+  "prediction_id": "DEMO-001-P0001",
+  "analyzed_at": "2026-11-11T12:26:19.511Z",
+  "inputs": {
+    "incident_type": "Single Vehicle Collision",
+    "incident_severity": "Major Damage",
+    "collision_type": "Side Collision",
+    "incident_hour_of_the_day": 5,
+    "number_of_vehicles_involved": 1,
+    "authorities_contacted": "Police",
+    "bodily_injuries": 1,
+    "witnesses": 2,
+    "property_damage": "YES",
+    "police_report_available": "YES",
+    "injury_claim": 6510,
+    "property_claim": 13020,
+    "vehicle_claim": 52080,
+    "months_as_customer": 328,
+    "policy_csl": "250/500",
+    "policy_deductable": 1000,
+    "policy_annual_premium": 1406.91,
+    "umbrella_limit": 0,
+    "insured_sex": "MALE",
+    "insured_education_level": "MD",
+    "insured_occupation": "craft-repair",
+    "insured_relationship": "husband",
+    "capital-gains": 53300,
+    "capital-loss": 0
+  },
+  "prediction": {
+    "model_version": "ite351-logistic-preserve-none-v2",
+    "score": 57.898465222028996,
+    "probability": 0.5789846522202899,
+    "score_scale": "0-100; not calibrated real-world probability"
+  },
+  "review_policy": {
+    "threshold": 10,
+    "recommendation": "additional_review",
+    "provisional": true
+  },
+  "explanation": {
+    "method": "linear_logit_contribution_relative_to_training_transformed_mean",
+    "unit": "log_odds",
+    "base": -1.4790654439447082,
+    "contribution_sum": 1.7976721252231735,
+    "log_odds": 0.3186066812784661,
+    "reconstruction_error": 7.216449660063518e-16,
+    "contributions": [
+      {
+        "field": "months_as_customer",
+        "input_value": 328,
+        "used_value": 328,
+        "contribution": 0.014591447542901367
+      },
+      {
+        "field": "policy_csl",
+        "input_value": "250/500",
+        "used_value": "250/500",
+        "contribution": 0.1170157041972382
+      },
+      {
+        "field": "policy_deductable",
+        "input_value": 1000,
+        "used_value": 1000,
+        "contribution": -0.014577268676273597
+      },
+      {
+        "field": "policy_annual_premium",
+        "input_value": 1406.91,
+        "used_value": 1406.91,
+        "contribution": -0.024370637004840972
+      },
+      {
+        "field": "umbrella_limit",
+        "input_value": 0,
+        "used_value": 0,
+        "contribution": -0.10209013573585847
+      },
+      {
+        "field": "insured_sex",
+        "input_value": "MALE",
+        "used_value": "MALE",
+        "contribution": 0.04181949686729082
+      },
+      {
+        "field": "insured_education_level",
+        "input_value": "MD",
+        "used_value": "MD",
+        "contribution": 0.06996516511525128
+      },
+      {
+        "field": "insured_occupation",
+        "input_value": "craft-repair",
+        "used_value": "craft-repair",
+        "contribution": 0.16546047780122947
+      },
+      {
+        "field": "insured_relationship",
+        "input_value": "husband",
+        "used_value": "husband",
+        "contribution": -0.3260860789850249
+      },
+      {
+        "field": "capital-gains",
+        "input_value": 53300,
+        "used_value": 53300,
+        "contribution": -0.041718119347870036
+      },
+      {
+        "field": "capital-loss",
+        "input_value": 0,
+        "used_value": 0,
+        "contribution": -0.08244808039691645
+      },
+      {
+        "field": "incident_type",
+        "input_value": "Single Vehicle Collision",
+        "used_value": "Single Vehicle Collision",
+        "contribution": 0.09499964787846421
+      },
+      {
+        "field": "collision_type",
+        "input_value": "Side Collision",
+        "used_value": "Side Collision",
+        "contribution": -0.2611431725015553
+      },
+      {
+        "field": "incident_severity",
+        "input_value": "Major Damage",
+        "used_value": "Major Damage",
+        "contribution": 1.8799916839698705
+      },
+      {
+        "field": "authorities_contacted",
+        "input_value": "Police",
+        "used_value": "Police",
+        "contribution": 0.0010032018792828015
+      },
+      {
+        "field": "incident_hour_of_the_day",
+        "input_value": 5,
+        "used_value": 5,
+        "contribution": 0.08335620407021233
+      },
+      {
+        "field": "number_of_vehicles_involved",
+        "input_value": 1,
+        "used_value": 1,
+        "contribution": -0.03994175856549421
+      },
+      {
+        "field": "property_damage",
+        "input_value": "YES",
+        "used_value": "YES",
+        "contribution": 0.05870558726607988
+      },
+      {
+        "field": "bodily_injuries",
+        "input_value": 1,
+        "used_value": 1,
+        "contribution": 0.0006392705703829489
+      },
+      {
+        "field": "witnesses",
+        "input_value": 2,
+        "used_value": 2,
+        "contribution": 0.04603061983533504
+      },
+      {
+        "field": "police_report_available",
+        "input_value": "YES",
+        "used_value": "YES",
+        "contribution": -0.10735907994193253
+      },
+      {
+        "field": "injury_claim",
+        "input_value": 6510,
+        "used_value": 6510,
+        "contribution": 0.03955292524167711
+      },
+      {
+        "field": "property_claim",
+        "input_value": 13020,
+        "used_value": 13020,
+        "contribution": -0.07566469935030928
+      },
+      {
+        "field": "vehicle_claim",
+        "input_value": 52080,
+        "used_value": 52080,
+        "contribution": 0.25993972349403377
+      }
+    ]
+  },
+  "input_processing": [],
+  "warnings": [],
+  "review_records": [],
+  "context": {
+    "demo_model_training_rows": 1000,
+    "sample_was_in_training_data": true,
+    "performance_source": "separate held-out cross-validation",
+    "currency": "original dataset units; not converted to KRW",
+    "storage": "browser tab memory; no server persistence"
+  }
+}

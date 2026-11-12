@@ -1,0 +1,1479 @@
+{
+  "kind": "browser_checks",
+  "executed_at": "2026-11-12T04:08:22.496Z",
+  "browser": "Chrome/158.0.8127.18 (headless)",
+  "runtime": "Node.js v26.9.0",
+  "html": {
+    "file": "보험청구_관리자_대시보드.html",
+    "bytes": 186805,
+    "sha256": "962074794f538ec9320a76092cac7265f2502460e2c469de8a36d9a27adc1561"
+  },
+  "status": "passed",
+  "passed": 56,
+  "failed": 0,
+  "not_executed": [
+    "Safari, Firefox 등 다른 브라우저 엔진에서의 확인",
+    "실제 휴대전화 기기에서의 확인 (390px는 Chrome의 기기 에뮬레이션)",
+    "화면 낭독기(스크린 리더)를 사용한 확인"
+  ],
+  "profiles": [
+    {
+      "name": "PC 1440×900",
+      "viewport": {
+        "inner_width": 1440,
+        "inner_height": 900,
+        "device_pixel_ratio": 1,
+        "emulated_mobile": false
+      },
+      "passed": 28,
+      "failed": 0,
+      "page_errors": [],
+      "results": [
+        {
+          "id": "U1",
+          "title": "예시 5건: 화면에서 계산한 점수가 expected_score와 1e-8 이내로 일치",
+          "pass": true,
+          "detail": [
+            {
+              "id": "DEMO-001",
+              "score": 57.898465222028996,
+              "expected": 57.898465222028996,
+              "abs_diff": 0,
+              "phase": "fresh",
+              "shown": "57.9",
+              "export_score": 57.898465222028996
+            },
+            {
+              "id": "DEMO-002",
+              "score": 21.446581502379676,
+              "expected": 21.446581502379676,
+              "abs_diff": 0,
+              "phase": "fresh",
+              "shown": "21.4",
+              "export_score": 21.446581502379676
+            },
+            {
+              "id": "DEMO-003",
+              "score": 11.758962782749277,
+              "expected": 11.758962782749283,
+              "abs_diff": 5.329070518200751e-15,
+              "phase": "fresh",
+              "shown": "11.8",
+              "export_score": 11.758962782749277
+            },
+            {
+              "id": "DEMO-004",
+              "score": 7.400354058299579,
+              "expected": 7.400354058299581,
+              "abs_diff": 2.6645352591003757e-15,
+              "phase": "fresh",
+              "shown": "7.4",
+              "export_score": 7.400354058299579
+            },
+            {
+              "id": "DEMO-005",
+              "score": 23.3375298280332,
+              "expected": 23.3375298280332,
+              "abs_diff": 0,
+              "phase": "fresh",
+              "shown": "23.3",
+              "export_score": 23.3375298280332
+            }
+          ]
+        },
+        {
+          "id": "U2",
+          "title": "DEMO-001 기본 점수 약 57.898465222점, 기본 검토 기준 10점",
+          "pass": true,
+          "detail": {
+            "score": 57.898465222028996,
+            "shown": true,
+            "default_threshold_10": true,
+            "pill": true,
+            "result_visible": true
+          }
+        },
+        {
+          "id": "U3",
+          "title": "DEMO-001의 피해 정도만 경미한 손상으로 바꿔 재분석하면 약 9.059383729점",
+          "pass": true,
+          "detail": {
+            "stale_state_shown_before_reanalysis": true,
+            "score": 9.05938372904684,
+            "shown": true,
+            "phase_fresh": true,
+            "new_prediction_id": true,
+            "drivers_updated": true,
+            "change_summary": "이전 분석 57.9점 → 이번 분석 9.1점 (모델 점수 −48.8점)바꾼 입력: 피해 정도 (큰 손상 → 경미한 손상)",
+            "pill": true,
+            "stale": {
+              "phase": true,
+              "banner": true,
+              "dimmed": true,
+              "tag": true,
+              "old_score_still_labelled_previous": true,
+              "context_notes_change": true
+            }
+          }
+        },
+        {
+          "id": "U4",
+          "title": "DEMO-003은 약 11.758962783점이고, 기준을 10점→20점으로 바꾸면 검토 구분만 바뀜",
+          "pass": true,
+          "detail": {
+            "score": 11.758962782749277,
+            "shown": true,
+            "pill_at_10": true,
+            "pill_at_20": true,
+            "score_and_factors_unchanged": true,
+            "marker_moved": true,
+            "sentence_mentions_20": true,
+            "export_policy": true,
+            "back_to_10": true
+          }
+        },
+        {
+          "id": "U5",
+          "title": "필수 입력을 비우면 필드별 오류가 나오고 분석이 차단됨 (필수 12개 각각)",
+          "pass": true,
+          "detail": [
+            {
+              "field": "incident_type",
+              "phase": "blocked",
+              "error_shown": true,
+              "marked_invalid": true,
+              "summary_shown": true,
+              "no_new_result": true,
+              "result_hidden": true,
+              "buttons_disabled": true
+            },
+            {
+              "field": "incident_severity",
+              "phase": "blocked",
+              "error_shown": true,
+              "marked_invalid": true,
+              "summary_shown": true,
+              "no_new_result": true,
+              "result_hidden": true,
+              "buttons_disabled": true
+            },
+            {
+              "field": "number_of_vehicles_involved",
+              "phase": "blocked",
+              "error_shown": true,
+              "marked_invalid": true,
+              "summary_shown": true,
+              "no_new_result": true,
+              "result_hidden": true,
+              "buttons_disabled": true
+            },
+            {
+              "field": "authorities_contacted",
+              "phase": "blocked",
+              "error_shown": true,
+              "marked_invalid": true,
+              "summary_shown": true,
+              "no_new_result": true,
+              "result_hidden": true,
+              "buttons_disabled": true
+            },
+            {
+              "field": "injury_claim",
+              "phase": "blocked",
+              "error_shown": true,
+              "marked_invalid": true,
+              "summary_shown": true,
+              "no_new_result": true,
+              "result_hidden": true,
+              "buttons_disabled": true
+            },
+            {
+              "field": "property_claim",
+              "phase": "blocked",
+              "error_shown": true,
+              "marked_invalid": true,
+              "summary_shown": true,
+              "no_new_result": true,
+              "result_hidden": true,
+              "buttons_disabled": true
+            },
+            {
+              "field": "vehicle_claim",
+              "phase": "blocked",
+              "error_shown": true,
+              "marked_invalid": true,
+              "summary_shown": true,
+              "no_new_result": true,
+              "result_hidden": true,
+              "buttons_disabled": true
+            },
+            {
+              "field": "policy_csl",
+              "phase": "blocked",
+              "error_shown": true,
+              "marked_invalid": true,
+              "summary_shown": true,
+              "no_new_result": true,
+              "result_hidden": true,
+              "buttons_disabled": true
+            },
+            {
+              "field": "insured_sex",
+              "phase": "blocked",
+              "error_shown": true,
+              "marked_invalid": true,
+              "summary_shown": true,
+              "no_new_result": true,
+              "result_hidden": true,
+              "buttons_disabled": true
+            },
+            {
+              "field": "insured_education_level",
+              "phase": "blocked",
+              "error_shown": true,
+              "marked_invalid": true,
+              "summary_shown": true,
+              "no_new_result": true,
+              "result_hidden": true,
+              "buttons_disabled": true
+            },
+            {
+              "field": "insured_occupation",
+              "phase": "blocked",
+              "error_shown": true,
+              "marked_invalid": true,
+              "summary_shown": true,
+              "no_new_result": true,
+              "result_hidden": true,
+              "buttons_disabled": true
+            },
+            {
+              "field": "insured_relationship",
+              "phase": "blocked",
+              "error_shown": true,
+              "marked_invalid": true,
+              "summary_shown": true,
+              "no_new_result": true,
+              "result_hidden": true,
+              "buttons_disabled": true
+            }
+          ]
+        },
+        {
+          "id": "U6",
+          "title": "입력 수정 후 재분석 전에는 검토 기록 저장과 결과 내보내기가 차단됨",
+          "pass": true,
+          "detail": {
+            "phase_stale": true,
+            "save_disabled": true,
+            "export_disabled": true,
+            "lock_note": true,
+            "banner": true,
+            "direct_save_refused": true,
+            "direct_export_refused": true,
+            "clicks_do_nothing": true,
+            "revert_restores_fresh": true,
+            "reanalysis_unlocks": true
+          }
+        },
+        {
+          "id": "U7",
+          "title": "메모를 기록해도 모델 점수는 그대로이고, JSON에 당시 입력과 결과가 저장됨",
+          "pass": true,
+          "detail": {
+            "requires_judgement": true,
+            "requires_memo": true,
+            "record_added": true,
+            "record_keeps_inputs_and_result": true,
+            "score_unchanged": true,
+            "memo_shown_as_text": true,
+            "history_count": true,
+            "draft_cleared": true,
+            "export_created": true,
+            "export_inputs_and_result": true,
+            "export_has_record": true,
+            "export_keeps_missing_as_null": true,
+            "score": 21.446581502379676,
+            "download_name": "DEMO-002_DEMO-002-P0025_result.json"
+          }
+        },
+        {
+          "id": "U8",
+          "title": "세 화면 이동과 예시 전환이 정상 동작",
+          "pass": true,
+          "detail": {
+            "views": [
+              {
+                "view": "evaluation",
+                "only_this_visible": true,
+                "nav_current": true,
+                "breadcrumb": true,
+                "heading": true
+              },
+              {
+                "view": "handoff",
+                "only_this_visible": true,
+                "nav_current": true,
+                "breadcrumb": true,
+                "heading": true
+              },
+              {
+                "view": "analysis",
+                "only_this_visible": true,
+                "nav_current": true,
+                "breadcrumb": true,
+                "heading": true
+              }
+            ],
+            "cases": [
+              {
+                "id": "DEMO-001",
+                "inputs_loaded": true,
+                "selected": true,
+                "analysed": true,
+                "context": true
+              },
+              {
+                "id": "DEMO-002",
+                "inputs_loaded": true,
+                "selected": true,
+                "analysed": true,
+                "context": true
+              },
+              {
+                "id": "DEMO-003",
+                "inputs_loaded": true,
+                "selected": true,
+                "analysed": true,
+                "context": true
+              },
+              {
+                "id": "DEMO-004",
+                "inputs_loaded": true,
+                "selected": true,
+                "analysed": true,
+                "context": true
+              },
+              {
+                "id": "DEMO-005",
+                "inputs_loaded": true,
+                "selected": true,
+                "analysed": true,
+                "context": true
+              }
+            ]
+          }
+        },
+        {
+          "id": "U9",
+          "title": "현재 화면 폭에서 가로 스크롤이 생기지 않고 배치가 기대와 같음",
+          "pass": true,
+          "detail": {
+            "layout": "side-by-side",
+            "expected_layout": "side-by-side",
+            "wide_tables_explained": true,
+            "rows": [
+              {
+                "state": "청구 분석 · 최신 결과 · 모두 펼침",
+                "scroll_width": 1425,
+                "inner_width": 1440,
+                "ok": true,
+                "offenders": [],
+                "crushed_table_cells": 0,
+                "table_scroll_hints": 0
+              },
+              {
+                "state": "청구 분석 · 재분석 필요",
+                "scroll_width": 1425,
+                "inner_width": 1440,
+                "ok": true,
+                "offenders": [],
+                "crushed_table_cells": 0,
+                "table_scroll_hints": 0
+              },
+              {
+                "state": "청구 분석 · 분석 차단",
+                "scroll_width": 1425,
+                "inner_width": 1440,
+                "ok": true,
+                "offenders": [],
+                "crushed_table_cells": 0,
+                "table_scroll_hints": 0
+              },
+              {
+                "state": "청구 분석 · 빈 양식",
+                "scroll_width": 1425,
+                "inner_width": 1440,
+                "ok": true,
+                "offenders": [],
+                "crushed_table_cells": 0,
+                "table_scroll_hints": 0
+              },
+              {
+                "state": "모델 평가",
+                "scroll_width": 1425,
+                "inner_width": 1440,
+                "ok": true,
+                "offenders": [],
+                "crushed_table_cells": 0,
+                "table_scroll_hints": 0
+              },
+              {
+                "state": "연결 데이터",
+                "scroll_width": 1425,
+                "inner_width": 1440,
+                "ok": true,
+                "offenders": [],
+                "crushed_table_cells": 0,
+                "table_scroll_hints": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": "U10",
+          "title": "숫자 0, 미상(빈칸), 문자열 \"None\"을 화면에서도 구분",
+          "pass": true,
+          "detail": {
+            "zero_is_value": true,
+            "blank_is_unknown": true,
+            "zero_and_blank_differ": true,
+            "none_is_category": true,
+            "unknown_category": true,
+            "umbrella_zero_kept": true,
+            "export_distinguishes": true
+          }
+        },
+        {
+          "id": "U11",
+          "title": "잘못된 범위·정수 위반은 차단하고, 학습 범위 밖의 값은 경고와 함께 계산",
+          "pass": true,
+          "detail": {
+            "blocked": [
+              {
+                "field": "incident_hour_of_the_day",
+                "value": "24",
+                "ok": true
+              },
+              {
+                "field": "witnesses",
+                "value": "1.5",
+                "ok": true
+              },
+              {
+                "field": "vehicle_claim",
+                "value": "-1",
+                "ok": true
+              },
+              {
+                "field": "capital-loss",
+                "value": "5",
+                "ok": true
+              },
+              {
+                "field": "number_of_vehicles_involved",
+                "value": "0",
+                "ok": true
+              }
+            ],
+            "warning": {
+              "phase": "fresh",
+              "text": "관련 차량 수 값이 학습 자료에서 본 범위 밖입니다. 입력과 예측 결과를 주의해서 확인하세요. (학습 자료 범위: 1~4)",
+              "chip": "경고 1건"
+            }
+          }
+        },
+        {
+          "id": "U12",
+          "title": "분석에 실패하면 이전 결과를 정상 결과처럼 보여 주지 않음",
+          "pass": true,
+          "detail": {
+            "blocked": true,
+            "previous_score_not_visible": true,
+            "placeholder": true,
+            "banner": true,
+            "export_blocked": true,
+            "still_hidden_until_reanalysis": true,
+            "reanalysis_shows_new_result": true,
+            "revert_after_failure": true
+          }
+        },
+        {
+          "id": "U13",
+          "title": "빈 양식 직접 입력: 분석 전에는 결과가 없고, 필수 12개를 채워야 분석됨",
+          "pass": true,
+          "detail": {
+            "empty_state": true,
+            "context": true,
+            "all_blank": true,
+            "blocked_with_12_errors": true,
+            "errors_cleared_while_fixing": true,
+            "analysed": true,
+            "export_marks_manual_entry": true,
+            "reset_clears_form": true,
+            "shown_errors_after_blank_submit": 12
+          }
+        },
+        {
+          "id": "U14",
+          "title": "초기화: 예시의 원래 값으로 되돌리고 다시 분석",
+          "pass": true,
+          "detail": {
+            "changed_first": true,
+            "inputs_restored": true,
+            "score_restored": true,
+            "no_stale_summary": true
+          }
+        },
+        {
+          "id": "U15",
+          "title": "저장 JSON 구조가 data/sample_result.json과 호환 (기존 키 유지, 값 일치)",
+          "pass": true,
+          "detail": {
+            "top_level_keys_kept": true,
+            "identity": true,
+            "inputs": true,
+            "prediction": true,
+            "review_policy": true,
+            "explanation": true,
+            "processing_and_warnings": true,
+            "context_keys_kept": true,
+            "added_context_keys": [
+              "input_source",
+              "inputs_match_sample",
+              "modified_fields"
+            ]
+          }
+        },
+        {
+          "id": "U16",
+          "title": "검토 기록은 탭 메모리에만 두고, 새로고침 시 사라진다고 안내",
+          "pass": true,
+          "detail": {
+            "notice": true,
+            "nothing_in_browser_storage": true,
+            "records_in_memory": true
+          }
+        },
+        {
+          "id": "U17",
+          "title": "도움말, 개발용 필드명 표시, 모두 펼치기·접기",
+          "pass": true,
+          "detail": {
+            "help_opens": true,
+            "help_closes": true,
+            "expand_all": true,
+            "keys_hidden_by_default": true,
+            "keys_shown_on_toggle": true,
+            "keys_hidden_again": true,
+            "collapse_all": true,
+            "detail_closed_by_default": true
+          }
+        },
+        {
+          "id": "U18",
+          "title": "모델 평가 화면: 세 범위를 구분해 표시하고, 수치가 평가 자료와 일치",
+          "pass": true,
+          "detail": {
+            "scope_labels": true,
+            "fold_table": true,
+            "mean_table": true,
+            "threshold_table": true,
+            "chart_drawn": true,
+            "legend": true,
+            "mean_bars": true,
+            "tiles": true,
+            "not_new_validation": true,
+            "tooltip": true,
+            "tooltip_keyboard": true,
+            "tooltip_hides": true,
+            "fold_top40": {
+              "logistic": 24,
+              "severity": 22
+            }
+          }
+        },
+        {
+          "id": "U19",
+          "title": "연결 데이터 화면: 미리보기가 저장 내용과 같고, 패키지 구성과 자체 점검을 표시",
+          "pass": true,
+          "detail": {
+            "preview_equals_export": true,
+            "self_check": true,
+            "package_scope": true,
+            "schema_table": true,
+            "stale_blocks_preview": true,
+            "fresh_again": true,
+            "export_from_this_view": true
+          }
+        },
+        {
+          "id": "U20",
+          "title": "표현: 영향값은 로그오즈 기여로 표시하고, 금액은 원본 단위, 점수는 확률로 단정하지 않음",
+          "pass": true,
+          "detail": {
+            "contribution_format": true,
+            "log_odds_note": true,
+            "no_risk_point_wording": true,
+            "claim_units": true,
+            "no_currency_symbols": true,
+            "probability_disclaimer": true,
+            "demo_scope_note": true,
+            "sample_numbers": [
+              "+1.880",
+              "+0.260",
+              "+0.165",
+              "−0.326",
+              "−0.261",
+              "−0.107"
+            ]
+          }
+        },
+        {
+          "id": "U21",
+          "title": "어느 상태에서도 화면에 깨진 출력([object …], undefined, NaN)이 없음",
+          "pass": true,
+          "detail": {
+            "rows": [
+              {
+                "state": "최신 결과 (미상 3건)",
+                "bad": []
+              },
+              {
+                "state": "재분석 필요",
+                "bad": []
+              },
+              {
+                "state": "분석 차단",
+                "bad": []
+              },
+              {
+                "state": "빈 양식",
+                "bad": []
+              },
+              {
+                "state": "경고 있는 결과",
+                "bad": []
+              },
+              {
+                "state": "모델 평가 (그래프 값 표시)",
+                "bad": []
+              },
+              {
+                "state": "연결 데이터",
+                "bad": []
+              }
+            ],
+            "null_text_in_analysis_view": false
+          }
+        },
+        {
+          "id": "R1",
+          "title": "실제 키 입력: 값을 고치면 재분석 필요 상태가 되고, Enter로 재분석됨",
+          "pass": true,
+          "detail": {
+            "typed_value": true,
+            "stale_after_typing": true,
+            "enter_reanalyses": true
+          }
+        },
+        {
+          "id": "R2",
+          "title": "실제 키 입력: 숫자로 읽을 수 없는 입력(1e)은 유효하지 않은 숫자로 차단",
+          "pass": true,
+          "detail": {
+            "browser_reports_bad_input": true,
+            "blocked": true,
+            "message": true,
+            "error": "차량 청구액 항목은 유효한 숫자여야 합니다."
+          }
+        },
+        {
+          "id": "R3",
+          "title": "실제 클릭(터치): 예시 선택과 검토 기준 전환",
+          "pass": true,
+          "detail": {
+            "example_loaded": true,
+            "threshold_20": true,
+            "threshold_10": true
+          }
+        },
+        {
+          "id": "R4",
+          "title": "결과 JSON 저장: 파일이 실제로 내려받아지고 내용이 화면의 결과와 같음",
+          "pass": true,
+          "detail": {
+            "file_name": true,
+            "same_as_screen": true,
+            "has_inputs_and_score": true,
+            "has_review_record": true,
+            "file": "DEMO-001_DEMO-001-P0004_result.json",
+            "bytes": 7327
+          }
+        },
+        {
+          "id": "R5",
+          "title": "새로고침하면 검토 기록이 사라지고 기본 상태(DEMO-001, 기준 10점)로 돌아옴",
+          "pass": true,
+          "detail": {
+            "had_record_before": true,
+            "records_gone": true,
+            "default_state": true
+          }
+        },
+        {
+          "id": "R6",
+          "title": "외부 네트워크 요청 없음 (요청 기록 확인)",
+          "pass": true,
+          "detail": {
+            "external_requests": [],
+            "request_kinds": [
+              "file",
+              "data"
+            ],
+            "total_requests": 6
+          }
+        },
+        {
+          "id": "R7",
+          "title": "페이지 오류와 콘솔 오류 없음",
+          "pass": true,
+          "detail": {
+            "exceptions": [],
+            "console_errors": []
+          }
+        }
+      ],
+      "screenshots": null
+    },
+    {
+      "name": "모바일 390×844 (기기 에뮬레이션)",
+      "viewport": {
+        "inner_width": 390,
+        "inner_height": 844,
+        "device_pixel_ratio": 2,
+        "emulated_mobile": true
+      },
+      "passed": 28,
+      "failed": 0,
+      "page_errors": [],
+      "results": [
+        {
+          "id": "U1",
+          "title": "예시 5건: 화면에서 계산한 점수가 expected_score와 1e-8 이내로 일치",
+          "pass": true,
+          "detail": [
+            {
+              "id": "DEMO-001",
+              "score": 57.898465222028996,
+              "expected": 57.898465222028996,
+              "abs_diff": 0,
+              "phase": "fresh",
+              "shown": "57.9",
+              "export_score": 57.898465222028996
+            },
+            {
+              "id": "DEMO-002",
+              "score": 21.446581502379676,
+              "expected": 21.446581502379676,
+              "abs_diff": 0,
+              "phase": "fresh",
+              "shown": "21.4",
+              "export_score": 21.446581502379676
+            },
+            {
+              "id": "DEMO-003",
+              "score": 11.758962782749277,
+              "expected": 11.758962782749283,
+              "abs_diff": 5.329070518200751e-15,
+              "phase": "fresh",
+              "shown": "11.8",
+              "export_score": 11.758962782749277
+            },
+            {
+              "id": "DEMO-004",
+              "score": 7.400354058299579,
+              "expected": 7.400354058299581,
+              "abs_diff": 2.6645352591003757e-15,
+              "phase": "fresh",
+              "shown": "7.4",
+              "export_score": 7.400354058299579
+            },
+            {
+              "id": "DEMO-005",
+              "score": 23.3375298280332,
+              "expected": 23.3375298280332,
+              "abs_diff": 0,
+              "phase": "fresh",
+              "shown": "23.3",
+              "export_score": 23.3375298280332
+            }
+          ]
+        },
+        {
+          "id": "U2",
+          "title": "DEMO-001 기본 점수 약 57.898465222점, 기본 검토 기준 10점",
+          "pass": true,
+          "detail": {
+            "score": 57.898465222028996,
+            "shown": true,
+            "default_threshold_10": true,
+            "pill": true,
+            "result_visible": true
+          }
+        },
+        {
+          "id": "U3",
+          "title": "DEMO-001의 피해 정도만 경미한 손상으로 바꿔 재분석하면 약 9.059383729점",
+          "pass": true,
+          "detail": {
+            "stale_state_shown_before_reanalysis": true,
+            "score": 9.05938372904684,
+            "shown": true,
+            "phase_fresh": true,
+            "new_prediction_id": true,
+            "drivers_updated": true,
+            "change_summary": "이전 분석 57.9점 → 이번 분석 9.1점 (모델 점수 −48.8점)바꾼 입력: 피해 정도 (큰 손상 → 경미한 손상)",
+            "pill": true,
+            "stale": {
+              "phase": true,
+              "banner": true,
+              "dimmed": true,
+              "tag": true,
+              "old_score_still_labelled_previous": true,
+              "context_notes_change": true
+            }
+          }
+        },
+        {
+          "id": "U4",
+          "title": "DEMO-003은 약 11.758962783점이고, 기준을 10점→20점으로 바꾸면 검토 구분만 바뀜",
+          "pass": true,
+          "detail": {
+            "score": 11.758962782749277,
+            "shown": true,
+            "pill_at_10": true,
+            "pill_at_20": true,
+            "score_and_factors_unchanged": true,
+            "marker_moved": true,
+            "sentence_mentions_20": true,
+            "export_policy": true,
+            "back_to_10": true
+          }
+        },
+        {
+          "id": "U5",
+          "title": "필수 입력을 비우면 필드별 오류가 나오고 분석이 차단됨 (필수 12개 각각)",
+          "pass": true,
+          "detail": [
+            {
+              "field": "incident_type",
+              "phase": "blocked",
+              "error_shown": true,
+              "marked_invalid": true,
+              "summary_shown": true,
+              "no_new_result": true,
+              "result_hidden": true,
+              "buttons_disabled": true
+            },
+            {
+              "field": "incident_severity",
+              "phase": "blocked",
+              "error_shown": true,
+              "marked_invalid": true,
+              "summary_shown": true,
+              "no_new_result": true,
+              "result_hidden": true,
+              "buttons_disabled": true
+            },
+            {
+              "field": "number_of_vehicles_involved",
+              "phase": "blocked",
+              "error_shown": true,
+              "marked_invalid": true,
+              "summary_shown": true,
+              "no_new_result": true,
+              "result_hidden": true,
+              "buttons_disabled": true
+            },
+            {
+              "field": "authorities_contacted",
+              "phase": "blocked",
+              "error_shown": true,
+              "marked_invalid": true,
+              "summary_shown": true,
+              "no_new_result": true,
+              "result_hidden": true,
+              "buttons_disabled": true
+            },
+            {
+              "field": "injury_claim",
+              "phase": "blocked",
+              "error_shown": true,
+              "marked_invalid": true,
+              "summary_shown": true,
+              "no_new_result": true,
+              "result_hidden": true,
+              "buttons_disabled": true
+            },
+            {
+              "field": "property_claim",
+              "phase": "blocked",
+              "error_shown": true,
+              "marked_invalid": true,
+              "summary_shown": true,
+              "no_new_result": true,
+              "result_hidden": true,
+              "buttons_disabled": true
+            },
+            {
+              "field": "vehicle_claim",
+              "phase": "blocked",
+              "error_shown": true,
+              "marked_invalid": true,
+              "summary_shown": true,
+              "no_new_result": true,
+              "result_hidden": true,
+              "buttons_disabled": true
+            },
+            {
+              "field": "policy_csl",
+              "phase": "blocked",
+              "error_shown": true,
+              "marked_invalid": true,
+              "summary_shown": true,
+              "no_new_result": true,
+              "result_hidden": true,
+              "buttons_disabled": true
+            },
+            {
+              "field": "insured_sex",
+              "phase": "blocked",
+              "error_shown": true,
+              "marked_invalid": true,
+              "summary_shown": true,
+              "no_new_result": true,
+              "result_hidden": true,
+              "buttons_disabled": true
+            },
+            {
+              "field": "insured_education_level",
+              "phase": "blocked",
+              "error_shown": true,
+              "marked_invalid": true,
+              "summary_shown": true,
+              "no_new_result": true,
+              "result_hidden": true,
+              "buttons_disabled": true
+            },
+            {
+              "field": "insured_occupation",
+              "phase": "blocked",
+              "error_shown": true,
+              "marked_invalid": true,
+              "summary_shown": true,
+              "no_new_result": true,
+              "result_hidden": true,
+              "buttons_disabled": true
+            },
+            {
+              "field": "insured_relationship",
+              "phase": "blocked",
+              "error_shown": true,
+              "marked_invalid": true,
+              "summary_shown": true,
+              "no_new_result": true,
+              "result_hidden": true,
+              "buttons_disabled": true
+            }
+          ]
+        },
+        {
+          "id": "U6",
+          "title": "입력 수정 후 재분석 전에는 검토 기록 저장과 결과 내보내기가 차단됨",
+          "pass": true,
+          "detail": {
+            "phase_stale": true,
+            "save_disabled": true,
+            "export_disabled": true,
+            "lock_note": true,
+            "banner": true,
+            "direct_save_refused": true,
+            "direct_export_refused": true,
+            "clicks_do_nothing": true,
+            "revert_restores_fresh": true,
+            "reanalysis_unlocks": true
+          }
+        },
+        {
+          "id": "U7",
+          "title": "메모를 기록해도 모델 점수는 그대로이고, JSON에 당시 입력과 결과가 저장됨",
+          "pass": true,
+          "detail": {
+            "requires_judgement": true,
+            "requires_memo": true,
+            "record_added": true,
+            "record_keeps_inputs_and_result": true,
+            "score_unchanged": true,
+            "memo_shown_as_text": true,
+            "history_count": true,
+            "draft_cleared": true,
+            "export_created": true,
+            "export_inputs_and_result": true,
+            "export_has_record": true,
+            "export_keeps_missing_as_null": true,
+            "score": 21.446581502379676,
+            "download_name": "DEMO-002_DEMO-002-P0025_result.json"
+          }
+        },
+        {
+          "id": "U8",
+          "title": "세 화면 이동과 예시 전환이 정상 동작",
+          "pass": true,
+          "detail": {
+            "views": [
+              {
+                "view": "evaluation",
+                "only_this_visible": true,
+                "nav_current": true,
+                "breadcrumb": true,
+                "heading": true
+              },
+              {
+                "view": "handoff",
+                "only_this_visible": true,
+                "nav_current": true,
+                "breadcrumb": true,
+                "heading": true
+              },
+              {
+                "view": "analysis",
+                "only_this_visible": true,
+                "nav_current": true,
+                "breadcrumb": true,
+                "heading": true
+              }
+            ],
+            "cases": [
+              {
+                "id": "DEMO-001",
+                "inputs_loaded": true,
+                "selected": true,
+                "analysed": true,
+                "context": true
+              },
+              {
+                "id": "DEMO-002",
+                "inputs_loaded": true,
+                "selected": true,
+                "analysed": true,
+                "context": true
+              },
+              {
+                "id": "DEMO-003",
+                "inputs_loaded": true,
+                "selected": true,
+                "analysed": true,
+                "context": true
+              },
+              {
+                "id": "DEMO-004",
+                "inputs_loaded": true,
+                "selected": true,
+                "analysed": true,
+                "context": true
+              },
+              {
+                "id": "DEMO-005",
+                "inputs_loaded": true,
+                "selected": true,
+                "analysed": true,
+                "context": true
+              }
+            ]
+          }
+        },
+        {
+          "id": "U9",
+          "title": "현재 화면 폭에서 가로 스크롤이 생기지 않고 배치가 기대와 같음",
+          "pass": true,
+          "detail": {
+            "layout": "stacked",
+            "expected_layout": "stacked",
+            "wide_tables_explained": true,
+            "rows": [
+              {
+                "state": "청구 분석 · 최신 결과 · 모두 펼침",
+                "scroll_width": 390,
+                "inner_width": 390,
+                "ok": true,
+                "offenders": [],
+                "crushed_table_cells": 0,
+                "table_scroll_hints": 0
+              },
+              {
+                "state": "청구 분석 · 재분석 필요",
+                "scroll_width": 390,
+                "inner_width": 390,
+                "ok": true,
+                "offenders": [],
+                "crushed_table_cells": 0,
+                "table_scroll_hints": 0
+              },
+              {
+                "state": "청구 분석 · 분석 차단",
+                "scroll_width": 390,
+                "inner_width": 390,
+                "ok": true,
+                "offenders": [],
+                "crushed_table_cells": 0,
+                "table_scroll_hints": 0
+              },
+              {
+                "state": "청구 분석 · 빈 양식",
+                "scroll_width": 390,
+                "inner_width": 390,
+                "ok": true,
+                "offenders": [],
+                "crushed_table_cells": 0,
+                "table_scroll_hints": 0
+              },
+              {
+                "state": "모델 평가",
+                "scroll_width": 390,
+                "inner_width": 390,
+                "ok": true,
+                "offenders": [],
+                "crushed_table_cells": 0,
+                "table_scroll_hints": 1
+              },
+              {
+                "state": "연결 데이터",
+                "scroll_width": 390,
+                "inner_width": 390,
+                "ok": true,
+                "offenders": [],
+                "crushed_table_cells": 0,
+                "table_scroll_hints": 3
+              }
+            ]
+          }
+        },
+        {
+          "id": "U10",
+          "title": "숫자 0, 미상(빈칸), 문자열 \"None\"을 화면에서도 구분",
+          "pass": true,
+          "detail": {
+            "zero_is_value": true,
+            "blank_is_unknown": true,
+            "zero_and_blank_differ": true,
+            "none_is_category": true,
+            "unknown_category": true,
+            "umbrella_zero_kept": true,
+            "export_distinguishes": true
+          }
+        },
+        {
+          "id": "U11",
+          "title": "잘못된 범위·정수 위반은 차단하고, 학습 범위 밖의 값은 경고와 함께 계산",
+          "pass": true,
+          "detail": {
+            "blocked": [
+              {
+                "field": "incident_hour_of_the_day",
+                "value": "24",
+                "ok": true
+              },
+              {
+                "field": "witnesses",
+                "value": "1.5",
+                "ok": true
+              },
+              {
+                "field": "vehicle_claim",
+                "value": "-1",
+                "ok": true
+              },
+              {
+                "field": "capital-loss",
+                "value": "5",
+                "ok": true
+              },
+              {
+                "field": "number_of_vehicles_involved",
+                "value": "0",
+                "ok": true
+              }
+            ],
+            "warning": {
+              "phase": "fresh",
+              "text": "관련 차량 수 값이 학습 자료에서 본 범위 밖입니다. 입력과 예측 결과를 주의해서 확인하세요. (학습 자료 범위: 1~4)",
+              "chip": "경고 1건"
+            }
+          }
+        },
+        {
+          "id": "U12",
+          "title": "분석에 실패하면 이전 결과를 정상 결과처럼 보여 주지 않음",
+          "pass": true,
+          "detail": {
+            "blocked": true,
+            "previous_score_not_visible": true,
+            "placeholder": true,
+            "banner": true,
+            "export_blocked": true,
+            "still_hidden_until_reanalysis": true,
+            "reanalysis_shows_new_result": true,
+            "revert_after_failure": true
+          }
+        },
+        {
+          "id": "U13",
+          "title": "빈 양식 직접 입력: 분석 전에는 결과가 없고, 필수 12개를 채워야 분석됨",
+          "pass": true,
+          "detail": {
+            "empty_state": true,
+            "context": true,
+            "all_blank": true,
+            "blocked_with_12_errors": true,
+            "errors_cleared_while_fixing": true,
+            "analysed": true,
+            "export_marks_manual_entry": true,
+            "reset_clears_form": true,
+            "shown_errors_after_blank_submit": 12
+          }
+        },
+        {
+          "id": "U14",
+          "title": "초기화: 예시의 원래 값으로 되돌리고 다시 분석",
+          "pass": true,
+          "detail": {
+            "changed_first": true,
+            "inputs_restored": true,
+            "score_restored": true,
+            "no_stale_summary": true
+          }
+        },
+        {
+          "id": "U15",
+          "title": "저장 JSON 구조가 data/sample_result.json과 호환 (기존 키 유지, 값 일치)",
+          "pass": true,
+          "detail": {
+            "top_level_keys_kept": true,
+            "identity": true,
+            "inputs": true,
+            "prediction": true,
+            "review_policy": true,
+            "explanation": true,
+            "processing_and_warnings": true,
+            "context_keys_kept": true,
+            "added_context_keys": [
+              "input_source",
+              "inputs_match_sample",
+              "modified_fields"
+            ]
+          }
+        },
+        {
+          "id": "U16",
+          "title": "검토 기록은 탭 메모리에만 두고, 새로고침 시 사라진다고 안내",
+          "pass": true,
+          "detail": {
+            "notice": true,
+            "nothing_in_browser_storage": true,
+            "records_in_memory": true
+          }
+        },
+        {
+          "id": "U17",
+          "title": "도움말, 개발용 필드명 표시, 모두 펼치기·접기",
+          "pass": true,
+          "detail": {
+            "help_opens": true,
+            "help_closes": true,
+            "expand_all": true,
+            "keys_hidden_by_default": true,
+            "keys_shown_on_toggle": true,
+            "keys_hidden_again": true,
+            "collapse_all": true,
+            "detail_closed_by_default": true
+          }
+        },
+        {
+          "id": "U18",
+          "title": "모델 평가 화면: 세 범위를 구분해 표시하고, 수치가 평가 자료와 일치",
+          "pass": true,
+          "detail": {
+            "scope_labels": true,
+            "fold_table": true,
+            "mean_table": true,
+            "threshold_table": true,
+            "chart_drawn": true,
+            "legend": true,
+            "mean_bars": true,
+            "tiles": true,
+            "not_new_validation": true,
+            "tooltip": true,
+            "tooltip_keyboard": true,
+            "tooltip_hides": true,
+            "fold_top40": {
+              "logistic": 24,
+              "severity": 22
+            }
+          }
+        },
+        {
+          "id": "U19",
+          "title": "연결 데이터 화면: 미리보기가 저장 내용과 같고, 패키지 구성과 자체 점검을 표시",
+          "pass": true,
+          "detail": {
+            "preview_equals_export": true,
+            "self_check": true,
+            "package_scope": true,
+            "schema_table": true,
+            "stale_blocks_preview": true,
+            "fresh_again": true,
+            "export_from_this_view": true
+          }
+        },
+        {
+          "id": "U20",
+          "title": "표현: 영향값은 로그오즈 기여로 표시하고, 금액은 원본 단위, 점수는 확률로 단정하지 않음",
+          "pass": true,
+          "detail": {
+            "contribution_format": true,
+            "log_odds_note": true,
+            "no_risk_point_wording": true,
+            "claim_units": true,
+            "no_currency_symbols": true,
+            "probability_disclaimer": true,
+            "demo_scope_note": true,
+            "sample_numbers": [
+              "+1.880",
+              "+0.260",
+              "+0.165",
+              "−0.326",
+              "−0.261",
+              "−0.107"
+            ]
+          }
+        },
+        {
+          "id": "U21",
+          "title": "어느 상태에서도 화면에 깨진 출력([object …], undefined, NaN)이 없음",
+          "pass": true,
+          "detail": {
+            "rows": [
+              {
+                "state": "최신 결과 (미상 3건)",
+                "bad": []
+              },
+              {
+                "state": "재분석 필요",
+                "bad": []
+              },
+              {
+                "state": "분석 차단",
+                "bad": []
+              },
+              {
+                "state": "빈 양식",
+                "bad": []
+              },
+              {
+                "state": "경고 있는 결과",
+                "bad": []
+              },
+              {
+                "state": "모델 평가 (그래프 값 표시)",
+                "bad": []
+              },
+              {
+                "state": "연결 데이터",
+                "bad": []
+              }
+            ],
+            "null_text_in_analysis_view": false
+          }
+        },
+        {
+          "id": "R1",
+          "title": "실제 키 입력: 값을 고치면 재분석 필요 상태가 되고, Enter로 재분석됨",
+          "pass": true,
+          "detail": {
+            "typed_value": true,
+            "stale_after_typing": true,
+            "enter_reanalyses": true
+          }
+        },
+        {
+          "id": "R2",
+          "title": "실제 키 입력: 숫자로 읽을 수 없는 입력(1e)은 유효하지 않은 숫자로 차단",
+          "pass": true,
+          "detail": {
+            "browser_reports_bad_input": true,
+            "blocked": true,
+            "message": true,
+            "error": "차량 청구액 항목은 유효한 숫자여야 합니다."
+          }
+        },
+        {
+          "id": "R3",
+          "title": "실제 클릭(터치): 예시 선택과 검토 기준 전환",
+          "pass": true,
+          "detail": {
+            "example_loaded": true,
+            "threshold_20": true,
+            "threshold_10": true
+          }
+        },
+        {
+          "id": "R4",
+          "title": "결과 JSON 저장: 파일이 실제로 내려받아지고 내용이 화면의 결과와 같음",
+          "pass": true,
+          "detail": {
+            "file_name": true,
+            "same_as_screen": true,
+            "has_inputs_and_score": true,
+            "has_review_record": true,
+            "file": "DEMO-001_DEMO-001-P0004_result.json",
+            "bytes": 7327
+          }
+        },
+        {
+          "id": "R5",
+          "title": "새로고침하면 검토 기록이 사라지고 기본 상태(DEMO-001, 기준 10점)로 돌아옴",
+          "pass": true,
+          "detail": {
+            "had_record_before": true,
+            "records_gone": true,
+            "default_state": true
+          }
+        },
+        {
+          "id": "R6",
+          "title": "외부 네트워크 요청 없음 (요청 기록 확인)",
+          "pass": true,
+          "detail": {
+            "external_requests": [],
+            "request_kinds": [
+              "file",
+              "data"
+            ],
+            "total_requests": 6
+          }
+        },
+        {
+          "id": "R7",
+          "title": "페이지 오류와 콘솔 오류 없음",
+          "pass": true,
+          "detail": {
+            "exceptions": [],
+            "console_errors": []
+          }
+        }
+      ],
+      "screenshots": null
+    }
+  ]
+}

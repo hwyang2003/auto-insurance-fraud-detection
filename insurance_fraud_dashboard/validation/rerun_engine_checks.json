@@ -1,0 +1,428 @@
+{
+  "kind": "engine_and_package_checks",
+  "executed_at": "2026-11-12T04:23:04.110Z",
+  "runtime": "Node.js v26.9.0",
+  "status": "passed",
+  "passed": 17,
+  "failed": 0,
+  "not_executed": [
+    "Python 모델과의 1,000건 예측 대조 (원본 자료와 Python 모델이 패키지에 없음. 기존 기록: validation/engine_checks.json)"
+  ],
+  "results": [
+    {
+      "id": "E1",
+      "title": "예시 5건의 계산값이 expected_score와 1e-8 이내로 일치",
+      "pass": true,
+      "detail": {
+        "max_abs_diff": 5.329070518200751e-15,
+        "rows": [
+          {
+            "id": "DEMO-001",
+            "status": "ok",
+            "score": 57.898465222028996,
+            "expected": 57.898465222028996,
+            "abs_diff": 0
+          },
+          {
+            "id": "DEMO-002",
+            "status": "ok",
+            "score": 21.446581502379676,
+            "expected": 21.446581502379676,
+            "abs_diff": 0
+          },
+          {
+            "id": "DEMO-003",
+            "status": "ok",
+            "score": 11.758962782749277,
+            "expected": 11.758962782749283,
+            "abs_diff": 5.329070518200751e-15
+          },
+          {
+            "id": "DEMO-004",
+            "status": "ok",
+            "score": 7.400354058299579,
+            "expected": 7.400354058299581,
+            "abs_diff": 2.6645352591003757e-15
+          },
+          {
+            "id": "DEMO-005",
+            "status": "ok",
+            "score": 23.337529828033205,
+            "expected": 23.3375298280332,
+            "abs_diff": 3.552713678800501e-15
+          }
+        ]
+      }
+    },
+    {
+      "id": "E2",
+      "title": "DEMO-001 기본 점수는 약 57.898465222점",
+      "pass": true,
+      "detail": {
+        "score": 57.898465222028996
+      }
+    },
+    {
+      "id": "E3",
+      "title": "DEMO-001의 incident_severity만 Minor Damage로 바꾸면 약 9.059383729점",
+      "pass": true,
+      "detail": {
+        "score": 9.05938372904684
+      }
+    },
+    {
+      "id": "E4",
+      "title": "DEMO-003은 약 11.758962783점이고, 기준 10점→20점에서 검토 구분만 바뀜",
+      "pass": true,
+      "detail": {
+        "score": 11.758962782749277,
+        "decision_at_10": "additional_review",
+        "decision_at_20": "standard_review",
+        "note": "decision()은 점수 계산과 분리된 함수라 기준을 바꿔도 score와 contributions는 다시 계산되지 않는다"
+      }
+    },
+    {
+      "id": "E5",
+      "title": "필수 입력을 비우면 해당 필드 오류와 함께 분석이 차단됨 (필수 12개 × 빈 값 4종 + 키 누락)",
+      "pass": true,
+      "detail": {
+        "required_fields": [
+          "incident_type",
+          "incident_severity",
+          "number_of_vehicles_involved",
+          "authorities_contacted",
+          "injury_claim",
+          "property_claim",
+          "vehicle_claim",
+          "policy_csl",
+          "insured_sex",
+          "insured_education_level",
+          "insured_occupation",
+          "insured_relationship"
+        ],
+        "failures": []
+      }
+    },
+    {
+      "id": "E6",
+      "title": "숫자 0, 미상 null, 문자열 \"None\"을 서로 다르게 처리",
+      "pass": true,
+      "detail": {
+        "zero_kept_as_zero": true,
+        "null_uses_median": true,
+        "zero_and_null_scores_differ": true,
+        "none_string_is_a_category": true,
+        "null_for_required_category_is_rejected": true,
+        "umbrella_zero_kept": true,
+        "score_witnesses_0": 53.473149509240315,
+        "score_witnesses_null": 55.697110714625865,
+        "score_authorities_None": 45.63806766729149
+      }
+    },
+    {
+      "id": "E7",
+      "title": "선택 항목의 미상: 숫자는 학습 중앙값, 범주는 미상 범주로 계산 (12개 항목 각각)",
+      "pass": true,
+      "detail": [
+        {
+          "field": "collision_type",
+          "ok": true
+        },
+        {
+          "field": "incident_hour_of_the_day",
+          "ok": true
+        },
+        {
+          "field": "bodily_injuries",
+          "ok": true
+        },
+        {
+          "field": "witnesses",
+          "ok": true
+        },
+        {
+          "field": "property_damage",
+          "ok": true
+        },
+        {
+          "field": "police_report_available",
+          "ok": true
+        },
+        {
+          "field": "months_as_customer",
+          "ok": true
+        },
+        {
+          "field": "policy_deductable",
+          "ok": true
+        },
+        {
+          "field": "policy_annual_premium",
+          "ok": true
+        },
+        {
+          "field": "umbrella_limit",
+          "ok": true
+        },
+        {
+          "field": "capital-gains",
+          "ok": true
+        },
+        {
+          "field": "capital-loss",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "id": "E8",
+      "title": "잘못된 숫자·범주·허용 범위는 차단",
+      "pass": true,
+      "detail": {
+        "rejected": 14,
+        "total": 14,
+        "rows": [
+          {
+            "name": "NaN",
+            "rejected": true
+          },
+          {
+            "name": "Infinity",
+            "rejected": true
+          },
+          {
+            "name": "숫자 자리에 문자열",
+            "rejected": true
+          },
+          {
+            "name": "정수 항목에 소수",
+            "rejected": true
+          },
+          {
+            "name": "사고 시각 24",
+            "rejected": true
+          },
+          {
+            "name": "사고 시각 -1",
+            "rejected": true
+          },
+          {
+            "name": "관련 차량 0대",
+            "rejected": true
+          },
+          {
+            "name": "음수 청구액",
+            "rejected": true
+          },
+          {
+            "name": "양수 자본 손실",
+            "rejected": true
+          },
+          {
+            "name": "음수 추가 보장한도",
+            "rejected": true
+          },
+          {
+            "name": "없는 범주",
+            "rejected": true
+          },
+          {
+            "name": "대소문자가 다른 범주",
+            "rejected": true
+          },
+          {
+            "name": "범주 자리에 숫자",
+            "rejected": true
+          },
+          {
+            "name": "미상을 학습하지 않은 범주에 미상",
+            "rejected": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "E9",
+      "title": "허용 범위 안이지만 학습 자료 범위 밖인 값은 계산하고 경고를 반환",
+      "pass": true,
+      "detail": [
+        {
+          "field": "number_of_vehicles_involved",
+          "value": 9,
+          "status": "ok",
+          "warned": true
+        },
+        {
+          "field": "policy_deductable",
+          "value": 0,
+          "status": "ok",
+          "warned": true
+        },
+        {
+          "field": "vehicle_claim",
+          "value": 200000,
+          "status": "ok",
+          "warned": true
+        },
+        {
+          "field": "bodily_injuries",
+          "value": 5,
+          "status": "ok",
+          "warned": true
+        }
+      ]
+    },
+    {
+      "id": "E10",
+      "title": "기준값 + 24개 기여의 합 = 내부값(로그오즈), 점수 = 100 × sigmoid(내부값)",
+      "pass": true,
+      "detail": {
+        "max_reconstruction_error": 8.881784197001252e-16,
+        "cases": 7
+      }
+    },
+    {
+      "id": "E11",
+      "title": "analyzeCase 반환 구조 (status ok / invalid)",
+      "pass": true,
+      "detail": {
+        "ok_keys": [
+          "base_log_odds",
+          "contribution_sum",
+          "contributions",
+          "input_processing",
+          "inputs",
+          "log_odds",
+          "model_version",
+          "probability",
+          "reconstruction_error",
+          "score",
+          "status",
+          "warnings"
+        ],
+        "invalid_keys": [
+          "status",
+          "errors"
+        ]
+      }
+    },
+    {
+      "id": "P1",
+      "title": "계산 엔진과 모델 데이터가 제공받은 패키지와 바이트 단위로 동일 (계수·전처리 값·범주 변경 없음)",
+      "pass": true,
+      "detail": [
+        {
+          "file": "src/engine.js",
+          "sha256": "1d413b21a10963bec62195b215983d0c3583be1be8071186c64bfd4ff241d5a2",
+          "unchanged": true
+        },
+        {
+          "file": "data/dashboard_payload.json",
+          "sha256": "4624156009569bb66f3c22c71fe9ee1f58a466d8ec4ab4762902de6d11c92faf",
+          "unchanged": true
+        },
+        {
+          "file": "data/field_schema.json",
+          "sha256": "c0c0e3423ab2f0aeeeab2e0308d218926cbc7db2569d759f0f3d221e243379c4",
+          "unchanged": true
+        },
+        {
+          "file": "data/sample_inputs.json",
+          "sha256": "a61ab03b41f13c3f2266c7b9f9afd07a5c3ff4926fa2d7f8bc1af76606df07ff",
+          "unchanged": true
+        },
+        {
+          "file": "data/sample_result.json",
+          "sha256": "9a5046a32b38dac4a71d4ecb2800ed85fe819093d920f038bfea2ec48fff0399",
+          "unchanged": true
+        }
+      ]
+    },
+    {
+      "id": "P2",
+      "title": "참고용 데이터 파일이 payload와 일치 (field_schema, sample_inputs)",
+      "pass": true,
+      "detail": {
+        "field_schema_matches": true,
+        "sample_inputs_match": true,
+        "fields": 24
+      }
+    },
+    {
+      "id": "P3",
+      "title": "data/sample_result.json의 점수·기여가 지금의 엔진 계산과 일치",
+      "pass": true,
+      "detail": {
+        "score": true,
+        "inputs": true,
+        "contributions": true,
+        "recommendation": true,
+        "case_id": "DEMO-001",
+        "analyzed_at": "2026-11-11T12:26:19.511Z"
+      }
+    },
+    {
+      "id": "P4",
+      "title": "독립 실행 HTML이 현재 소스·데이터와 일치",
+      "pass": true,
+      "detail": {
+        "html": "보험청구_관리자_대시보드.html",
+        "bytes": 186805,
+        "sources_embedded": {
+          "src/dashboard.css": true,
+          "src/engine.js": true,
+          "src/dashboard.js": true
+        },
+        "payload_embedded_equal": true,
+        "rebuild_check": "rebuild_from_payload.py --check 통과"
+      }
+    },
+    {
+      "id": "P5",
+      "title": "독립 실행 HTML이 외부 자원을 불러오지 않음 (정적 검사)",
+      "pass": true,
+      "detail": {
+        "found": [],
+        "urls_in_file": [
+          "http://www.w3.org/2000/svg"
+        ],
+        "note": "w3.org 주소는 SVG 네임스페이스 식별자이며 네트워크 요청이 아님"
+      }
+    },
+    {
+      "id": "V1",
+      "title": "평가 자료의 세 범위가 서로 다른 집계임을 확인 (폴드 200건 / 첫 반복 1,000건 / 15회 평균)",
+      "pass": true,
+      "detail": {
+        "fold": {
+          "rows": 200,
+          "fraud_labels": 50,
+          "top40_logistic": 24,
+          "top40_severity": 22
+        },
+        "first_repeat": [
+          {
+            "threshold": 0.1,
+            "total": 1000,
+            "fraud_labels": 247,
+            "selected_ok": true
+          },
+          {
+            "threshold": 0.2,
+            "total": 1000,
+            "fraud_labels": 247,
+            "selected_ok": true
+          },
+          {
+            "threshold": 0.5,
+            "total": 1000,
+            "fraud_labels": 247,
+            "selected_ok": true
+          }
+        ],
+        "mean_budgets_times_15_are_integers": true,
+        "note": "이 검사는 집계 범위와 산술 일관성만 확인한다. 모델 성능을 새로 검증하지 않는다."
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "python_parity_rows": 1000,
+  "modified_python_parity_cases": 6,
+  "invalid_cases_rejected": 12,
+  "max_probability_absolute_error": 2.7755575615628914e-16,
+  "max_explanation_reconstruction_error": 1.7763568394002505e-15,
+  "none_preserved": true,
+  "zero_preserved": true,
+  "threshold_uses_unrounded_score": true
+}

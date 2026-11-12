@@ -1,0 +1,3975 @@
+{
+  "model": {
+    "version": "ite351-logistic-preserve-none-v2",
+    "cols": [
+      "months_as_customer",
+      "policy_csl",
+      "policy_deductable",
+      "policy_annual_premium",
+      "umbrella_limit",
+      "insured_sex",
+      "insured_education_level",
+      "insured_occupation",
+      "insured_relationship",
+      "capital-gains",
+      "capital-loss",
+      "incident_type",
+      "collision_type",
+      "incident_severity",
+      "authorities_contacted",
+      "incident_hour_of_the_day",
+      "number_of_vehicles_involved",
+      "property_damage",
+      "bodily_injuries",
+      "witnesses",
+      "police_report_available",
+      "injury_claim",
+      "property_claim",
+      "vehicle_claim"
+    ],
+    "spec": {
+      "months_as_customer": {
+        "type": "number",
+        "median": 199.5,
+        "mean": 203.954,
+        "scale": 115.05560344459543,
+        "coef": 0.01353391324330229,
+        "reference": -1.0157347576891627e-18,
+        "min": 0.0,
+        "max": 479.0,
+        "integer": true
+      },
+      "policy_deductable": {
+        "type": "number",
+        "median": 1000.0,
+        "mean": 1136.0,
+        "scale": 611.5586643977829,
+        "coef": 0.06555040413404067,
+        "reference": -2.285334772333072e-17,
+        "min": 500.0,
+        "max": 2000.0,
+        "integer": true
+      },
+      "policy_annual_premium": {
+        "type": "number",
+        "median": 1257.1999999999998,
+        "mean": 1256.4061499999998,
+        "scale": 244.04528072773198,
+        "coef": -0.03951752031167352,
+        "reference": -3.234336795472994e-17,
+        "min": 433.33,
+        "max": 2047.59,
+        "integer": false
+      },
+      "umbrella_limit": {
+        "type": "number",
+        "median": 0.0,
+        "mean": 1101000.0,
+        "scale": 2296257.6074996465,
+        "coef": 0.21292030048513758,
+        "reference": 2.86030714210535e-17,
+        "min": -1000000.0,
+        "max": 10000000.0,
+        "integer": true
+      },
+      "capital-gains": {
+        "type": "number",
+        "median": 0.0,
+        "mean": 25126.1,
+        "scale": 27858.248128516618,
+        "coef": -0.04125072213105155,
+        "reference": -1.1632565379046215e-18,
+        "min": 0.0,
+        "max": 100500.0,
+        "integer": true
+      },
+      "capital-loss": {
+        "type": "number",
+        "median": -23250.0,
+        "mean": -26793.7,
+        "scale": 28090.04112332341,
+        "coef": -0.08643710905505617,
+        "reference": -1.330067535557731e-17,
+        "min": -111100.0,
+        "max": 0.0,
+        "integer": true
+      },
+      "incident_hour_of_the_day": {
+        "type": "number",
+        "median": 12.0,
+        "mean": 11.644,
+        "scale": 6.947896372284204,
+        "coef": -0.08716891448928507,
+        "reference": 4.606582148725079e-18,
+        "min": 0.0,
+        "max": 23.0,
+        "integer": true
+      },
+      "number_of_vehicles_involved": {
+        "type": "number",
+        "median": 1.0,
+        "mean": 1.839,
+        "scale": 1.0183707576320127,
+        "coef": 0.048480952242547413,
+        "reference": -6.66349407610608e-18,
+        "min": 1.0,
+        "max": 4.0,
+        "integer": true
+      },
+      "bodily_injuries": {
+        "type": "number",
+        "median": 1.0,
+        "mean": 0.992,
+        "scale": 0.8197170243443771,
+        "coef": 0.06550262121315638,
+        "reference": 9.628461415524986e-18,
+        "min": 0.0,
+        "max": 2.0,
+        "integer": true
+      },
+      "witnesses": {
+        "type": "number",
+        "median": 1.0,
+        "mean": 1.487,
+        "scale": 1.1107794560577722,
+        "coef": 0.09966835645749612,
+        "reference": -4.924107635371852e-17,
+        "min": 0.0,
+        "max": 3.0,
+        "integer": true
+      },
+      "injury_claim": {
+        "type": "number",
+        "median": 6775.0,
+        "mean": 7433.42,
+        "scale": 4878.510766986171,
+        "coef": -0.20896165521357662,
+        "reference": 3.61910703775758e-18,
+        "min": 0.0,
+        "max": 21450.0,
+        "integer": true
+      },
+      "property_claim": {
+        "type": "number",
+        "median": 6750.0,
+        "mean": 7399.57,
+        "scale": 4822.313212048757,
+        "coef": -0.06492010030597187,
+        "reference": -2.0469524394268756e-18,
+        "min": 0.0,
+        "max": 23670.0,
+        "integer": true
+      },
+      "vehicle_claim": {
+        "type": "number",
+        "median": 42100.0,
+        "mean": 37928.95,
+        "scale": 18876.807404789084,
+        "coef": 0.34674685604608874,
+        "reference": 5.2124442882651075e-17,
+        "min": 70.0,
+        "max": 79560.0,
+        "integer": true
+      },
+      "policy_csl": {
+        "type": "category",
+        "categories": [
+          "100/300",
+          "250/500",
+          "500/1000"
+        ],
+        "weights": {
+          "100/300": -0.03432405329278446,
+          "250/500": 0.11905979968082037,
+          "500/1000": -0.09255599868401336
+        },
+        "reference": 0.002044095483582163
+      },
+      "insured_sex": {
+        "type": "category",
+        "categories": [
+          "FEMALE",
+          "MALE"
+        ],
+        "weights": {
+          "FEMALE": -0.04284820516780927,
+          "MALE": 0.03502795287183844
+        },
+        "reference": -0.006791543995452381
+      },
+      "insured_education_level": {
+        "type": "category",
+        "categories": [
+          "Associate",
+          "College",
+          "High School",
+          "JD",
+          "MD",
+          "Masters",
+          "PhD"
+        ],
+        "weights": {
+          "Associate": -0.23916432440529975,
+          "College": 0.03658251162476736,
+          "High School": 0.00859715142504951,
+          "JD": 0.25719339867606367,
+          "MD": 0.07180067436520404,
+          "Masters": -0.17877781417909525,
+          "PhD": 0.035948150197333335
+        },
+        "reference": 0.0018355092499527598
+      },
+      "insured_occupation": {
+        "type": "category",
+        "categories": [
+          "adm-clerical",
+          "armed-forces",
+          "craft-repair",
+          "exec-managerial",
+          "farming-fishing",
+          "handlers-cleaners",
+          "machine-op-inspct",
+          "other-service",
+          "priv-house-serv",
+          "prof-specialty",
+          "protective-serv",
+          "sales",
+          "tech-support",
+          "transport-moving"
+        ],
+        "weights": {
+          "adm-clerical": -0.04449720373067674,
+          "armed-forces": 0.08085074339611124,
+          "craft-repair": 0.1745186930839717,
+          "exec-managerial": 0.44072296403742134,
+          "farming-fishing": 0.12824850525427203,
+          "handlers-cleaners": -0.4535558174118217,
+          "machine-op-inspct": -0.0038609809190841187,
+          "other-service": -0.5160599654977305,
+          "priv-house-serv": -0.16802154768971903,
+          "prof-specialty": -0.14975329568302223,
+          "protective-serv": -0.1277731892918059,
+          "sales": 0.2510488581402673,
+          "tech-support": 0.150461781672011,
+          "transport-moving": 0.22985020234383044
+        },
+        "reference": 0.009058215282742236
+      },
+      "insured_relationship": {
+        "type": "category",
+        "categories": [
+          "husband",
+          "not-in-family",
+          "other-relative",
+          "own-child",
+          "unmarried",
+          "wife"
+        ],
+        "weights": {
+          "husband": -0.3333411465136549,
+          "not-in-family": 0.2637770307059929,
+          "other-relative": 0.2273297221244248,
+          "own-child": -0.3461589119186832,
+          "unmarried": 0.0973842258197788,
+          "wife": 0.08318882748616531
+        },
+        "reference": -0.0072550675286299805
+      },
+      "incident_type": {
+        "type": "category",
+        "categories": [
+          "Multi-vehicle Collision",
+          "Parked Car",
+          "Single Vehicle Collision",
+          "Vehicle Theft"
+        ],
+        "weights": {
+          "Multi-vehicle Collision": -0.24974253411612612,
+          "Parked Car": 0.16871008041514962,
+          "Single Vehicle Collision": 0.016513921520622414,
+          "Vehicle Theft": 0.056698279884379206
+        },
+        "reference": -0.0784857263578418
+      },
+      "collision_type": {
+        "type": "category",
+        "categories": [
+          "Front Collision",
+          "Rear Collision",
+          "Side Collision",
+          "__MISSING__"
+        ],
+        "weights": {
+          "Front Collision": -0.13502464150553953,
+          "Rear Collision": 0.1813160120487315,
+          "Side Collision": -0.279519983138697,
+          "__MISSING__": 0.22540836029952838
+        },
+        "reference": -0.018376810637141777
+      },
+      "incident_severity": {
+        "type": "category",
+        "categories": [
+          "Major Damage",
+          "Minor Damage",
+          "Total Loss",
+          "Trivial Damage"
+        ],
+        "weights": {
+          "Major Damage": 2.0137422425063396,
+          "Minor Damage": -0.6112700671576022,
+          "Total Loss": -0.4143493585971862,
+          "Trivial Damage": -0.9959430690475259
+        },
+        "reference": 0.1337505585364691
+      },
+      "authorities_contacted": {
+        "type": "category",
+        "categories": [
+          "Ambulance",
+          "Fire",
+          "None",
+          "Other",
+          "Police"
+        ],
+        "weights": {
+          "Ambulance": 0.14374867545825717,
+          "Fire": -0.06599709947200895,
+          "None": -0.44384952905613384,
+          "Other": 0.308598598460475,
+          "Police": 0.04967910231343092
+        },
+        "reference": 0.04867590043414812
+      },
+      "property_damage": {
+        "type": "category",
+        "categories": [
+          "NO",
+          "YES",
+          "__MISSING__"
+        ],
+        "weights": {
+          "NO": -0.20735419643582764,
+          "YES": 0.0571380801144771,
+          "__MISSING__": 0.1423958640253747
+        },
+        "reference": -0.0015675071516027747
+      },
+      "police_report_available": {
+        "type": "category",
+        "categories": [
+          "NO",
+          "YES",
+          "__MISSING__"
+        ],
+        "weights": {
+          "NO": 0.10348586959451657,
+          "YES": -0.10694016178761293,
+          "__MISSING__": -0.004365960102883735
+        },
+        "reference": 0.000418918154319603
+      }
+    },
+    "intercept": -1.5623719854152536,
+    "base": -1.4790654439447082,
+    "cases": [
+      {
+        "id": 0,
+        "inputs": {
+          "months_as_customer": 328,
+          "policy_csl": "250/500",
+          "policy_deductable": 1000,
+          "policy_annual_premium": 1406.91,
+          "umbrella_limit": 0,
+          "insured_sex": "MALE",
+          "insured_education_level": "MD",
+          "insured_occupation": "craft-repair",
+          "insured_relationship": "husband",
+          "capital-gains": 53300,
+          "capital-loss": 0,
+          "incident_type": "Single Vehicle Collision",
+          "collision_type": "Side Collision",
+          "incident_severity": "Major Damage",
+          "authorities_contacted": "Police",
+          "incident_hour_of_the_day": 5,
+          "number_of_vehicles_involved": 1,
+          "property_damage": "YES",
+          "bodily_injuries": 1,
+          "witnesses": 2,
+          "police_report_available": "YES",
+          "injury_claim": 6510,
+          "property_claim": 13020,
+          "vehicle_claim": 52080
+        }
+      },
+      {
+        "id": 1,
+        "inputs": {
+          "months_as_customer": 228,
+          "policy_csl": "250/500",
+          "policy_deductable": 2000,
+          "policy_annual_premium": 1197.22,
+          "umbrella_limit": 5000000,
+          "insured_sex": "MALE",
+          "insured_education_level": "MD",
+          "insured_occupation": "machine-op-inspct",
+          "insured_relationship": "other-relative",
+          "capital-gains": 0,
+          "capital-loss": 0,
+          "incident_type": "Vehicle Theft",
+          "collision_type": null,
+          "incident_severity": "Minor Damage",
+          "authorities_contacted": "Police",
+          "incident_hour_of_the_day": 8,
+          "number_of_vehicles_involved": 1,
+          "property_damage": null,
+          "bodily_injuries": 0,
+          "witnesses": 0,
+          "police_report_available": null,
+          "injury_claim": 780,
+          "property_claim": 780,
+          "vehicle_claim": 3510
+        }
+      },
+      {
+        "id": 2,
+        "inputs": {
+          "months_as_customer": 134,
+          "policy_csl": "100/300",
+          "policy_deductable": 2000,
+          "policy_annual_premium": 1413.14,
+          "umbrella_limit": 5000000,
+          "insured_sex": "FEMALE",
+          "insured_education_level": "PhD",
+          "insured_occupation": "sales",
+          "insured_relationship": "own-child",
+          "capital-gains": 35100,
+          "capital-loss": 0,
+          "incident_type": "Multi-vehicle Collision",
+          "collision_type": "Rear Collision",
+          "incident_severity": "Minor Damage",
+          "authorities_contacted": "Police",
+          "incident_hour_of_the_day": 7,
+          "number_of_vehicles_involved": 3,
+          "property_damage": "NO",
+          "bodily_injuries": 2,
+          "witnesses": 3,
+          "police_report_available": "NO",
+          "injury_claim": 7700,
+          "property_claim": 3850,
+          "vehicle_claim": 23100
+        }
+      },
+      {
+        "id": 10,
+        "inputs": {
+          "months_as_customer": 235,
+          "policy_csl": "100/300",
+          "policy_deductable": 500,
+          "policy_annual_premium": 1253.12,
+          "umbrella_limit": 4000000,
+          "insured_sex": "FEMALE",
+          "insured_education_level": "Masters",
+          "insured_occupation": "exec-managerial",
+          "insured_relationship": "other-relative",
+          "capital-gains": 38400,
+          "capital-loss": 0,
+          "incident_type": "Single Vehicle Collision",
+          "collision_type": "Front Collision",
+          "incident_severity": "Total Loss",
+          "authorities_contacted": "Police",
+          "incident_hour_of_the_day": 22,
+          "number_of_vehicles_involved": 1,
+          "property_damage": "YES",
+          "bodily_injuries": 2,
+          "witnesses": 2,
+          "police_report_available": null,
+          "injury_claim": 7910,
+          "property_claim": 15820,
+          "vehicle_claim": 63280
+        }
+      },
+      {
+        "id": 25,
+        "inputs": {
+          "months_as_customer": 8,
+          "policy_csl": "100/300",
+          "policy_deductable": 2000,
+          "policy_annual_premium": 1266.92,
+          "umbrella_limit": 0,
+          "insured_sex": "MALE",
+          "insured_education_level": "Masters",
+          "insured_occupation": "sales",
+          "insured_relationship": "own-child",
+          "capital-gains": 0,
+          "capital-loss": 0,
+          "incident_type": "Multi-vehicle Collision",
+          "collision_type": "Rear Collision",
+          "incident_severity": "Major Damage",
+          "authorities_contacted": "Other",
+          "incident_hour_of_the_day": 16,
+          "number_of_vehicles_involved": 3,
+          "property_damage": "NO",
+          "bodily_injuries": 1,
+          "witnesses": 3,
+          "police_report_available": "YES",
+          "injury_claim": 16500,
+          "property_claim": 11000,
+          "vehicle_claim": 44000
+        }
+      }
+    ]
+  },
+  "fields": [
+    {
+      "name": "incident_type",
+      "label": "사고 유형",
+      "group": "accident",
+      "hint": "사고가 발생한 형태입니다.",
+      "unit": "",
+      "required": true,
+      "type": "category",
+      "options": [
+        {
+          "value": "Multi-vehicle Collision",
+          "label": "다중 차량 충돌"
+        },
+        {
+          "value": "Parked Car",
+          "label": "주차 차량 사고"
+        },
+        {
+          "value": "Single Vehicle Collision",
+          "label": "단독 차량 충돌"
+        },
+        {
+          "value": "Vehicle Theft",
+          "label": "차량 도난"
+        }
+      ]
+    },
+    {
+      "name": "incident_severity",
+      "label": "피해 정도",
+      "group": "accident",
+      "hint": "기록에 기재된 피해 구분입니다. 모델의 중요한 입력입니다.",
+      "unit": "",
+      "required": true,
+      "type": "category",
+      "options": [
+        {
+          "value": "Major Damage",
+          "label": "큰 손상"
+        },
+        {
+          "value": "Minor Damage",
+          "label": "경미한 손상"
+        },
+        {
+          "value": "Total Loss",
+          "label": "전손"
+        },
+        {
+          "value": "Trivial Damage",
+          "label": "아주 작은 손상"
+        }
+      ]
+    },
+    {
+      "name": "collision_type",
+      "label": "충돌 방향",
+      "group": "accident",
+      "hint": "알 수 없으면 미상을 선택합니다. 해당 없음을 임의의 새 범주로 추가하지 않습니다.",
+      "unit": "",
+      "required": false,
+      "type": "category",
+      "options": [
+        {
+          "value": "Front Collision",
+          "label": "전면 충돌"
+        },
+        {
+          "value": "Rear Collision",
+          "label": "후면 충돌"
+        },
+        {
+          "value": "Side Collision",
+          "label": "측면 충돌"
+        },
+        {
+          "value": "__MISSING__",
+          "label": "미상 (모름)"
+        }
+      ]
+    },
+    {
+      "name": "incident_hour_of_the_day",
+      "label": "사고 시각",
+      "group": "accident",
+      "hint": "시간만 입력합니다. 오후 5시는 17입니다.",
+      "unit": "시",
+      "required": false,
+      "type": "number",
+      "integer": true,
+      "min": 0,
+      "max": 23
+    },
+    {
+      "name": "number_of_vehicles_involved",
+      "label": "관련 차량 수",
+      "group": "accident",
+      "hint": "사고에 관련된 차량의 수입니다.",
+      "unit": "대",
+      "required": true,
+      "type": "number",
+      "integer": true,
+      "min": 1,
+      "max": null
+    },
+    {
+      "name": "authorities_contacted",
+      "label": "연락한 기관",
+      "group": "accident",
+      "hint": "연락한 기관 없음은 정보가 누락됐다는 뜻과 다릅니다.",
+      "unit": "",
+      "required": true,
+      "type": "category",
+      "options": [
+        {
+          "value": "Ambulance",
+          "label": "구급"
+        },
+        {
+          "value": "Fire",
+          "label": "소방"
+        },
+        {
+          "value": "None",
+          "label": "연락한 기관 없음"
+        },
+        {
+          "value": "Other",
+          "label": "기타 기관"
+        },
+        {
+          "value": "Police",
+          "label": "경찰"
+        }
+      ]
+    },
+    {
+      "name": "bodily_injuries",
+      "label": "부상자 수",
+      "group": "evidence",
+      "hint": "기록에 기재된 부상자 수입니다.",
+      "unit": "명",
+      "required": false,
+      "type": "number",
+      "integer": true,
+      "min": 0,
+      "max": null
+    },
+    {
+      "name": "witnesses",
+      "label": "목격자 수",
+      "group": "evidence",
+      "hint": "목격자 수입니다. 0은 없음, 빈칸은 모름입니다.",
+      "unit": "명",
+      "required": false,
+      "type": "number",
+      "integer": true,
+      "min": 0,
+      "max": null
+    },
+    {
+      "name": "property_damage",
+      "label": "재물 피해 여부",
+      "group": "evidence",
+      "hint": "재물 피해 유무가 확인되지 않았다면 미상을 선택합니다.",
+      "unit": "",
+      "required": false,
+      "type": "category",
+      "options": [
+        {
+          "value": "NO",
+          "label": "없음"
+        },
+        {
+          "value": "YES",
+          "label": "있음"
+        },
+        {
+          "value": "__MISSING__",
+          "label": "미상 (모름)"
+        }
+      ]
+    },
+    {
+      "name": "police_report_available",
+      "label": "경찰 보고서 확보",
+      "group": "evidence",
+      "hint": "경찰 보고서가 있는지에 대한 기록입니다.",
+      "unit": "",
+      "required": false,
+      "type": "category",
+      "options": [
+        {
+          "value": "NO",
+          "label": "없음"
+        },
+        {
+          "value": "YES",
+          "label": "있음"
+        },
+        {
+          "value": "__MISSING__",
+          "label": "미상 (모름)"
+        }
+      ]
+    },
+    {
+      "name": "injury_claim",
+      "label": "상해 청구액",
+      "group": "claim",
+      "hint": "인적 피해와 관련한 청구금액입니다.",
+      "unit": "원본 단위",
+      "required": true,
+      "type": "number",
+      "integer": false,
+      "min": 0,
+      "max": null
+    },
+    {
+      "name": "property_claim",
+      "label": "재물 청구액",
+      "group": "claim",
+      "hint": "재물 피해와 관련한 청구금액입니다.",
+      "unit": "원본 단위",
+      "required": true,
+      "type": "number",
+      "integer": false,
+      "min": 0,
+      "max": null
+    },
+    {
+      "name": "vehicle_claim",
+      "label": "차량 청구액",
+      "group": "claim",
+      "hint": "차량 피해와 관련한 청구금액입니다.",
+      "unit": "원본 단위",
+      "required": true,
+      "type": "number",
+      "integer": false,
+      "min": 0,
+      "max": null
+    },
+    {
+      "name": "months_as_customer",
+      "label": "가입 기간",
+      "group": "policy",
+      "hint": "고객으로 등록된 기간입니다.",
+      "unit": "개월",
+      "required": false,
+      "type": "number",
+      "integer": true,
+      "min": 0,
+      "max": null
+    },
+    {
+      "name": "policy_csl",
+      "label": "보장한도 구분",
+      "group": "policy",
+      "hint": "원본 데이터의 계약 보장한도 범주를 사용합니다.",
+      "unit": "",
+      "required": true,
+      "type": "category",
+      "options": [
+        {
+          "value": "100/300",
+          "label": "100/300"
+        },
+        {
+          "value": "250/500",
+          "label": "250/500"
+        },
+        {
+          "value": "500/1000",
+          "label": "500/1000"
+        }
+      ]
+    },
+    {
+      "name": "policy_deductable",
+      "label": "자기부담금",
+      "group": "policy",
+      "hint": "계약에 정해진 자기부담금입니다.",
+      "unit": "원본 단위",
+      "required": false,
+      "type": "number",
+      "integer": false,
+      "min": 0,
+      "max": null
+    },
+    {
+      "name": "policy_annual_premium",
+      "label": "연간 보험료",
+      "group": "policy",
+      "hint": "소수점도 입력할 수 있습니다.",
+      "unit": "원본 단위",
+      "required": false,
+      "type": "number",
+      "integer": false,
+      "min": 0,
+      "max": null
+    },
+    {
+      "name": "umbrella_limit",
+      "label": "추가 보장한도",
+      "group": "policy",
+      "hint": "추가 보장한도입니다. 0은 추가 한도가 없다는 값입니다.",
+      "unit": "원본 단위",
+      "required": false,
+      "type": "number",
+      "integer": false,
+      "min": 0,
+      "max": null
+    },
+    {
+      "name": "insured_sex",
+      "label": "성별",
+      "group": "profile",
+      "hint": "현재 분석 모델에 포함된 원본 항목입니다.",
+      "unit": "",
+      "required": true,
+      "type": "category",
+      "options": [
+        {
+          "value": "FEMALE",
+          "label": "여성"
+        },
+        {
+          "value": "MALE",
+          "label": "남성"
+        }
+      ]
+    },
+    {
+      "name": "insured_education_level",
+      "label": "학력 구분",
+      "group": "profile",
+      "hint": "원본에 기록된 학력 범주를 선택합니다.",
+      "unit": "",
+      "required": true,
+      "type": "category",
+      "options": [
+        {
+          "value": "Associate",
+          "label": "준학사"
+        },
+        {
+          "value": "College",
+          "label": "대학"
+        },
+        {
+          "value": "High School",
+          "label": "고등학교"
+        },
+        {
+          "value": "JD",
+          "label": "법학 전문학위 (JD)"
+        },
+        {
+          "value": "MD",
+          "label": "의학 전문학위 (MD)"
+        },
+        {
+          "value": "Masters",
+          "label": "석사"
+        },
+        {
+          "value": "PhD",
+          "label": "박사"
+        }
+      ]
+    },
+    {
+      "name": "insured_occupation",
+      "label": "직업 구분",
+      "group": "profile",
+      "hint": "원본에 기록된 직업 범주를 선택합니다.",
+      "unit": "",
+      "required": true,
+      "type": "category",
+      "options": [
+        {
+          "value": "adm-clerical",
+          "label": "사무 / 행정"
+        },
+        {
+          "value": "armed-forces",
+          "label": "군인"
+        },
+        {
+          "value": "craft-repair",
+          "label": "기능 / 수리"
+        },
+        {
+          "value": "exec-managerial",
+          "label": "경영 / 관리"
+        },
+        {
+          "value": "farming-fishing",
+          "label": "농림 / 어업"
+        },
+        {
+          "value": "handlers-cleaners",
+          "label": "운반 / 청소"
+        },
+        {
+          "value": "machine-op-inspct",
+          "label": "기계 조작 / 검사"
+        },
+        {
+          "value": "other-service",
+          "label": "기타 서비스"
+        },
+        {
+          "value": "priv-house-serv",
+          "label": "가사 서비스"
+        },
+        {
+          "value": "prof-specialty",
+          "label": "전문직"
+        },
+        {
+          "value": "protective-serv",
+          "label": "보안 / 보호"
+        },
+        {
+          "value": "sales",
+          "label": "판매"
+        },
+        {
+          "value": "tech-support",
+          "label": "기술 지원"
+        },
+        {
+          "value": "transport-moving",
+          "label": "운송"
+        }
+      ]
+    },
+    {
+      "name": "insured_relationship",
+      "label": "가구 내 관계",
+      "group": "profile",
+      "hint": "원본에 기록된 가구 내 관계 범주입니다.",
+      "unit": "",
+      "required": true,
+      "type": "category",
+      "options": [
+        {
+          "value": "husband",
+          "label": "남편"
+        },
+        {
+          "value": "not-in-family",
+          "label": "가족 외 구성원"
+        },
+        {
+          "value": "other-relative",
+          "label": "기타 친척"
+        },
+        {
+          "value": "own-child",
+          "label": "자녀"
+        },
+        {
+          "value": "unmarried",
+          "label": "미혼"
+        },
+        {
+          "value": "wife",
+          "label": "아내"
+        }
+      ]
+    },
+    {
+      "name": "capital-gains",
+      "label": "자본 이익",
+      "group": "profile",
+      "hint": "이익이 없으면 0, 모르면 빈칸입니다.",
+      "unit": "원본 단위",
+      "required": false,
+      "type": "number",
+      "integer": false,
+      "min": 0,
+      "max": null
+    },
+    {
+      "name": "capital-loss",
+      "label": "자본 손실",
+      "group": "profile",
+      "hint": "원본 데이터처럼 손실을 음수로 입력합니다. 손실이 없으면 0입니다.",
+      "unit": "원본 단위",
+      "required": false,
+      "type": "number",
+      "integer": false,
+      "min": null,
+      "max": 0
+    }
+  ],
+  "groups": [
+    {
+      "id": "accident",
+      "label": "사고 정보",
+      "description": "사고 유형과 피해 내용을 확인합니다.",
+      "open": true
+    },
+    {
+      "id": "claim",
+      "label": "청구금액",
+      "description": "금액은 예시 데이터의 원래 단위입니다. 원화로 해석하지 않습니다.",
+      "open": true
+    },
+    {
+      "id": "evidence",
+      "label": "현장 및 증빙 정보",
+      "description": "없음과 미상을 구분해 입력합니다.",
+      "open": false
+    },
+    {
+      "id": "policy",
+      "label": "계약 정보",
+      "description": "현재 모델이 사용하는 계약 관련 항목입니다.",
+      "open": false
+    },
+    {
+      "id": "profile",
+      "label": "기타 모델 입력",
+      "description": "기존 분석 모델과 입력을 맞추기 위해 사용하는 항목입니다.",
+      "open": false
+    }
+  ],
+  "labels": {
+    "Single Vehicle Collision": "단독 차량 충돌",
+    "Multi-vehicle Collision": "다중 차량 충돌",
+    "Vehicle Theft": "차량 도난",
+    "Parked Car": "주차 차량 사고",
+    "Major Damage": "큰 손상",
+    "Minor Damage": "경미한 손상",
+    "Total Loss": "전손",
+    "Trivial Damage": "아주 작은 손상",
+    "Side Collision": "측면 충돌",
+    "Front Collision": "전면 충돌",
+    "Rear Collision": "후면 충돌",
+    "__MISSING__": "미상 (모름)",
+    "YES": "있음",
+    "NO": "없음",
+    "None": "연락한 기관 없음",
+    "Police": "경찰",
+    "Fire": "소방",
+    "Ambulance": "구급",
+    "Other": "기타 기관",
+    "MALE": "남성",
+    "FEMALE": "여성",
+    "Associate": "준학사",
+    "College": "대학",
+    "High School": "고등학교",
+    "JD": "법학 전문학위 (JD)",
+    "MD": "의학 전문학위 (MD)",
+    "Masters": "석사",
+    "PhD": "박사",
+    "adm-clerical": "사무 / 행정",
+    "armed-forces": "군인",
+    "craft-repair": "기능 / 수리",
+    "exec-managerial": "경영 / 관리",
+    "farming-fishing": "농림 / 어업",
+    "handlers-cleaners": "운반 / 청소",
+    "machine-op-inspct": "기계 조작 / 검사",
+    "other-service": "기타 서비스",
+    "priv-house-serv": "가사 서비스",
+    "prof-specialty": "전문직",
+    "protective-serv": "보안 / 보호",
+    "sales": "판매",
+    "tech-support": "기술 지원",
+    "transport-moving": "운송",
+    "husband": "남편",
+    "wife": "아내",
+    "own-child": "자녀",
+    "other-relative": "기타 친척",
+    "not-in-family": "가족 외 구성원",
+    "unmarried": "미혼"
+  },
+  "cases": [
+    {
+      "id": "DEMO-001",
+      "source_row": 0,
+      "title": "큰 손상 / 단독 충돌",
+      "note": "기본 시연 예시입니다. 피해 정도를 바꾸고 재분석해 보세요.",
+      "inputs": {
+        "months_as_customer": 328,
+        "policy_csl": "250/500",
+        "policy_deductable": 1000,
+        "policy_annual_premium": 1406.91,
+        "umbrella_limit": 0,
+        "insured_sex": "MALE",
+        "insured_education_level": "MD",
+        "insured_occupation": "craft-repair",
+        "insured_relationship": "husband",
+        "capital-gains": 53300,
+        "capital-loss": 0,
+        "incident_type": "Single Vehicle Collision",
+        "collision_type": "Side Collision",
+        "incident_severity": "Major Damage",
+        "authorities_contacted": "Police",
+        "incident_hour_of_the_day": 5,
+        "number_of_vehicles_involved": 1,
+        "property_damage": "YES",
+        "bodily_injuries": 1,
+        "witnesses": 2,
+        "police_report_available": "YES",
+        "injury_claim": 6510,
+        "property_claim": 13020,
+        "vehicle_claim": 52080
+      },
+      "expected_score": 57.898465222028996
+    },
+    {
+      "id": "DEMO-002",
+      "source_row": 1,
+      "title": "미상 정보가 있는 청구",
+      "note": "충돌 방향, 재물 피해, 경찰 보고서가 미상인 입력입니다.",
+      "inputs": {
+        "months_as_customer": 228,
+        "policy_csl": "250/500",
+        "policy_deductable": 2000,
+        "policy_annual_premium": 1197.22,
+        "umbrella_limit": 5000000,
+        "insured_sex": "MALE",
+        "insured_education_level": "MD",
+        "insured_occupation": "machine-op-inspct",
+        "insured_relationship": "other-relative",
+        "capital-gains": 0,
+        "capital-loss": 0,
+        "incident_type": "Vehicle Theft",
+        "collision_type": null,
+        "incident_severity": "Minor Damage",
+        "authorities_contacted": "Police",
+        "incident_hour_of_the_day": 8,
+        "number_of_vehicles_involved": 1,
+        "property_damage": null,
+        "bodily_injuries": 0,
+        "witnesses": 0,
+        "police_report_available": null,
+        "injury_claim": 780,
+        "property_claim": 780,
+        "vehicle_claim": 3510
+      },
+      "expected_score": 21.446581502379676
+    },
+    {
+      "id": "DEMO-003",
+      "source_row": 2,
+      "title": "10점과 20점 비교",
+      "note": "검토 기준을 바꿔도 모델 점수는 그대로인 것을 확인합니다.",
+      "inputs": {
+        "months_as_customer": 134,
+        "policy_csl": "100/300",
+        "policy_deductable": 2000,
+        "policy_annual_premium": 1413.14,
+        "umbrella_limit": 5000000,
+        "insured_sex": "FEMALE",
+        "insured_education_level": "PhD",
+        "insured_occupation": "sales",
+        "insured_relationship": "own-child",
+        "capital-gains": 35100,
+        "capital-loss": 0,
+        "incident_type": "Multi-vehicle Collision",
+        "collision_type": "Rear Collision",
+        "incident_severity": "Minor Damage",
+        "authorities_contacted": "Police",
+        "incident_hour_of_the_day": 7,
+        "number_of_vehicles_involved": 3,
+        "property_damage": "NO",
+        "bodily_injuries": 2,
+        "witnesses": 3,
+        "police_report_available": "NO",
+        "injury_claim": 7700,
+        "property_claim": 3850,
+        "vehicle_claim": 23100
+      },
+      "expected_score": 11.758962782749283
+    },
+    {
+      "id": "DEMO-004",
+      "source_row": 4,
+      "title": "낮은 점수 예시",
+      "note": "낮은 점수도 정상 확정을 뜻하지 않습니다.",
+      "inputs": {
+        "months_as_customer": 228,
+        "policy_csl": "500/1000",
+        "policy_deductable": 1000,
+        "policy_annual_premium": 1583.91,
+        "umbrella_limit": 6000000,
+        "insured_sex": "MALE",
+        "insured_education_level": "Associate",
+        "insured_occupation": "sales",
+        "insured_relationship": "unmarried",
+        "capital-gains": 66000,
+        "capital-loss": -46000,
+        "incident_type": "Vehicle Theft",
+        "collision_type": null,
+        "incident_severity": "Minor Damage",
+        "authorities_contacted": "None",
+        "incident_hour_of_the_day": 20,
+        "number_of_vehicles_involved": 1,
+        "property_damage": "NO",
+        "bodily_injuries": 0,
+        "witnesses": 1,
+        "police_report_available": "NO",
+        "injury_claim": 1300,
+        "property_claim": 650,
+        "vehicle_claim": 4550
+      },
+      "expected_score": 7.400354058299581
+    },
+    {
+      "id": "DEMO-005",
+      "source_row": 10,
+      "title": "전손 / 다중 차량 충돌",
+      "note": "서로 다른 사고 유형과 청구금액의 결과를 비교합니다.",
+      "inputs": {
+        "months_as_customer": 235,
+        "policy_csl": "100/300",
+        "policy_deductable": 500,
+        "policy_annual_premium": 1253.12,
+        "umbrella_limit": 4000000,
+        "insured_sex": "FEMALE",
+        "insured_education_level": "Masters",
+        "insured_occupation": "exec-managerial",
+        "insured_relationship": "other-relative",
+        "capital-gains": 38400,
+        "capital-loss": 0,
+        "incident_type": "Single Vehicle Collision",
+        "collision_type": "Front Collision",
+        "incident_severity": "Total Loss",
+        "authorities_contacted": "Police",
+        "incident_hour_of_the_day": 22,
+        "number_of_vehicles_involved": 1,
+        "property_damage": "YES",
+        "bodily_injuries": 2,
+        "witnesses": 2,
+        "police_report_available": null,
+        "injury_claim": 7910,
+        "property_claim": 15820,
+        "vehicle_claim": 63280
+      },
+      "expected_score": 23.3375298280332
+    }
+  ],
+  "evaluation": {
+    "n": 200,
+    "frauds": 50,
+    "fold": 0,
+    "rows": [
+      {
+        "id": 0,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.5308915753713418,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 31,
+          "Severity": 52
+        }
+      },
+      {
+        "id": 1,
+        "label": 1,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.18053648137415382,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 89,
+          "Severity": 149
+        }
+      },
+      {
+        "id": 9,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.23483950383409374,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 75,
+          "Severity": 112
+        }
+      },
+      {
+        "id": 25,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.4310823158113055,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 50,
+          "Severity": 47
+        }
+      },
+      {
+        "id": 32,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.06359358006726384,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 158,
+          "Severity": 66
+        }
+      },
+      {
+        "id": 42,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.03362422740346195,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 188,
+          "Severity": 183
+        }
+      },
+      {
+        "id": 52,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.10669702688506298,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 127,
+          "Severity": 169
+        }
+      },
+      {
+        "id": 57,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.020625645718117213,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 199,
+          "Severity": 172
+        }
+      },
+      {
+        "id": 61,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.05189459340765979,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 167,
+          "Severity": 69
+        }
+      },
+      {
+        "id": 63,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.479423969191282,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 41,
+          "Severity": 29
+        }
+      },
+      {
+        "id": 65,
+        "label": 1,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.11627232768646956,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 118,
+          "Severity": 142
+        }
+      },
+      {
+        "id": 68,
+        "label": 0,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.4570616446064851,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 45,
+          "Severity": 60
+        }
+      },
+      {
+        "id": 70,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.3960169395821084,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 52,
+          "Severity": 44
+        }
+      },
+      {
+        "id": 72,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.10904254010836803,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 125,
+          "Severity": 175
+        }
+      },
+      {
+        "id": 77,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.14435840816482137,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 104,
+          "Severity": 89
+        }
+      },
+      {
+        "id": 78,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.09906712544793904,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 131,
+          "Severity": 131
+        }
+      },
+      {
+        "id": 86,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.03606130958832585,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 187,
+          "Severity": 156
+        }
+      },
+      {
+        "id": 96,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.49085711349891636,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 37,
+          "Severity": 3
+        }
+      },
+      {
+        "id": 97,
+        "label": 1,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.1104824181947463,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 124,
+          "Severity": 177
+        }
+      },
+      {
+        "id": 101,
+        "label": 0,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.4833436662372979,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 39,
+          "Severity": 42
+        }
+      },
+      {
+        "id": 110,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.19149730041369648,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 86,
+          "Severity": 168
+        }
+      },
+      {
+        "id": 115,
+        "label": 1,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.2029943041077671,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 83,
+          "Severity": 85
+        }
+      },
+      {
+        "id": 116,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.08477584464183141,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 142,
+          "Severity": 182
+        }
+      },
+      {
+        "id": 121,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.4392758300343439,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 49,
+          "Severity": 58
+        }
+      },
+      {
+        "id": 125,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.43960342205330816,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 48,
+          "Severity": 108
+        }
+      },
+      {
+        "id": 133,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.09061495975727486,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 135,
+          "Severity": 74
+        }
+      },
+      {
+        "id": 135,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.8027652259457791,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 5,
+          "Severity": 32
+        }
+      },
+      {
+        "id": 138,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.11740648451842321,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 117,
+          "Severity": 119
+        }
+      },
+      {
+        "id": 139,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.050093767282865506,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 170,
+          "Severity": 71
+        }
+      },
+      {
+        "id": 142,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.03185212168885041,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 191,
+          "Severity": 163
+        }
+      },
+      {
+        "id": 144,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.21180777315222235,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 80,
+          "Severity": 103
+        }
+      },
+      {
+        "id": 149,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.7086495114904671,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 16,
+          "Severity": 63
+        }
+      },
+      {
+        "id": 150,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.1286126778821807,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 111,
+          "Severity": 83
+        }
+      },
+      {
+        "id": 151,
+        "label": 0,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.5090580579787443,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 34,
+          "Severity": 25
+        }
+      },
+      {
+        "id": 158,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.06508410258772744,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 157,
+          "Severity": 91
+        }
+      },
+      {
+        "id": 160,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.0907321408564044,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 133,
+          "Severity": 129
+        }
+      },
+      {
+        "id": 163,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.5299305608164423,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 32,
+          "Severity": 7
+        }
+      },
+      {
+        "id": 170,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.04909056372007667,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 174,
+          "Severity": 150
+        }
+      },
+      {
+        "id": 172,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.2279207419325213,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 77,
+          "Severity": 77
+        }
+      },
+      {
+        "id": 174,
+        "label": 0,
+        "severity": "Trivial Damage",
+        "scores": {
+          "Logistic": 0.04637838822985122,
+          "Severity": 0.08038237310898708
+        },
+        "ranks": {
+          "Logistic": 179,
+          "Severity": 194
+        }
+      },
+      {
+        "id": 176,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.0876767497534629,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 138,
+          "Severity": 148
+        }
+      },
+      {
+        "id": 180,
+        "label": 0,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.21418420709748667,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 79,
+          "Severity": 55
+        }
+      },
+      {
+        "id": 187,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.1674619834639965,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 95,
+          "Severity": 164
+        }
+      },
+      {
+        "id": 193,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.04031086621196971,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 186,
+          "Severity": 140
+        }
+      },
+      {
+        "id": 195,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.052217877402771604,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 165,
+          "Severity": 110
+        }
+      },
+      {
+        "id": 209,
+        "label": 0,
+        "severity": "Trivial Damage",
+        "scores": {
+          "Logistic": 0.07697601451054226,
+          "Severity": 0.08038237310898708
+        },
+        "ranks": {
+          "Logistic": 149,
+          "Severity": 197
+        }
+      },
+      {
+        "id": 221,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.029242690437334667,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 195,
+          "Severity": 145
+        }
+      },
+      {
+        "id": 229,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.2438386401225975,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 73,
+          "Severity": 136
+        }
+      },
+      {
+        "id": 239,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.031320662352304685,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 192,
+          "Severity": 162
+        }
+      },
+      {
+        "id": 249,
+        "label": 0,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.8296215585188671,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 4,
+          "Severity": 8
+        }
+      },
+      {
+        "id": 255,
+        "label": 0,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.4511908323810407,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 46,
+          "Severity": 16
+        }
+      },
+      {
+        "id": 258,
+        "label": 0,
+        "severity": "Trivial Damage",
+        "scores": {
+          "Logistic": 0.05117507216985719,
+          "Severity": 0.08038237310898708
+        },
+        "ranks": {
+          "Logistic": 168,
+          "Severity": 185
+        }
+      },
+      {
+        "id": 260,
+        "label": 0,
+        "severity": "Trivial Damage",
+        "scores": {
+          "Logistic": 0.04107116305782259,
+          "Severity": 0.08038237310898708
+        },
+        "ranks": {
+          "Logistic": 185,
+          "Severity": 196
+        }
+      },
+      {
+        "id": 262,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.7071974123144738,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 17,
+          "Severity": 45
+        }
+      },
+      {
+        "id": 264,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.05191933737883762,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 166,
+          "Severity": 165
+        }
+      },
+      {
+        "id": 265,
+        "label": 0,
+        "severity": "Trivial Damage",
+        "scores": {
+          "Logistic": 0.0425011404497419,
+          "Severity": 0.08038237310898708
+        },
+        "ranks": {
+          "Logistic": 183,
+          "Severity": 195
+        }
+      },
+      {
+        "id": 268,
+        "label": 0,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.6849783043087165,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 18,
+          "Severity": 30
+        }
+      },
+      {
+        "id": 278,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.576646219695075,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 26,
+          "Severity": 39
+        }
+      },
+      {
+        "id": 290,
+        "label": 0,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.4864944626577024,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 38,
+          "Severity": 9
+        }
+      },
+      {
+        "id": 296,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.14410733608183546,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 105,
+          "Severity": 126
+        }
+      },
+      {
+        "id": 299,
+        "label": 0,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.7435700328504028,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 12,
+          "Severity": 46
+        }
+      },
+      {
+        "id": 311,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.7137178455688759,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 15,
+          "Severity": 33
+        }
+      },
+      {
+        "id": 319,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.3685903304853133,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 55,
+          "Severity": 38
+        }
+      },
+      {
+        "id": 323,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.09061351024746873,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 136,
+          "Severity": 106
+        }
+      },
+      {
+        "id": 324,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.82974756368484,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 3,
+          "Severity": 43
+        }
+      },
+      {
+        "id": 328,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.35163100503414957,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 57,
+          "Severity": 35
+        }
+      },
+      {
+        "id": 329,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.44337632992794584,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 47,
+          "Severity": 37
+        }
+      },
+      {
+        "id": 340,
+        "label": 1,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.13086116284615126,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 110,
+          "Severity": 80
+        }
+      },
+      {
+        "id": 348,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.11334170576040123,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 122,
+          "Severity": 64
+        }
+      },
+      {
+        "id": 354,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.04603063828323248,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 180,
+          "Severity": 147
+        }
+      },
+      {
+        "id": 359,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.09200409577570037,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 132,
+          "Severity": 76
+        }
+      },
+      {
+        "id": 364,
+        "label": 1,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.04737832545123434,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 177,
+          "Severity": 146
+        }
+      },
+      {
+        "id": 375,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.1667696458962739,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 96,
+          "Severity": 111
+        }
+      },
+      {
+        "id": 382,
+        "label": 1,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.25080008290051226,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 69,
+          "Severity": 132
+        }
+      },
+      {
+        "id": 395,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.07051443171778779,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 151,
+          "Severity": 121
+        }
+      },
+      {
+        "id": 396,
+        "label": 0,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.7456873217899855,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 11,
+          "Severity": 20
+        }
+      },
+      {
+        "id": 397,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.0671248772558339,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 155,
+          "Severity": 138
+        }
+      },
+      {
+        "id": 405,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.24438820749400367,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 71,
+          "Severity": 99
+        }
+      },
+      {
+        "id": 406,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.08235841017955643,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 146,
+          "Severity": 157
+        }
+      },
+      {
+        "id": 408,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.24490594606797328,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 70,
+          "Severity": 171
+        }
+      },
+      {
+        "id": 416,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.23171618020682344,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 76,
+          "Severity": 100
+        }
+      },
+      {
+        "id": 418,
+        "label": 0,
+        "severity": "Trivial Damage",
+        "scores": {
+          "Logistic": 0.08443332216599536,
+          "Severity": 0.08038237310898708
+        },
+        "ranks": {
+          "Logistic": 143,
+          "Severity": 189
+        }
+      },
+      {
+        "id": 419,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.12022835377000012,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 115,
+          "Severity": 174
+        }
+      },
+      {
+        "id": 423,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.04909909256969956,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 173,
+          "Severity": 128
+        }
+      },
+      {
+        "id": 424,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.314530422332803,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 64,
+          "Severity": 2
+        }
+      },
+      {
+        "id": 425,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.5455033966405778,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 28,
+          "Severity": 5
+        }
+      },
+      {
+        "id": 432,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.5238041745150532,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 33,
+          "Severity": 50
+        }
+      },
+      {
+        "id": 434,
+        "label": 0,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.6666009152263483,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 19,
+          "Severity": 31
+        }
+      },
+      {
+        "id": 436,
+        "label": 0,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.7650428610518665,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 8,
+          "Severity": 13
+        }
+      },
+      {
+        "id": 444,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.08505262114200807,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 141,
+          "Severity": 153
+        }
+      },
+      {
+        "id": 449,
+        "label": 0,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.46444169236574046,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 43,
+          "Severity": 11
+        }
+      },
+      {
+        "id": 463,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.13724172571131876,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 107,
+          "Severity": 102
+        }
+      },
+      {
+        "id": 465,
+        "label": 0,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.7953764740704511,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 6,
+          "Severity": 27
+        }
+      },
+      {
+        "id": 477,
+        "label": 1,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.12718790781064465,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 113,
+          "Severity": 86
+        }
+      },
+      {
+        "id": 480,
+        "label": 0,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.8523270827682093,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 1,
+          "Severity": 21
+        }
+      },
+      {
+        "id": 493,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.1522823335675722,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 100,
+          "Severity": 159
+        }
+      },
+      {
+        "id": 494,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.5545900084026004,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 27,
+          "Severity": 24
+        }
+      },
+      {
+        "id": 500,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.10725465937090917,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 126,
+          "Severity": 123
+        }
+      },
+      {
+        "id": 504,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.7728432368453898,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 7,
+          "Severity": 6
+        }
+      },
+      {
+        "id": 509,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.2968748973269716,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 65,
+          "Severity": 117
+        }
+      },
+      {
+        "id": 510,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.21179207967053493,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 81,
+          "Severity": 115
+        }
+      },
+      {
+        "id": 517,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.32419746323797644,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 62,
+          "Severity": 48
+        }
+      },
+      {
+        "id": 518,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.23932318407883854,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 74,
+          "Severity": 134
+        }
+      },
+      {
+        "id": 520,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.1960308133196661,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 85,
+          "Severity": 118
+        }
+      },
+      {
+        "id": 528,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.14403336035440997,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 106,
+          "Severity": 109
+        }
+      },
+      {
+        "id": 533,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.13231802658102926,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 109,
+          "Severity": 166
+        }
+      },
+      {
+        "id": 535,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.6036102951112723,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 22,
+          "Severity": 28
+        }
+      },
+      {
+        "id": 542,
+        "label": 0,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.4763871342201328,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 42,
+          "Severity": 19
+        }
+      },
+      {
+        "id": 549,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.058666955591282155,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 161,
+          "Severity": 124
+        }
+      },
+      {
+        "id": 557,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.07862585172775666,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 148,
+          "Severity": 179
+        }
+      },
+      {
+        "id": 560,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.030559584642174897,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 193,
+          "Severity": 90
+        }
+      },
+      {
+        "id": 565,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.1509775777355499,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 101,
+          "Severity": 130
+        }
+      },
+      {
+        "id": 570,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.2512233238198741,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 68,
+          "Severity": 81
+        }
+      },
+      {
+        "id": 576,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.11476444765921665,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 121,
+          "Severity": 158
+        }
+      },
+      {
+        "id": 579,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.37006479950332277,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 54,
+          "Severity": 15
+        }
+      },
+      {
+        "id": 586,
+        "label": 0,
+        "severity": "Trivial Damage",
+        "scores": {
+          "Logistic": 0.06040593041361048,
+          "Severity": 0.08038237310898708
+        },
+        "ranks": {
+          "Logistic": 159,
+          "Severity": 199
+        }
+      },
+      {
+        "id": 589,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.05015360686895247,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 169,
+          "Severity": 105
+        }
+      },
+      {
+        "id": 591,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.5341259470627937,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 29,
+          "Severity": 49
+        }
+      },
+      {
+        "id": 596,
+        "label": 0,
+        "severity": "Trivial Damage",
+        "scores": {
+          "Logistic": 0.10153895401074864,
+          "Severity": 0.08038237310898708
+        },
+        "ranks": {
+          "Logistic": 130,
+          "Severity": 190
+        }
+      },
+      {
+        "id": 597,
+        "label": 1,
+        "severity": "Trivial Damage",
+        "scores": {
+          "Logistic": 0.13386320213786124,
+          "Severity": 0.08038237310898708
+        },
+        "ranks": {
+          "Logistic": 108,
+          "Severity": 192
+        }
+      },
+      {
+        "id": 603,
+        "label": 0,
+        "severity": "Trivial Damage",
+        "scores": {
+          "Logistic": 0.0445226264566963,
+          "Severity": 0.08038237310898708
+        },
+        "ranks": {
+          "Logistic": 181,
+          "Severity": 191
+        }
+      },
+      {
+        "id": 609,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.08733890868395108,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 139,
+          "Severity": 160
+        }
+      },
+      {
+        "id": 610,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.05550891765781643,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 163,
+          "Severity": 122
+        }
+      },
+      {
+        "id": 615,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.16015415718822676,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 98,
+          "Severity": 87
+        }
+      },
+      {
+        "id": 618,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.14730950863433276,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 102,
+          "Severity": 65
+        }
+      },
+      {
+        "id": 620,
+        "label": 1,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.03206499427824742,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 190,
+          "Severity": 152
+        }
+      },
+      {
+        "id": 621,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.04336606785784725,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 182,
+          "Severity": 141
+        }
+      },
+      {
+        "id": 628,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.730256115377391,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 13,
+          "Severity": 10
+        }
+      },
+      {
+        "id": 630,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.03359580489393907,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 189,
+          "Severity": 125
+        }
+      },
+      {
+        "id": 638,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.24421771792194885,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 72,
+          "Severity": 40
+        }
+      },
+      {
+        "id": 641,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.327250031776064,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 60,
+          "Severity": 72
+        }
+      },
+      {
+        "id": 650,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.7239725715537769,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 14,
+          "Severity": 59
+        }
+      },
+      {
+        "id": 660,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.1551944340647656,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 99,
+          "Severity": 97
+        }
+      },
+      {
+        "id": 668,
+        "label": 0,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.6546687399327205,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 20,
+          "Severity": 23
+        }
+      },
+      {
+        "id": 669,
+        "label": 0,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.758287426438113,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 9,
+          "Severity": 41
+        }
+      },
+      {
+        "id": 677,
+        "label": 0,
+        "severity": "Trivial Damage",
+        "scores": {
+          "Logistic": 0.02918670800537638,
+          "Severity": 0.08038237310898708
+        },
+        "ranks": {
+          "Logistic": 196,
+          "Severity": 186
+        }
+      },
+      {
+        "id": 691,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.7460687634984817,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 10,
+          "Severity": 62
+        }
+      },
+      {
+        "id": 696,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.463145957359604,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 44,
+          "Severity": 93
+        }
+      },
+      {
+        "id": 701,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.6093519627509923,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 21,
+          "Severity": 53
+        }
+      },
+      {
+        "id": 704,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.3397241034776085,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 58,
+          "Severity": 4
+        }
+      },
+      {
+        "id": 706,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.09062648448079622,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 134,
+          "Severity": 151
+        }
+      },
+      {
+        "id": 714,
+        "label": 0,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.41607075591811793,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 51,
+          "Severity": 34
+        }
+      },
+      {
+        "id": 715,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.8367324983411099,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 2,
+          "Severity": 61
+        }
+      },
+      {
+        "id": 716,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.14625158912481542,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 103,
+          "Severity": 96
+        }
+      },
+      {
+        "id": 720,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.048444072145973696,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 175,
+          "Severity": 92
+        }
+      },
+      {
+        "id": 722,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.3194145740494223,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 63,
+          "Severity": 18
+        }
+      },
+      {
+        "id": 724,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.046954288316713874,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 178,
+          "Severity": 84
+        }
+      },
+      {
+        "id": 738,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.029012079696971626,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 197,
+          "Severity": 155
+        }
+      },
+      {
+        "id": 742,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.3933797070911891,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 53,
+          "Severity": 26
+        }
+      },
+      {
+        "id": 748,
+        "label": 0,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.3246359158774929,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 61,
+          "Severity": 1
+        }
+      },
+      {
+        "id": 750,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.08047042412589894,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 147,
+          "Severity": 176
+        }
+      },
+      {
+        "id": 764,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.047935135718510886,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 176,
+          "Severity": 178
+        }
+      },
+      {
+        "id": 766,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.1731048013754277,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 92,
+          "Severity": 70
+        }
+      },
+      {
+        "id": 769,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.0884406472762692,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 137,
+          "Severity": 95
+        }
+      },
+      {
+        "id": 772,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.11594223179352356,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 119,
+          "Severity": 68
+        }
+      },
+      {
+        "id": 780,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.1019241767842856,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 129,
+          "Severity": 101
+        }
+      },
+      {
+        "id": 781,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.06981580795768809,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 153,
+          "Severity": 135
+        }
+      },
+      {
+        "id": 787,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.042044801486452364,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 184,
+          "Severity": 161
+        }
+      },
+      {
+        "id": 789,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.1735600111216876,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 91,
+          "Severity": 167
+        }
+      },
+      {
+        "id": 793,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.08400196986651957,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 144,
+          "Severity": 107
+        }
+      },
+      {
+        "id": 795,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.20533329700629585,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 82,
+          "Severity": 67
+        }
+      },
+      {
+        "id": 799,
+        "label": 0,
+        "severity": "Trivial Damage",
+        "scores": {
+          "Logistic": 0.015080086063895394,
+          "Severity": 0.08038237310898708
+        },
+        "ranks": {
+          "Logistic": 200,
+          "Severity": 200
+        }
+      },
+      {
+        "id": 802,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.3336965054818455,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 59,
+          "Severity": 78
+        }
+      },
+      {
+        "id": 804,
+        "label": 0,
+        "severity": "Trivial Damage",
+        "scores": {
+          "Logistic": 0.10565317339197686,
+          "Severity": 0.08038237310898708
+        },
+        "ranks": {
+          "Logistic": 128,
+          "Severity": 187
+        }
+      },
+      {
+        "id": 806,
+        "label": 0,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.5308987775119682,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 30,
+          "Severity": 36
+        }
+      },
+      {
+        "id": 816,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.060047218257606595,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 160,
+          "Severity": 143
+        }
+      },
+      {
+        "id": 818,
+        "label": 0,
+        "severity": "Trivial Damage",
+        "scores": {
+          "Logistic": 0.11786539478331647,
+          "Severity": 0.08038237310898708
+        },
+        "ranks": {
+          "Logistic": 116,
+          "Severity": 198
+        }
+      },
+      {
+        "id": 821,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.023408541998291767,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 198,
+          "Severity": 173
+        }
+      },
+      {
+        "id": 824,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.1677899081368943,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 94,
+          "Severity": 82
+        }
+      },
+      {
+        "id": 825,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.1999678135974639,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 84,
+          "Severity": 116
+        }
+      },
+      {
+        "id": 832,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.06661818475272398,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 156,
+          "Severity": 137
+        }
+      },
+      {
+        "id": 833,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.1275508094136296,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 112,
+          "Severity": 94
+        }
+      },
+      {
+        "id": 838,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.1911368532288143,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 87,
+          "Severity": 17
+        }
+      },
+      {
+        "id": 841,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.18510497617033972,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 88,
+          "Severity": 180
+        }
+      },
+      {
+        "id": 845,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.2597321257207065,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 67,
+          "Severity": 14
+        }
+      },
+      {
+        "id": 858,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.12065506873701538,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 114,
+          "Severity": 120
+        }
+      },
+      {
+        "id": 859,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.08247498040763496,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 145,
+          "Severity": 88
+        }
+      },
+      {
+        "id": 866,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.05738001413670138,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 162,
+          "Severity": 184
+        }
+      },
+      {
+        "id": 878,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.5034552214133573,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 35,
+          "Severity": 57
+        }
+      },
+      {
+        "id": 883,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.5032225736149051,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 36,
+          "Severity": 51
+        }
+      },
+      {
+        "id": 886,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.11545954223530953,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 120,
+          "Severity": 113
+        }
+      },
+      {
+        "id": 891,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.3676843408719832,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 56,
+          "Severity": 114
+        }
+      },
+      {
+        "id": 893,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.07242997957068857,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 150,
+          "Severity": 154
+        }
+      },
+      {
+        "id": 906,
+        "label": 0,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.5804595504455838,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 25,
+          "Severity": 22
+        }
+      },
+      {
+        "id": 913,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.17249977679815282,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 93,
+          "Severity": 170
+        }
+      },
+      {
+        "id": 916,
+        "label": 0,
+        "severity": "Trivial Damage",
+        "scores": {
+          "Logistic": 0.04928924401520565,
+          "Severity": 0.08038237310898708
+        },
+        "ranks": {
+          "Logistic": 171,
+          "Severity": 193
+        }
+      },
+      {
+        "id": 922,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.16409951168293777,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 97,
+          "Severity": 144
+        }
+      },
+      {
+        "id": 928,
+        "label": 0,
+        "severity": "Trivial Damage",
+        "scores": {
+          "Logistic": 0.07043421865912472,
+          "Severity": 0.08038237310898708
+        },
+        "ranks": {
+          "Logistic": 152,
+          "Severity": 188
+        }
+      },
+      {
+        "id": 949,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.21740917374197546,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 78,
+          "Severity": 104
+        }
+      },
+      {
+        "id": 952,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.049208237250231615,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 172,
+          "Severity": 79
+        }
+      },
+      {
+        "id": 959,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.03036582566707347,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 194,
+          "Severity": 181
+        }
+      },
+      {
+        "id": 960,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.05486059125225552,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 164,
+          "Severity": 133
+        }
+      },
+      {
+        "id": 963,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.06834430914016855,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 154,
+          "Severity": 127
+        }
+      },
+      {
+        "id": 967,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.6004214238055744,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 23,
+          "Severity": 54
+        }
+      },
+      {
+        "id": 968,
+        "label": 0,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.48037699311367094,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 40,
+          "Severity": 12
+        }
+      },
+      {
+        "id": 970,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.08580671697259748,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 140,
+          "Severity": 73
+        }
+      },
+      {
+        "id": 975,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.265625585326947,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 66,
+          "Severity": 98
+        }
+      },
+      {
+        "id": 977,
+        "label": 1,
+        "severity": "Major Damage",
+        "scores": {
+          "Logistic": 0.5997701272903474,
+          "Severity": 0.5875455744243394
+        },
+        "ranks": {
+          "Logistic": 24,
+          "Severity": 56
+        }
+      },
+      {
+        "id": 981,
+        "label": 0,
+        "severity": "Total Loss",
+        "scores": {
+          "Logistic": 0.17648379967412822,
+          "Severity": 0.14801702849753764
+        },
+        "ranks": {
+          "Logistic": 90,
+          "Severity": 75
+        }
+      },
+      {
+        "id": 988,
+        "label": 0,
+        "severity": "Minor Damage",
+        "scores": {
+          "Logistic": 0.11097414252393197,
+          "Severity": 0.11317764962124094
+        },
+        "ranks": {
+          "Logistic": 123,
+          "Severity": 139
+        }
+      }
+    ],
+    "threshold_first_repeat": [
+      {
+        "threshold": 0.1,
+        "selected": 609,
+        "tp": 209,
+        "fp": 400,
+        "fn": 38,
+        "tn": 353,
+        "precision": 0.34318555008210183,
+        "recall": 0.8461538461538461
+      },
+      {
+        "threshold": 0.2,
+        "selected": 363,
+        "tp": 175,
+        "fp": 188,
+        "fn": 72,
+        "tn": 565,
+        "precision": 0.4820936639118457,
+        "recall": 0.708502024291498
+      },
+      {
+        "threshold": 0.5,
+        "selected": 200,
+        "tp": 121,
+        "fp": 79,
+        "fn": 126,
+        "tn": 674,
+        "precision": 0.605,
+        "recall": 0.4898785425101215
+      }
+    ],
+    "mean_budgets": [
+      {
+        "model": "Logistic",
+        "k": 10,
+        "found": 6.0,
+        "recall": 0.12152380952380952,
+        "precision": 0.5999999999999999
+      },
+      {
+        "model": "Logistic",
+        "k": 20,
+        "found": 12.2,
+        "recall": 0.24704761904761904,
+        "precision": 0.61
+      },
+      {
+        "model": "Logistic",
+        "k": 40,
+        "found": 24.2,
+        "recall": 0.4899591836734694,
+        "precision": 0.605
+      },
+      {
+        "model": "Logistic",
+        "k": 60,
+        "found": 32.93333333333333,
+        "recall": 0.6667482993197279,
+        "precision": 0.5488888888888889
+      },
+      {
+        "model": "Severity",
+        "k": 10,
+        "found": 6.066666666666666,
+        "recall": 0.12277551020408163,
+        "precision": 0.6066666666666666
+      },
+      {
+        "model": "Severity",
+        "k": 20,
+        "found": 11.8,
+        "recall": 0.23893877551020412,
+        "precision": 0.5900000000000001
+      },
+      {
+        "model": "Severity",
+        "k": 40,
+        "found": 24.266666666666666,
+        "recall": 0.4913741496598639,
+        "precision": 0.6066666666666667
+      },
+      {
+        "model": "Severity",
+        "k": 60,
+        "found": 33.46666666666667,
+        "recall": 0.6776054421768708,
+        "precision": 0.5577777777777777
+      }
+    ]
+  },
+  "metadata": {
+    "created": "2026-11-11",
+    "training_rows": 1000,
+    "fraud_labels": 247,
+    "input_count": 24,
+    "data_sha256": "be11b9370c0cda353a4519832803d07bb90a494e91dfd9d56a85aa4093ba5378"
+  }
+}

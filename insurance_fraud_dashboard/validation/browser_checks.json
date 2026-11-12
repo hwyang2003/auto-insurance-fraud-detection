@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "browser": "157.0.8103.39",
+  "input_fields": 24,
+  "default_score": 57.898465222028996,
+  "modified_score": 9.05938372904684,
+  "required_input_blocked": true,
+  "stale_results_blocked": true,
+  "threshold_does_not_change_model": true,
+  "review_does_not_change_score": true,
+  "review_text_escaped": true,
+  "json_download_checked": true,
+  "none_preserved": true,
+  "missing_categories_checked": 3,
+  "all_views_work": true,
+  "help_works": true,
+  "mobile_width": 390,
+  "mobile_no_overflow": true,
+  "notes_clear_on_reload": true,
+  "page_errors": [],
+  "external_requests": []
+}
