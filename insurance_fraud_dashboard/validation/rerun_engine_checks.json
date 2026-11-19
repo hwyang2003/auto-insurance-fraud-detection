@@ -1,9 +1,9 @@
 {
   "kind": "engine_and_package_checks",
-  "executed_at": "2026-11-12T04:23:04.110Z",
+  "executed_at": "2026-11-18T12:22:33.780Z",
   "runtime": "Node.js v26.9.0",
   "status": "passed",
-  "passed": 17,
+  "passed": 19,
   "failed": 0,
   "not_executed": [
     "Python 모델과의 1,000건 예측 대조 (원본 자료와 Python 모델이 패키지에 없음. 기존 기록: validation/engine_checks.json)"
@@ -307,6 +307,112 @@
       }
     },
     {
+      "id": "E12",
+      "title": "학습 범위 밖 숫자를 엔진에 그대로 넣으면 점수가 0점·100점으로 쏠리고, 범위 끝값은 숫자 항목마다 유효한 입력",
+      "pass": true,
+      "detail": {
+        "engine_alone_scores": {
+          "property_claim_at_range_end": 54.36961703305201,
+          "property_claim_1000000": 0.00023325364466765175,
+          "vehicle_claim_at_range_end": 69.49544144557646,
+          "vehicle_claim_5000000": 100
+        },
+        "engine_alone_property_claim_100000000000": "Prediction integrity error",
+        "range_ends": [
+          {
+            "field": "number_of_vehicles_involved",
+            "side": "max",
+            "range_end": 4,
+            "accepted_without_warning": true
+          },
+          {
+            "field": "bodily_injuries",
+            "side": "max",
+            "range_end": 2,
+            "accepted_without_warning": true
+          },
+          {
+            "field": "witnesses",
+            "side": "max",
+            "range_end": 3,
+            "accepted_without_warning": true
+          },
+          {
+            "field": "injury_claim",
+            "side": "max",
+            "range_end": 21450,
+            "accepted_without_warning": true
+          },
+          {
+            "field": "property_claim",
+            "side": "max",
+            "range_end": 23670,
+            "accepted_without_warning": true
+          },
+          {
+            "field": "vehicle_claim",
+            "side": "min",
+            "range_end": 70,
+            "accepted_without_warning": true
+          },
+          {
+            "field": "vehicle_claim",
+            "side": "max",
+            "range_end": 79560,
+            "accepted_without_warning": true
+          },
+          {
+            "field": "months_as_customer",
+            "side": "max",
+            "range_end": 479,
+            "accepted_without_warning": true
+          },
+          {
+            "field": "policy_deductable",
+            "side": "min",
+            "range_end": 500,
+            "accepted_without_warning": true
+          },
+          {
+            "field": "policy_deductable",
+            "side": "max",
+            "range_end": 2000,
+            "accepted_without_warning": true
+          },
+          {
+            "field": "policy_annual_premium",
+            "side": "min",
+            "range_end": 433.33,
+            "accepted_without_warning": true
+          },
+          {
+            "field": "policy_annual_premium",
+            "side": "max",
+            "range_end": 2047.59,
+            "accepted_without_warning": true
+          },
+          {
+            "field": "umbrella_limit",
+            "side": "max",
+            "range_end": 10000000,
+            "accepted_without_warning": true
+          },
+          {
+            "field": "capital-gains",
+            "side": "max",
+            "range_end": 100500,
+            "accepted_without_warning": true
+          },
+          {
+            "field": "capital-loss",
+            "side": "min",
+            "range_end": -111100,
+            "accepted_without_warning": true
+          }
+        ]
+      }
+    },
+    {
       "id": "P1",
       "title": "계산 엔진과 모델 데이터가 제공받은 패키지와 바이트 단위로 동일 (계수·전처리 값·범주 변경 없음)",
       "pass": true,
@@ -367,7 +473,7 @@
       "pass": true,
       "detail": {
         "html": "보험청구_관리자_대시보드.html",
-        "bytes": 186805,
+        "bytes": 202955,
         "sources_embedded": {
           "src/dashboard.css": true,
           "src/engine.js": true,
@@ -422,6 +528,56 @@
         ],
         "mean_budgets_times_15_are_integers": true,
         "note": "이 검사는 집계 범위와 산술 일관성만 확인한다. 모델 성능을 새로 검증하지 않는다."
+      }
+    },
+    {
+      "id": "V2",
+      "title": "평가 폴드의 피해 정도별 집계 (모델 평가 화면 ‘두 모델의 결과가 비슷한 이유’의 근거)",
+      "pass": true,
+      "detail": {
+        "every_row_has_a_known_severity": true,
+        "one_score_per_severity_level": true,
+        "ranks_follow_scores": true,
+        "counts": true,
+        "logistic_top40_all_in_top_level": true,
+        "top40_hits": true,
+        "severity_top40_is_a_tie": true,
+        "distinct_scores": true,
+        "levels": [
+          {
+            "severity": "Major Damage",
+            "rows": 63,
+            "fraud_labels": 40,
+            "severity_model_scores": [
+              0.5875455744243394
+            ]
+          },
+          {
+            "severity": "Total Loss",
+            "rows": 55,
+            "fraud_labels": 3,
+            "severity_model_scores": [
+              0.14801702849753764
+            ]
+          },
+          {
+            "severity": "Minor Damage",
+            "rows": 66,
+            "fraud_labels": 6,
+            "severity_model_scores": [
+              0.11317764962124094
+            ]
+          },
+          {
+            "severity": "Trivial Damage",
+            "rows": 16,
+            "fraud_labels": 1,
+            "severity_model_scores": [
+              0.08038237310898708
+            ]
+          }
+        ],
+        "note": "평가 폴드 1개(200건)의 행을 다시 센 것이다. 모델 성능을 새로 검증하지 않는다."
       }
     }
   ]

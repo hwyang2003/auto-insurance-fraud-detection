@@ -290,7 +290,8 @@ window.__runUiChecks = function (options) {
       setField('number_of_vehicles_involved', '9');
       analyze();
       const warning = { phase: state().phase, text: text('rangeWarnings'), chip: text('warningCount') };
-      const warned = warning.phase === 'fresh' && warning.text.includes('학습 자료에서 본 범위 밖') && warning.text.includes('학습 자료 범위: 1~4') && warning.chip === '경고 1건';
+      const warned = warning.phase === 'fresh' && warning.text.includes('학습 자료에서 본 범위 밖') && warning.text.includes('학습 자료 범위: 1~4') && warning.chip === '경고 1건'
+        && warning.text.includes('입력한 9대 대신 학습 범위의 최댓값(4대)을 사용했습니다');
       return { pass: blocked.every(r => r.ok) && warned, detail: { blocked, warning } };
     });
 
@@ -520,6 +521,159 @@ window.__runUiChecks = function (options) {
       goto('analysis');
       const nullInAnalysis = / null\b|\bnull /.test($('analysisView').textContent);
       return { pass: rows.every(r => r.bad.length === 0) && !nullInAnalysis, detail: { rows, null_text_in_analysis_view: nullInAnalysis } };
+    });
+
+    /* ---------- 학습 범위 밖 숫자 (2026-11-13 추가) ---------- */
+    check('U22', '학습 범위 밖 숫자는 범위 끝값으로 계산: 점수가 0점·100점으로 쏠리지 않고, 입력한 값과 바꾸지 않았을 때의 계산값을 남김', () => {
+      const base = sampleOf('DEMO-001').inputs, spec = P.model.spec, facts = {};
+      const scoreOf = changes => analyzeCase({ ...base, ...changes }).score;   // 엔진을 직접 불러 구한 비교값
+      const pcMax = spec.property_claim.max;
+
+      // 재물 청구액 1,000,000 — 엔진에 그대로 넣으면 0점에 가깝다
+      loadCase('DEMO-001');
+      setField('property_claim', '1000000');
+      analyze();
+      const raw = scoreOf({ property_claim: 1000000 }), bound = scoreOf({ property_claim: pcMax }), current = state().current;
+      facts.engine_alone_goes_to_zero = raw < 0.001;
+      facts.scored_at_range_end = state().phase === 'fresh' && current.score === bound && bound > 50 && text('scoreValue') === bound.toFixed(1);
+      facts.entered_value_kept = current.inputs.property_claim === 1000000 && D.readInputs().property_claim === 1000000;
+      facts.notice_next_to_score = shown($('rangeNotice')) && text('rangeNotice').includes('입력 1개') && text('rangeNotice').includes('재물 청구액 1,000,000 → 23,670');
+      facts.warning_explains = text('warningCount') === '경고 1건' && text('rangeWarnings').includes('학습 자료 범위: 0~23,670')
+        && text('rangeWarnings').includes('입력한 1,000,000 대신 학습 범위의 최댓값(23,670)을 사용했습니다') && text('rangeWarnings').includes(`그대로 계산하면 ${raw.toFixed(1)}점`);
+      facts.does_not_claim_all_inputs_used_as_is = text('processingList').includes('학습 범위 밖 1개를 뺀 23개 값은 입력한 그대로') && !text('processingList').includes('24개 값을 그대로');
+      $('allDetails').open = true;
+      facts.table_shows_both_values = text('allContributions').includes('1,000,000 → 학습 범위 최댓값 23,670 사용');
+      facts.no_horizontal_scroll = document.documentElement.scrollWidth <= window.innerWidth;
+      $('allDetails').open = false;
+      const exported = D.makeExport();
+      const row = exported.explanation.contributions.find(c => c.field === 'property_claim'), item = exported.input_processing.find(p => p.field === 'property_claim');
+      facts.export_records_limit = exported.inputs.property_claim === 1000000 && exported.prediction.score === bound && exported.prediction.range_limited === true
+        && Math.abs(exported.prediction.without_range_limit.score - raw) < 1e-12 && row.input_value === 1000000 && row.used_value === pcMax
+        && !!item && item.method === 'training_range_limit' && item.input_value === 1000000 && item.used_value === pcMax && item.bound === 'max'
+        && exported.warnings.length === 1 && exported.warnings[0].field === 'property_claim';
+      goto('handoff');
+      facts.data_view_notes_limit = text('inputJsonHint').includes('범위 끝값으로 바꿔 계산') && JSON.parse($('inputJson').textContent).property_claim === 1000000
+        && same(JSON.parse($('outputJson').textContent), exported);
+      goto('analysis');
+      document.querySelector('label[for="review-basic"]').click();
+      $('reviewNote').value = '범위 밖 금액 확인';
+      fire($('reviewNote'), 'input');
+      $('saveReview').click();
+      const record = state().records[state().records.length - 1];
+      facts.review_record_keeps_entered_value = !!record && record.memo === '범위 밖 금액 확인' && record.inputs_at_review.property_claim === 1000000 && record.model_score_at_review === bound;
+
+      // 범위를 얼마나 벗어나든 점수가 같다. 엔진만으로는 계산이 끝나지 않는 크기(1,000억)도 계산된다
+      const sizes = ['23671', '30000', '500000', '100000000000'].map(value => {
+        setField('property_claim', value);
+        analyze();
+        return { value, phase: state().phase, same_score: state().current.score === bound, limits: state().current.range_limits.length };
+      });
+      facts.any_size_same_score = sizes.every(r => r.phase === 'fresh' && r.same_score && r.limits === 1);
+      let engineAloneFails = false;
+      try { analyzeCase({ ...base, property_claim: 100000000000 }); } catch (error) { engineAloneFails = true; }
+      facts.huge_value_handled = engineAloneFails && state().current.without_range_limit === null && text('rangeWarnings').includes('계산을 끝내지 못합니다')
+        && D.makeExport().prediction.without_range_limit === null && !/\[object |undefined|NaN| null\b|\bnull /.test($('analysisView').textContent);
+
+      // 범위의 끝값 자체는 범위 안이므로 바꾸지 않는다
+      setField('property_claim', String(pcMax));
+      analyze();
+      const atEnd = D.makeExport();
+      facts.range_end_itself_untouched = state().current.score === bound && state().current.range_limits.length === 0 && !shown($('rangeNotice')) && text('warningCount') === '경고 없음'
+        && atEnd.prediction.range_limited === false && atEnd.prediction.without_range_limit === null && !atEnd.input_processing.some(p => p.method === 'training_range_limit');
+
+      // 두 항목이 함께 벗어난 경우
+      setField('property_claim', '1000000');
+      setField('vehicle_claim', '5000000');
+      analyze();
+      const both = scoreOf({ property_claim: pcMax, vehicle_claim: spec.vehicle_claim.max });
+      facts.two_fields = state().current.score === both && both < 99 && scoreOf({ property_claim: 1000000, vehicle_claim: 5000000 }) > 99.999
+        && text('rangeNotice').includes('입력 2개') && text('warningCount') === '경고 2건' && D.makeExport().input_processing.filter(p => p.method === 'training_range_limit').length === 2;
+
+      // 숫자 항목 전체: 입력할 수 있는 방향마다 범위 밖 값을 넣어 본다
+      const sweep = [];
+      for (const field of P.fields.filter(f => f.type === 'number')) {
+        const s = spec[field.name], span = Math.max(s.max - s.min, 1);
+        for (const side of ['min', 'max']) {
+          let far = side === 'max' ? s.max + span * 1000 : s.min - span * 1000;
+          if (side === 'max' && field.max !== null) far = Math.min(far, field.max);
+          if (side === 'min' && field.min !== null) far = Math.max(far, field.min);
+          if (field.integer) far = Math.round(far);
+          if (far >= s.min && far <= s.max) continue;   // 이 방향으로는 범위 밖 값을 입력할 수 없는 항목
+          loadCase('DEMO-001');
+          setField(field.name, String(far));
+          analyze();
+          const now = state().current, limit = now.range_limits[0];
+          sweep.push({ field: field.name, side, entered: far, used: s[side], score: now.score,
+            ok: state().phase === 'fresh' && now.range_limits.length === 1 && limit.field === field.name && limit.bound === side && limit.used_value === s[side]
+              && now.score === scoreOf({ [field.name]: s[side] }) && now.inputs[field.name] === far && now.warnings.length === 1 && now.warnings[0].field === field.name });
+        }
+      }
+      facts.every_numeric_field_and_side = sweep.length === 15 && sweep.every(r => r.ok);
+
+      // 범위 안의 입력은 그대로: 예시 5건은 analyzeCase와 같은 값이고 바꾼 항목이 없다
+      facts.in_range_inputs_untouched = P.cases.every(c => {
+        const r = D.analyzeInputs(c.inputs), direct = analyzeCase(c.inputs);
+        return r.status === 'ok' && r.score === direct.score && r.range_limits.length === 0 && r.without_range_limit === null && same(r.contributions, direct.contributions) && same(r.inputs, direct.inputs);
+      });
+      // 입력 오류는 범위 제한보다 먼저 걸러진다 (허용 범위 밖, 정수 위반)
+      const invalid = [{ vehicle_claim: -1 }, { witnesses: 7.5 }, { 'capital-loss': 5 }, { property_claim: null }].map(changes => D.analyzeInputs({ ...base, ...changes }));
+      facts.validation_first = invalid.every(r => r.status === 'invalid' && r.errors.length === 1);
+      return { pass: all(facts), detail: { ...facts, score_at_range_end: bound, engine_alone_at_1000000: raw, sizes, sweep } };
+    });
+
+    /* ---------- 두 모델의 결과가 비슷한 이유 (2026-11-18 추가) ---------- */
+    check('U23', '모델 평가 화면: ‘두 모델의 결과가 비슷한 이유’의 표와 문장이 평가 폴드 자료와 일치', () => {
+      goto('evaluation');
+      const rows = P.evaluation.rows, facts = {}, pts = value => (value * 100).toFixed(1), pct = (ratio, digits = 1) => (ratio * 100).toFixed(digits) + '%';
+      const options = P.fields.find(f => f.name === 'incident_severity').options;
+      // 화면 코드와 따로, 평가 폴드의 행에서 직접 다시 센다
+      const by = {};
+      for (const r of rows) (by[r.severity] = by[r.severity] || []).push(r);
+      const levels = Object.entries(by).map(([value, list]) => {
+        const sorted = list.map(r => r.scores.Logistic).sort((a, b) => a - b), mid = Math.floor(sorted.length / 2);
+        return { value, label: options.find(o => o.value === value).label, n: list.length, frauds: list.filter(r => r.label === 1).length, severity: [...new Set(list.map(r => r.scores.Severity))],
+          median: sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2, min: sorted[0], max: sorted[sorted.length - 1] };
+      }).sort((a, b) => b.severity[0] - a.severity[0]);
+      const top = levels[0], total = rows.filter(r => r.label === 1).length;
+      const topK = key => [...rows].sort((a, b) => a.ranks[key] - b.ranks[key]).slice(0, 40);
+      const hits = key => topK(key).filter(r => r.label === 1).length;
+      const picked = topK('Logistic').filter(r => r.severity === top.value), pickedFrauds = picked.filter(r => r.label === 1).length;
+      const mean = key => P.evaluation.mean_budgets.find(r => r.model === key && r.k === 40).found;
+
+      facts.fold_counts_as_expected = same(levels.map(l => [l.label, l.n, l.frauds]), [['큰 손상', 63, 40], ['전손', 55, 3], ['경미한 손상', 66, 6], ['아주 작은 손상', 16, 1]])
+        && levels.every(l => l.severity.length === 1) && picked.length === 40 && pickedFrauds === 24 && hits('Logistic') === 24 && hits('Severity') === 22;
+      facts.panel_shown = shown($('similarityPanel')) && text('scopeSimilarity') === text('scopeFold') && text('scopeSimilarity').includes('범위 A');
+      facts.table_head = same([...$('severityTableHead').rows[0].cells].map(cell => cell.textContent.trim()), ['피해 정도', '시험 건수', '그중 사기 표시', '24개 정보 모델의 점수', '손상 정도만 쓰는 모델의 점수']);
+      const body = [...$('severityTable').rows];
+      facts.table_rows = body.length === levels.length && levels.every((level, i) => {
+        const cells = [...body[i].cells].map(cell => cell.textContent.replace(/\s+/g, ' ').trim()), bar = body[i].querySelector('.rate-track > span');
+        return cells[0] === level.label && cells[1] === `${level.n}건` && cells[2] === `${level.frauds}건 · ${pct(level.frauds / level.n)}`
+          && Math.abs(parseFloat(bar.style.width) - level.frauds / level.n * 100) < 0.01
+          && cells[3].includes(`중앙값 ${pts(level.median)}점`) && cells[3].includes(`${pts(level.min)}~${pts(level.max)}점`)
+          && cells[4].startsWith(`${pts(level.severity[0])}점`) && cells[4].includes(`${level.n}건 모두 같은 점수`);
+      });
+      const reasons = text('similarityReasons');
+      facts.reasons = $('similarityReasons').children.length === 4
+        && reasons.includes(`사기 표시 ${total}건 가운데 ${top.frauds}건(${pct(top.frauds / total, 0)})이 ‘${top.label}’ 청구입니다`)
+        && reasons.includes(`${top.n}건 중 ${pct(top.frauds / top.n)}가 사기 표시이고, 나머지 등급은 5.5%~9.1%입니다`)
+        && reasons.includes(`점수가 높은 40건은 모두 ‘${top.label}’ 청구입니다`)
+        && reasons.includes(`그 40건 안의 사기 표시는 ${pickedFrauds}건(${pct(pickedFrauds / 40)})으로, ‘${top.label}’ 청구 전체의 비율 ${pct(top.frauds / top.n)}보다 높지 않습니다`)
+        && reasons.includes('같은 등급 안의 순서는 나머지 23개 입력이 정합니다')
+        && reasons.includes(`‘${top.label}’ ${top.n}건에 모두 같은 점수를 줍니다`) && reasons.includes('사기 표시가 17건에서 40건까지 달라질 수 있습니다')
+        && reasons.includes(`기록된 순서로는 ${hits('Severity')}건입니다`);
+      const insight = text('similarityInsight');
+      facts.insight = insight.includes(`24개 정보 모델 ${hits('Logistic')}건, 손상 정도만 쓰는 모델 ${hits('Severity')}건`)
+        && insight.includes(`평가 15회 평균(범위 C, 40건 기준)은 ${mean('Logistic').toFixed(2)}건과 ${mean('Severity').toFixed(2)}건입니다`)
+        && insight.includes('사기 표시를 더 많이 찾아낸다고 말할 근거는 없습니다');
+      facts.differences = $('modelDifferences').children.length === 2
+        && text('modelDifferences').includes(`입력 1개(피해 정도). 이 폴드 200건에 매긴 점수가 ${new Set(rows.map(r => r.scores.Severity)).size}가지뿐`)
+        && text('modelDifferences').includes(`입력 24개. 이 폴드 200건에 매긴 점수가 ${new Set(rows.map(r => r.scores.Logistic)).size}가지`);
+      facts.not_new_validation = text('similarityNote').includes('성능을 새로 검증한 것이 아닙니다') && text('similarityNote').includes('구분할 수 없습니다');
+      facts.pointer_from_mean_panel = text('budgetInsight').includes('아래 ‘두 모델의 결과가 비슷한 이유’');
+      facts.wording = !/위험\s*점수|undefined|NaN|\[object |null/.test($('similarityPanel').textContent);
+      facts.no_horizontal_scroll = document.documentElement.scrollWidth <= window.innerWidth;
+      goto('analysis');
+      return { pass: all(facts), detail: { ...facts, levels: levels.map(l => ({ label: l.label, rows: l.n, fraud_labels: l.frauds, severity_model_score: l.severity[0], logistic_median: l.median })), top40_of_logistic_in_top_level: picked.length, fraud_labels_in_those: pickedFrauds } };
     });
   } finally {
     window.Blob = RealBlob;

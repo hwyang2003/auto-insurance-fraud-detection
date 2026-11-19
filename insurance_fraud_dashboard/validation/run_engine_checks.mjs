@@ -152,6 +152,34 @@ check('E11', 'analyzeCase 반환 구조 (status ok / invalid)', () => {
   return { pass: JSON.stringify(okKeys) === JSON.stringify(expected) && JSON.stringify(Object.keys(bad).sort()) === JSON.stringify(['errors', 'status']), detail: { ok_keys: okKeys, invalid_keys: Object.keys(bad) } };
 });
 
+/* ---- 화면의 범위 제한 규칙이 기대는 사실 ----
+ * 규칙 자체(학습 범위 밖 숫자를 범위 끝값으로 바꿔 계산)는 src/dashboard.js의 analyzeInputs에 있고, 화면 검사 U22·R6에서 확인한다.
+ * 여기서는 엔진만으로 계산했을 때 어떤 일이 생기는지와, 범위 끝값을 엔진이 그대로 받아들이는지를 확인한다. */
+check('E12', '학습 범위 밖 숫자를 엔진에 그대로 넣으면 점수가 0점·100점으로 쏠리고, 범위 끝값은 숫자 항목마다 유효한 입력', () => {
+  const spec = PAYLOAD.model.spec, score = changes => analyzeCase(withInputs('DEMO-001', changes)).score;
+  const engineAlone = {
+    property_claim_at_range_end: score({ property_claim: spec.property_claim.max }),
+    property_claim_1000000: score({ property_claim: 1000000 }),
+    vehicle_claim_at_range_end: score({ vehicle_claim: spec.vehicle_claim.max }),
+    vehicle_claim_5000000: score({ vehicle_claim: 5000000 })
+  };
+  let hugeValue = 'ok';
+  try { analyzeCase(withInputs('DEMO-001', { property_claim: 100000000000 })); } catch (error) { hugeValue = error.message; }
+  const rows = [];
+  for (const field of fieldsOf(f => f.type === 'number')) {
+    for (const side of ['min', 'max']) {
+      // 입력 가능 범위가 학습 범위보다 넓은 방향만 범위 밖 값이 들어올 수 있다
+      const reachable = side === 'max' ? (field.max === null || field.max > spec[field.name].max) : (field.min === null || field.min < spec[field.name].min);
+      if (!reachable) continue;
+      const r = analyzeCase(withInputs('DEMO-001', { [field.name]: spec[field.name][side] }));
+      rows.push({ field: field.name, side, range_end: spec[field.name][side], accepted_without_warning: r.status === 'ok' && !r.warnings.some(w => w.field === field.name) });
+    }
+  }
+  const pass = engineAlone.property_claim_1000000 < 0.001 && engineAlone.property_claim_at_range_end > 50 && engineAlone.vehicle_claim_5000000 > 99.999 && engineAlone.vehicle_claim_at_range_end < 99
+    && hugeValue === 'Prediction integrity error' && rows.length === 15 && rows.every(r => r.accepted_without_warning);
+  return { pass, detail: { engine_alone_scores: engineAlone, engine_alone_property_claim_100000000000: hugeValue, range_ends: rows } };
+});
+
 /* ---- 패키지 일관성 ---- */
 check('P1', '계산 엔진과 모델 데이터가 제공받은 패키지와 바이트 단위로 동일 (계수·전처리 값·범주 변경 없음)', () => {
   const rows = Object.entries(PROVIDED_SHA256).map(([file, expected]) => ({ file, sha256: sha256(file), unchanged: sha256(file) === expected }));
@@ -206,6 +234,28 @@ check('V1', '평가 자료의 세 범위가 서로 다른 집계임을 확인 (�
   const pass = fold.rows === ev.n && fold.fraud_labels === ev.frauds && fold.rows === 200
     && repeat.every(r => r.total === PAYLOAD.metadata.training_rows && r.fraud_labels === PAYLOAD.metadata.fraud_labels && r.selected_ok) && integerLike;
   return { pass, detail: { fold, first_repeat: repeat, mean_budgets_times_15_are_integers: integerLike, note: '이 검사는 집계 범위와 산술 일관성만 확인한다. 모델 성능을 새로 검증하지 않는다.' } };
+});
+
+check('V2', '평가 폴드의 피해 정도별 집계 (모델 평가 화면 ‘두 모델의 결과가 비슷한 이유’의 근거)', () => {
+  const rows = PAYLOAD.evaluation.rows, categories = PAYLOAD.model.spec.incident_severity.categories, by = {};
+  for (const r of rows) (by[r.severity] = by[r.severity] || []).push(r);
+  const levels = Object.entries(by).map(([severity, list]) => ({ severity, rows: list.length, fraud_labels: list.reduce((s, r) => s + r.label, 0), severity_model_scores: [...new Set(list.map(r => r.scores.Severity))] }))
+    .sort((a, b) => b.severity_model_scores[0] - a.severity_model_scores[0]);
+  const top = levels[0], ordered = key => [...rows].sort((a, b) => a.ranks[key] - b.ranks[key]);
+  const ranksFollowScores = key => ordered(key).every((r, i, list) => i === 0 || list[i - 1].scores[key] >= r.scores[key]);
+  const top40 = key => ordered(key).slice(0, 40), hits = list => list.reduce((s, r) => s + r.label, 0);
+  const picked = top40('Logistic').filter(r => r.severity === top.severity);
+  const facts = {
+    every_row_has_a_known_severity: rows.every(r => categories.includes(r.severity)),
+    one_score_per_severity_level: levels.every(l => l.severity_model_scores.length === 1),
+    ranks_follow_scores: ranksFollowScores('Logistic') && ranksFollowScores('Severity'),
+    counts: JSON.stringify(levels.map(l => [l.severity, l.rows, l.fraud_labels])) === JSON.stringify([['Major Damage', 63, 40], ['Total Loss', 55, 3], ['Minor Damage', 66, 6], ['Trivial Damage', 16, 1]]),
+    logistic_top40_all_in_top_level: picked.length === 40 && hits(picked) === 24,
+    top40_hits: hits(top40('Logistic')) === 24 && hits(top40('Severity')) === 22,
+    severity_top40_is_a_tie: top.rows >= 40 && Math.max(0, 40 - (top.rows - top.fraud_labels)) === 17 && Math.min(40, top.fraud_labels) === 40,
+    distinct_scores: new Set(rows.map(r => r.scores.Logistic)).size === 200 && new Set(rows.map(r => r.scores.Severity)).size === 4
+  };
+  return { pass: Object.values(facts).every(Boolean), detail: { ...facts, levels, note: '평가 폴드 1개(200건)의 행을 다시 센 것이다. 모델 성능을 새로 검증하지 않는다.' } };
 });
 
 const failed = results.filter(r => !r.pass);

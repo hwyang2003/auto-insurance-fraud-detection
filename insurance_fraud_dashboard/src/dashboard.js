@@ -3,6 +3,7 @@
  * 계산은 engine.js의 analyzeCase(inputs)와 decision(score, threshold)만 사용한다.
  * 이 파일은 입력 수집, 상태 관리, 결과 표시, 담당자 검토 기록, JSON 저장을 맡는다.
  * 모델 계수·전처리 값·범주는 PAYLOAD에서 읽기만 하고 바꾸지 않는다.
+ * 학습 자료 범위 밖의 숫자만 범위 끝값으로 바꿔 analyzeCase에 넘긴다(analyzeInputs 참고).
  * 화면에 넣는 모든 글자는 textContent로 넣는다(innerHTML을 쓰지 않는다).
  */
 (function () {
@@ -340,11 +341,53 @@
     if (errors.length && FIELD_MAP[errors[0].field]) focusField(errors[0].field);
     else $('inputErrors').focus();
   }
-  /* 현재 입력을 analyzeCase에 전달하고 반환값으로 화면을 갱신한다. */
+  /* 학습 자료 범위(PAYLOAD.model.spec의 min~max) 밖에 있는 숫자 입력을 찾아, 가까운 쪽 끝값과 함께 돌려준다. */
+  function findRangeLimits(inputs) {
+    const limits = [];
+    for (const field of FIELDS) {
+      const value = inputs[field.name], spec = PAYLOAD.model.spec[field.name];
+      if (field.type !== 'number' || typeof value !== 'number' || !Number.isFinite(value)) continue;
+      const bound = value < spec.min ? 'min' : (value > spec.max ? 'max' : null);
+      if (bound) limits.push({ field: field.name, method: 'training_range_limit', input_value: value, used_value: spec[bound], bound, training_min: spec.min, training_max: spec.max });
+    }
+    return limits;
+  }
+  /* 입력을 엔진으로 계산한다. 학습 범위 밖 숫자가 없으면 analyzeCase(inputs)의 반환값 그대로다.
+   *
+   * 엔진은 숫자 입력을 (값 − 학습 평균) ÷ 학습 표준편차 × 계수로 계산하므로, 학습 자료에 없던 크기의 값을 넣으면
+   * 내부값이 그만큼 계속 커지거나 작아져 점수가 0점이나 100점으로 쏠린다. 그래서 엔진의 입력 검사를 통과한 값 가운데
+   * 학습 범위 밖의 숫자는 범위 끝값으로 바꿔 analyzeCase에 넘긴다. 끝값은 payload에 기록된 값이고 새로 정한 숫자가 아니다.
+   * 반환값의 inputs와 warnings는 입력한 값 기준이며, 바꾼 내역은 range_limits에, 바꾸지 않았을 때의 계산값은
+   * without_range_limit에 남긴다. 범위 안의 입력은 손대지 않으므로 예시와 평가 자료의 계산은 달라지지 않는다. */
+  function analyzeInputs(inputs) {
+    const checked = validateInputs(inputs);   // 엔진의 입력 검사. 오류가 있으면 계산하지 않는다
+    if (!checked.valid) return { status: 'invalid', errors: checked.errors };
+    const limits = findRangeLimits(checked.inputs);
+    if (!limits.length) return { ...analyzeCase(inputs), range_limits: [], without_range_limit: null };
+
+    const limited = { ...checked.inputs }, byField = {};
+    for (const item of limits) { limited[item.field] = item.used_value; byField[item.field] = item; }
+    const result = analyzeCase(limited);
+    if (result.status !== 'ok') throw new Error('Range-limited inputs were rejected');
+    let unlimited = null;
+    try {
+      const raw = analyzeCase(inputs);
+      if (raw.status === 'ok') unlimited = { score: raw.score, probability: raw.probability, log_odds: raw.log_odds };
+    } catch (error) { unlimited = null; }   // 값이 지나치게 크면 엔진의 계산 점검에 걸려 구하지 못한다
+    return {
+      ...result,
+      inputs: checked.inputs,
+      warnings: checked.warnings,
+      contributions: result.contributions.map(row => (byField[row.field] ? { ...row, input_value: byField[row.field].input_value } : row)),
+      range_limits: limits,
+      without_range_limit: unlimited
+    };
+  }
+  /* 현재 입력을 계산하고 반환값으로 화면을 갱신한다. */
   function runAnalysis(options = {}) {
     const inputs = readInputs();
     let result;
-    try { result = analyzeCase(inputs); }
+    try { result = analyzeInputs(inputs); }
     catch (error) { failAnalysis([], '계산을 완료하지 못했습니다. 입력을 확인한 뒤 다시 시도해 주세요.'); return false; }
     if (result.status !== 'ok') { failAnalysis(result.errors || [], ''); return false; }
 
@@ -394,10 +437,14 @@
     $('meterThresholdLabel').textContent = `기준 ${threshold}점`;
     $('scoreMeter').setAttribute('aria-label', `모델 점수 ${scoreText(result.score)}점, 검토 기준 ${threshold}점, ${DECISION_LABEL[kind]}`);
   }
+  const boundLabel = bound => (bound === 'max' ? '최댓값' : '최솟값');
   function usedValueText(row) {
     const field = FIELD_MAP[row.field];
-    if (row.input_value !== null) return prettyValue(row.field, row.used_value);
-    return field.type === 'number' ? `미상 → 학습 자료 중앙값 ${prettyValue(row.field, row.used_value)} 사용` : '미상 → 미상 범주로 계산';
+    if (row.input_value === null) return field.type === 'number' ? `미상 → 학습 자료 중앙값 ${prettyValue(row.field, row.used_value)} 사용` : '미상 → 미상 범주로 계산';
+    if (row.input_value !== row.used_value) {   // 학습 범위 밖이어서 끝값으로 바꿔 계산한 숫자
+      return `${prettyValue(row.field, row.input_value)} → 학습 범위 ${boundLabel(row.used_value < row.input_value ? 'max' : 'min')} ${prettyValue(row.field, row.used_value)} 사용`;
+    }
+    return prettyValue(row.field, row.used_value);
   }
   function driverRow(row, direction, max) {
     const label = FIELD_MAP[row.field].label;
@@ -451,6 +498,7 @@
   }
   function renderProcessing() {
     const result = state.current, processed = result.input_processing, warnings = result.warnings;
+    const limits = result.range_limits, unlimited = result.without_range_limit;
     const missingChip = $('missingCount'), warningChip = $('warningCount');
     missingChip.textContent = processed.length ? `미상 처리 ${processed.length}건` : '미상 처리 없음';
     missingChip.className = 'chip' + (processed.length ? ' attention' : '');
@@ -466,12 +514,26 @@
         contribution ? el('p', { class: 'sub', text: `이 처리의 로그오즈 기여: ${signed(contribution.contribution, 3)}` }) : null);
     }) : [el('div', { class: 'processing ok' },
       el('strong', { text: '미상으로 처리한 입력이 없습니다.' }),
-      el('p', { text: `입력한 ${FIELD_NAMES.length}개 값을 그대로 계산에 사용했습니다.` }))]));
+      el('p', { text: limits.length
+        ? `학습 범위 밖 ${limits.length}개를 뺀 ${FIELD_NAMES.length - limits.length}개 값은 입력한 그대로 계산에 사용했습니다.`
+        : `입력한 ${FIELD_NAMES.length}개 값을 그대로 계산에 사용했습니다.` }))]));
     setChildren($('rangeWarnings'), ...warnings.map(warning => {
-      const spec = PAYLOAD.model.spec[warning.field];
+      const spec = PAYLOAD.model.spec[warning.field], limit = limits.find(item => item.field === warning.field);
       const range = spec && spec.type === 'number' ? ` (학습 자료 범위: ${nf(spec.min)}~${nf(spec.max)})` : '';
-      return el('p', { class: 'warning-item' }, icon('alert'), el('span', { text: warning.message + range }));
-    }));
+      return el('p', { class: 'warning-item' }, icon('alert'), el('span', null, warning.message + range,
+        limit ? el('span', { class: 'sub', text: `계산에는 입력한 ${prettyValue(limit.field, limit.input_value)} 대신 학습 범위의 ${boundLabel(limit.bound)}(${prettyValue(limit.field, limit.used_value)})을 사용했습니다.` }) : null));
+    }), limits.length ? el('p', { class: 'hint range-summary', text: unlimited
+      ? `범위를 제한하지 않고 입력한 값 그대로 계산하면 ${scoreText(unlimited.score)}점입니다. 학습 자료에 없던 크기의 값에 계수를 그대로 곱한 결과여서 모델 점수로 쓰지 않습니다.`
+      : '범위를 제한하지 않고 입력한 값 그대로는 값이 너무 커서 계산을 끝내지 못합니다.' }) : null);
+  }
+  /* 점수 바로 아래에, 범위 끝값으로 바꿔 계산한 입력이 있음을 알린다. */
+  function renderRangeNotice() {
+    const limits = state.current.range_limits, box = $('rangeNotice');
+    box.hidden = limits.length === 0;
+    if (!limits.length) { setChildren(box); return; }
+    setChildren(box, icon('alert'), el('span', null,
+      el('b', { text: `학습 범위 밖 입력 ${limits.length}개를 범위 끝값으로 바꿔 계산한 점수입니다. ` }),
+      limits.map(item => `${FIELD_MAP[item.field].label} ${prettyValue(item.field, item.input_value)} → ${prettyValue(item.field, item.used_value)}`).join(', ')));
   }
   function renderResult() {
     const result = state.current;
@@ -479,6 +541,7 @@
     $('scoreValue').textContent = scoreText(result.score);
     $('meterFill').style.width = Math.max(0, Math.min(100, result.score)) + '%';
     $('resultMeta').textContent = `분석 ID ${result.prediction_id} · ${timeText(result.analyzed_at)}`;
+    renderRangeNotice();
     renderRecommendation();
     renderChangeSummary();
     renderDrivers();
@@ -562,15 +625,18 @@
       source_row: sample ? sample.source_row : null,
       prediction_id: result.prediction_id,
       analyzed_at: result.analyzed_at,
-      inputs: copy(result.inputs),
-      prediction: { model_version: result.model_version, score: result.score, probability: result.probability, score_scale: '0-100; not calibrated real-world probability' },
+      inputs: copy(result.inputs),   // 입력한 값 그대로. 범위 끝값으로 바꾼 내역은 input_processing에 있다
+      prediction: {
+        model_version: result.model_version, score: result.score, probability: result.probability, score_scale: '0-100; not calibrated real-world probability',
+        range_limited: result.range_limits.length > 0, without_range_limit: copy(result.without_range_limit)
+      },
       review_policy: { threshold, recommendation: decision(result.score, threshold), provisional: true },
       explanation: {
         method: 'linear_logit_contribution_relative_to_training_transformed_mean', unit: 'log_odds',
         base: result.base_log_odds, contribution_sum: result.contribution_sum, log_odds: result.log_odds,
         reconstruction_error: result.reconstruction_error, contributions: copy(result.contributions)
       },
-      input_processing: copy(result.input_processing),
+      input_processing: [...copy(result.input_processing), ...copy(result.range_limits)],
       warnings: copy(result.warnings),
       review_records: copy(state.records.filter(record => record.case_id === state.caseId)),
       context: {
@@ -581,6 +647,7 @@
         modified_fields: modified,
         performance_source: 'separate held-out cross-validation',
         currency: 'original dataset units; not converted to KRW',
+        numeric_range_policy: 'numeric inputs outside the training range are scored at the nearest training-range bound; applied by the dashboard before calling the engine',
         storage: 'browser tab memory; no server persistence'
       }
     };
@@ -610,6 +677,8 @@
     else if (phase === 'blocked') banner.textContent = '입력 오류로 분석이 차단되었습니다. 현재 입력에 대한 결과가 없습니다.';
     else if (phase === 'empty') banner.textContent = '아직 분석 결과가 없습니다. 청구 분석 화면에서 입력을 분석하면 여기에 표시됩니다.';
     $('inputJson').textContent = result ? JSON.stringify(result.inputs, null, 2) : '분석한 입력이 없습니다.';
+    $('inputJsonHint').textContent = '마지막으로 분석에 성공한 입력입니다.' + (result && result.range_limits.length
+      ? ` 입력한 값 그대로이며, 학습 범위 밖 숫자 ${result.range_limits.length}개는 범위 끝값으로 바꿔 계산했습니다(결과 JSON의 input_processing 참고).` : '');
     $('outputJson').textContent = phase === 'fresh' ? JSON.stringify(makeExport(), null, 2) : '현재 입력을 다시 분석하면 표시됩니다.';
   }
   function runSelfCheck() {
@@ -790,6 +859,78 @@
       el('div', { class: 'eval-head' }, el('span', { text: label }), el('b', { text: `${value.toFixed(2)}건` })),
       el('div', { class: 'eval-track' }, el('div', { style: `width:${(value / max * 100).toFixed(2)}%;background:${color}` })));
   }
+  /* 두 모델의 결과가 비슷한 이유 (범위 A).
+     평가 폴드의 행을 피해 정도별로 묶어 그대로 센다. 표와 문장의 숫자는 모두 여기서 계산하며, 따로 적어 둔 값은 없다.
+     평균이 1건 넘게 벌어지거나, 행에 피해 정도가 없거나, 두 모델이 서로 다른 등급을 먼저 고르면 설명이 성립하지 않으므로
+     패널을 숨긴다. 패널을 보여 줬으면 true를 돌려준다. */
+  function buildSimilarity(context) {
+    const panel = $('similarityPanel'), rows = EVAL.rows, field = FIELD_MAP.incident_severity;
+    const points = value => (value * 100).toFixed(1), frauds = list => list.reduce((sum, row) => sum + row.label, 0);
+    if (!rows.length || !rows.every(row => typeof row.severity === 'string')) { panel.hidden = true; return false; }
+    const groups = new Map();
+    for (const row of rows) groups.set(row.severity, (groups.get(row.severity) || []).concat(row));
+    const levels = [...groups].map(([value, list]) => {
+      const scores = list.map(row => row.scores.Logistic).sort((x, y) => x - y), mid = Math.floor(scores.length / 2);
+      return {
+        value, label: optionLabel(field, value), n: list.length, frauds: frauds(list),
+        severityScores: [...new Set(list.map(row => row.scores.Severity))],
+        median: scores.length % 2 ? scores[mid] : (scores[mid - 1] + scores[mid]) / 2, min: scores[0], max: scores[scores.length - 1]
+      };
+    }).sort((x, y) => Math.max(...y.severityScores) - Math.max(...x.severityScores));
+    const top = levels[0], k = Math.min(40, gain.n);
+    // 24개 정보 모델이 점수가 높다고 본 k건 가운데, 손상 정도만 쓰는 모델이 가장 높게 보는 등급에 속한 건
+    const picked = [...rows].sort((x, y) => x.ranks.Logistic - y.ranks.Logistic).slice(0, k).filter(row => row.severity === top.value);
+    const usable = Math.abs(context.meanLogistic - context.meanSeverity) < 1 && levels.length >= 2 && picked.length * 2 >= k;
+    panel.hidden = !usable;
+    if (!usable) return false;
+
+    $('scopeSimilarity').textContent = context.scope;
+    setChildren($('severityTableHead'), el('tr', null,
+      el('th', { text: field.label }), el('th', { class: 'num', text: '시험 건수' }), el('th', { text: '그중 사기 표시' }),
+      SERIES.map(series => el('th', { class: 'num' }, el('span', { class: 'th-series' }, el('i', { style: `background:${series.color}` }), `${series.label}의 점수`)))));
+    setChildren($('severityTable'), levels.map(level => el('tr', null,
+      el('td', { text: level.label }),
+      el('td', { class: 'num', text: `${nf(level.n, 0)}건` }),
+      el('td', null, el('div', { class: 'rate', title: `${level.label}: ${nf(level.n, 0)}건 중 사기 표시 ${nf(level.frauds, 0)}건` },
+        el('span', null, el('b', { text: `${nf(level.frauds, 0)}건` }), ` · ${percent(level.frauds / level.n)}`),
+        el('span', { class: 'rate-track', 'aria-hidden': 'true' }, el('span', { style: `width:${(level.frauds / level.n * 100).toFixed(2)}%` })))),
+      el('td', { class: 'num' }, `중앙값 ${points(level.median)}점`, el('span', { class: 'sub', text: `${points(level.min)}~${points(level.max)}점` })),
+      el('td', { class: 'num' }, `${level.severityScores.map(points).join(', ')}점`,
+        el('span', { class: 'sub', text: level.severityScores.length === 1 ? `${nf(level.n, 0)}건 모두 같은 점수` : '점수가 여러 가지' })))));
+
+    const q = `‘${top.label}’`, restRates = levels.slice(1).map(level => level.frauds / level.n);
+    const pickedFrauds = frauds(picked), pickedRate = pickedFrauds / picked.length, topRate = top.frauds / top.n, better = pickedRate > topRate;
+    const reasons = [
+      [`사기 표시가 ${q} 청구에 몰려 있습니다.`,
+        `이 폴드의 사기 표시 ${nf(gain.total, 0)}건 가운데 ${nf(top.frauds, 0)}건(${percent(top.frauds / gain.total, 0)})이 ${q} 청구입니다. ` +
+        `${q} 청구는 ${nf(top.n, 0)}건 중 ${percent(topRate)}가 사기 표시이고, 나머지 등급은 ${percent(Math.min(...restRates))}~${percent(Math.max(...restRates))}입니다.`],
+      [`${SERIES[0].label}도 ${q} 청구에 높은 점수를 줍니다.`,
+        picked.length === k ? `이 모델의 점수가 높은 ${k}건은 모두 ${q} 청구입니다.` : `이 모델의 점수가 높은 ${k}건 가운데 ${picked.length}건이 ${q} 청구입니다.`],
+      [better ? '같은 등급 안에서 매긴 순서는 사기 표시를 조금 더 골라냈습니다.' : '같은 등급 안에서 매긴 순서는 사기 표시를 더 잘 골라내지 못했습니다.',
+        `그 ${picked.length}건 안의 사기 표시는 ${nf(pickedFrauds, 0)}건(${percent(pickedRate)})으로, ${q} 청구 전체의 비율 ${percent(topRate)}보다 ${better ? '높습니다' : '높지 않습니다'}. ` +
+        `같은 등급 안의 순서는 나머지 ${FIELDS.length - 1}개 입력이 정합니다.`]
+    ];
+    if (top.severityScores.length === 1 && k <= top.n) {   // 가장 높은 등급이 모두 동점이라, k건을 고르는 방법이 여러 가지다
+      reasons.push([`${SERIES[1].label}은 ${q} ${nf(top.n, 0)}건에 모두 같은 점수를 줍니다.`,
+        `그중 ${k}건을 고르면 어느 청구가 뽑히느냐에 따라 사기 표시가 ${Math.max(0, k - (top.n - top.frauds))}건에서 ${Math.min(k, top.frauds)}건까지 달라질 수 있습니다. ` +
+        `평가 자료에 기록된 순서로는 ${gain.gains.Severity[k]}건입니다.`]);
+    }
+    setChildren($('similarityReasons'), reasons.map(([lead, detail]) => el('li', null, el('b', { text: lead + ' ' }), detail)));
+    $('similarityInsight').textContent =
+      `그래서 같은 건수를 고르면 두 모델에 포함되는 사기 표시 수가 비슷합니다. 이 폴드에서 점수가 높은 ${k}건을 고르면 ${SERIES[0].label} ${gain.gains.Logistic[k]}건, ${SERIES[1].label} ${gain.gains.Severity[k]}건이고, ` +
+      `평가 ${context.runs}회 평균(범위 C, ${context.headline}건 기준)은 ${context.meanLogistic.toFixed(2)}건과 ${context.meanSeverity.toFixed(2)}건입니다. ` +
+      `${SERIES[0].label}은 청구마다 다른 점수와 입력별 영향 설명을 주지만, 이 평가 자료에서 사기 표시를 더 많이 찾아낸다고 말할 근거는 없습니다.`;
+    const distinct = key => new Set(rows.map(row => row.scores[key])).size;
+    setChildren($('modelDifferences'),
+      el('li', null, el('b', { text: `${SERIES[1].label} ` }),
+        `입력 1개(${field.label}). 이 폴드 ${nf(rows.length, 0)}건에 매긴 점수가 ${nf(distinct('Severity'), 0)}가지뿐이라 같은 등급의 청구는 모두 동점이고, 그 안에서는 우선순위를 정하지 못합니다.`),
+      el('li', null, el('b', { text: `${SERIES[0].label} ` }),
+        `입력 ${FIELDS.length}개. 이 폴드 ${nf(rows.length, 0)}건에 매긴 점수가 ${nf(distinct('Logistic'), 0)}가지여서 같은 등급 안에서도 순서가 정해지고, 청구 분석 화면처럼 입력별 영향을 설명할 수 있습니다.`));
+    $('similarityNote').textContent =
+      `평가 폴드 1개의 시험 ${nf(rows.length, 0)}건을 ${field.label}별로 다시 센 것이며, 성능을 새로 검증한 것이 아닙니다. ` +
+      `나머지 입력이 사기 표시와 원래 관계가 약한 것인지, 자료 ${nf(META.training_rows, 0)}건으로는 약한 관계를 찾기에 부족한 것인지는 이 자료로 구분할 수 없습니다.`;
+    return true;
+  }
   function buildEvaluation() {
     buildFoldGains();
     const runs = CV_DESIGN.folds * CV_DESIGN.repeats, baseRate = META.fraud_labels / META.training_rows;
@@ -855,10 +996,11 @@
       }),
       el('td', { class: 'num' }, `${(k * baseRate).toFixed(2)}건`, el('span', { class: 'sub', text: `${percent(baseRate)}가 사기 표시` })))));
     const a = meanAt('Logistic', headline).found, b = meanAt('Severity', headline).found;
+    const explained = buildSimilarity({ scope: scopeFold, runs, headline, meanLogistic: a, meanSeverity: b });
     $('budgetInsight').textContent =
       `${headline}건 기준으로 ${SERIES[0].label}은 평균 ${a.toFixed(2)}건, ${SERIES[1].label}은 평균 ${b.toFixed(2)}건입니다. ` +
       (Math.abs(a - b) < 1
-        ? '두 모델이 거의 비슷했습니다. 현재 결과로 복잡한 모델의 우월성을 주장하기는 어렵습니다.'
+        ? '두 모델이 거의 비슷했습니다. 현재 결과로 복잡한 모델의 우월성을 주장하기는 어렵습니다.' + (explained ? ' 그 이유는 아래 ‘두 모델의 결과가 비슷한 이유’에서 볼 수 있습니다.' : '')
         : '두 모델의 차이를 해석할 때는 평가 횟수와 자료 규모를 함께 고려해야 합니다.') +
       ` 무작위 선택 기대값은 전체 사기 표시 비율(${percent(baseRate)})에 건수를 곱한 계산값입니다.`;
 
@@ -1024,7 +1166,7 @@
   }
 
   /* 개발자 도구와 검증 스크립트에서 상태를 확인할 수 있도록 일부만 내보낸다. */
-  window.ClaimDashboard = { state, THRESHOLDS, readInputs, runAnalysis, makeExport, saveReview, loadCase, loadManual, switchView, currentThreshold, scoreText };
+  window.ClaimDashboard = { state, THRESHOLDS, readInputs, analyzeInputs, runAnalysis, makeExport, saveReview, loadCase, loadManual, switchView, currentThreshold, scoreText };
 
   init();
 })();

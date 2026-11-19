@@ -135,6 +135,7 @@ __STYLES__
                 <p id="resultSentence"></p>
               </div>
             </div>
+            <p id="rangeNotice" class="warning-item range-notice" hidden></p>
             <div class="meter" id="scoreMeter" role="img">
               <div class="meter-track">
                 <div class="meter-fill" id="meterFill"></div>
@@ -191,7 +192,7 @@ __STYLES__
               <div>
                 <span class="step">04 입력 처리</span>
                 <h2 id="qualityTitle">미상 입력 처리와 경고</h2>
-                <p>모르는 정보를 계산에 어떻게 넣었는지, 주의해서 볼 입력이 있는지 확인합니다.</p>
+                <p>모르는 정보와 학습 자료 범위 밖의 숫자를 계산에 어떻게 넣었는지, 주의해서 볼 입력이 있는지 확인합니다.</p>
               </div>
               <div class="chips"><span class="chip" id="missingCount"></span><span class="chip" id="warningCount"></span></div>
             </div>
@@ -292,6 +293,27 @@ __STYLES__
       </section>
     </div>
 
+    <section class="panel" id="similarityPanel" aria-labelledby="similarityTitle">
+      <span class="scope" id="scopeSimilarity"></span>
+      <div class="panel-head">
+        <div>
+          <h2 id="similarityTitle">두 모델의 결과가 비슷한 이유</h2>
+          <p>평가 폴드 한 개의 시험 예측값을 피해 정도별로 나누어 보면, 두 모델이 같은 청구에 높은 점수를 주는 것을 확인할 수 있습니다.</p>
+        </div>
+      </div>
+      <div class="table-scroll wide">
+        <table>
+          <thead id="severityTableHead"></thead>
+          <tbody id="severityTable"></tbody>
+        </table>
+      </div>
+      <ol class="reason-list" id="similarityReasons"></ol>
+      <p class="insight" id="similarityInsight"></p>
+      <h3 class="sub-heading">두 모델이 실제로 다른 점</h3>
+      <ul class="reason-list" id="modelDifferences"></ul>
+      <p class="hint" id="similarityNote"></p>
+    </section>
+
     <section class="panel" aria-labelledby="thresholdTitle">
       <span class="scope" id="scopeRepeat"></span>
       <div class="panel-head">
@@ -349,7 +371,7 @@ __STYLES__
     </section>
 
     <section class="panel" aria-labelledby="mappingTitle">
-      <div class="panel-head"><div><h2 id="mappingTitle">화면 영역과 값의 출처</h2><p>입력을 <code>analyzeCase(inputs)</code>에 전달하고, 반환값을 화면에 배치합니다. 저장할 때는 오른쪽 열의 구조로 옮겨 담습니다.</p></div></div>
+      <div class="panel-head"><div><h2 id="mappingTitle">화면 영역과 값의 출처</h2><p>입력을 <code>analyzeCase(inputs)</code>에 전달하고, 반환값을 화면에 배치합니다. 학습 자료 범위 밖의 숫자만 범위 끝값으로 바꿔 전달합니다. 저장할 때는 오른쪽 열의 구조로 옮겨 담습니다.</p></div></div>
       <div class="table-scroll wide">
         <table>
           <thead><tr><th>화면 영역</th><th>계산 엔진 반환값</th><th>저장 JSON 위치</th><th>뜻</th></tr></thead>
@@ -361,6 +383,7 @@ __STYLES__
             <tr><td>점수에 영향을 준 정보</td><td><code>contributions[]</code>, <code>base_log_odds</code>, <code>log_odds</code></td><td><code>explanation</code></td><td>입력별 로그오즈 기여와 기준값</td></tr>
             <tr><td>미상 입력 처리</td><td><code>input_processing[]</code></td><td><code>input_processing</code></td><td>빈칸·미상에 적용한 처리 방법과 사용한 값</td></tr>
             <tr><td>경고</td><td><code>warnings[]</code></td><td><code>warnings</code></td><td>학습 자료 범위를 벗어난 입력</td></tr>
+            <tr><td>학습 범위 밖 숫자</td><td>엔진 호출 전에 화면에서 처리</td><td><code>input_processing</code>, <code>prediction.without_range_limit</code></td><td>범위 끝값으로 바꿔 계산. 입력한 값과 바꾸지 않았을 때의 계산값을 함께 저장</td></tr>
             <tr><td>담당자 판단과 검토 메모</td><td>엔진과 무관</td><td><code>review_records[]</code></td><td>기록 당시의 입력·점수·기준과 메모</td></tr>
           </tbody>
         </table>
@@ -370,7 +393,7 @@ __STYLES__
     <div class="json-grid">
       <section class="panel" aria-labelledby="inputJsonTitle">
         <h2 id="inputJsonTitle">현재 분석에 사용한 입력</h2>
-        <p class="hint">마지막으로 분석에 성공한 입력입니다.</p>
+        <p class="hint" id="inputJsonHint">마지막으로 분석에 성공한 입력입니다.</p>
         <pre id="inputJson" tabindex="0"></pre>
       </section>
       <section class="panel" aria-labelledby="outputJsonTitle">

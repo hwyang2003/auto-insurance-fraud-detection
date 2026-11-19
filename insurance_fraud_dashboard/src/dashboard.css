@@ -338,7 +338,11 @@ body[data-phase="blocked"] .form-status::before { background: var(--danger); }
 .processing .sub { color: var(--muted); font-size: var(--fs-xs); }
 .processing.ok { border-left: 3px solid var(--accent-line); }
 .warning-item { display: flex; gap: 8px; margin-top: 8px; padding: 10px 14px; border: 1px solid var(--warn-line); border-radius: var(--radius-sm); background: var(--warn-soft); color: var(--warn-text); font-size: var(--fs-sm); }
-.warning-item .icon { margin-top: 3px; }
+.warning-item .icon { flex: none; margin-top: 3px; }
+.warning-item > span { min-width: 0; }
+.warning-item .sub { display: block; margin-top: 2px; }
+.range-notice { margin-top: 14px; }
+.range-summary { margin-top: 8px; }
 
 .review-panel textarea { display: block; min-height: 88px; margin-top: 8px; padding: 10px; line-height: 1.6; resize: vertical; }
 .note-meta { display: flex; justify-content: flex-end; margin-top: 4px; color: var(--muted); font-size: var(--fs-xs); font-variant-numeric: tabular-nums; }
@@ -390,6 +394,18 @@ body[data-phase="blocked"] .form-status::before { background: var(--danger); }
 #evaluationBars { margin-bottom: 16px; }
 .evaluation-notes ul { margin-top: 10px; padding-left: 20px; color: var(--ink-2); font-size: var(--fs-sm); }
 .evaluation-notes li + li { margin-top: 6px; }
+/* 두 모델의 결과가 비슷한 이유 */
+.th-series { display: inline-flex; align-items: center; gap: 6px; }
+.th-series i { display: inline-block; flex: none; width: 12px; height: 3px; border-radius: 2px; }
+.rate { min-width: 150px; font-variant-numeric: tabular-nums; }
+.rate-track { display: block; height: 8px; margin-top: 5px; border-radius: 0 4px 4px 0; background: #eef2f3; }
+.rate-track > span { display: block; height: 100%; min-width: 2px; border-radius: 0 4px 4px 0; background: var(--ink-2); }
+.reason-list { margin-top: 14px; padding-left: 20px; color: var(--ink-2); font-size: var(--fs-sm); }
+.reason-list li + li { margin-top: 6px; }
+.reason-list b { color: var(--ink); font-weight: 650; }
+.sub-heading { margin-top: 18px; }
+#modelDifferences { margin-top: 8px; }
+#similarityNote { margin-top: 12px; }
 
 /* ---------- 7) 연결 데이터 ---------- */
 #handoffView > .panel, #handoffView > .json-grid { margin-top: 16px; }

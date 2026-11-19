@@ -1,15 +1,15 @@
 {
   "kind": "browser_checks",
-  "executed_at": "2026-11-12T04:08:22.496Z",
-  "browser": "Chrome/158.0.8127.18 (headless)",
+  "executed_at": "2026-11-18T12:21:28.931Z",
+  "browser": "Chrome/158.0.8127.37 (headless)",
   "runtime": "Node.js v26.9.0",
   "html": {
     "file": "보험청구_관리자_대시보드.html",
-    "bytes": 186805,
-    "sha256": "962074794f538ec9320a76092cac7265f2502460e2c469de8a36d9a27adc1561"
+    "bytes": 202955,
+    "sha256": "14986d72b944008897c58301580b497623b743ba6a0bc7c5a84e4a12d4c621f1"
   },
   "status": "passed",
-  "passed": 56,
+  "passed": 62,
   "failed": 0,
   "not_executed": [
     "Safari, Firefox 등 다른 브라우저 엔진에서의 확인",
@@ -25,7 +25,7 @@
         "device_pixel_ratio": 1,
         "emulated_mobile": false
       },
-      "passed": 28,
+      "passed": 31,
       "failed": 0,
       "page_errors": [],
       "results": [
@@ -478,7 +478,7 @@
             ],
             "warning": {
               "phase": "fresh",
-              "text": "관련 차량 수 값이 학습 자료에서 본 범위 밖입니다. 입력과 예측 결과를 주의해서 확인하세요. (학습 자료 범위: 1~4)",
+              "text": "관련 차량 수 값이 학습 자료에서 본 범위 밖입니다. 입력과 예측 결과를 주의해서 확인하세요. (학습 자료 범위: 1~4)계산에는 입력한 9대 대신 학습 범위의 최댓값(4대)을 사용했습니다.범위를 제한하지 않고 입력한 값 그대로 계산하면 66.8점입니다. 학습 자료에 없던 크기의 값에 계수를 그대로 곱한 결과여서 모델 점수로 쓰지 않습니다.",
               "chip": "경고 1건"
             }
           }
@@ -541,7 +541,8 @@
             "added_context_keys": [
               "input_source",
               "inputs_match_sample",
-              "modified_fields"
+              "modified_fields",
+              "numeric_range_policy"
             ]
           }
         },
@@ -668,6 +669,231 @@
           }
         },
         {
+          "id": "U22",
+          "title": "학습 범위 밖 숫자는 범위 끝값으로 계산: 점수가 0점·100점으로 쏠리지 않고, 입력한 값과 바꾸지 않았을 때의 계산값을 남김",
+          "pass": true,
+          "detail": {
+            "engine_alone_goes_to_zero": true,
+            "scored_at_range_end": true,
+            "entered_value_kept": true,
+            "notice_next_to_score": true,
+            "warning_explains": true,
+            "does_not_claim_all_inputs_used_as_is": true,
+            "table_shows_both_values": true,
+            "no_horizontal_scroll": true,
+            "export_records_limit": true,
+            "data_view_notes_limit": true,
+            "review_record_keeps_entered_value": true,
+            "any_size_same_score": true,
+            "huge_value_handled": true,
+            "range_end_itself_untouched": true,
+            "two_fields": true,
+            "every_numeric_field_and_side": true,
+            "in_range_inputs_untouched": true,
+            "validation_first": true,
+            "score_at_range_end": 54.36961703305201,
+            "engine_alone_at_1000000": 0.00023325364466765175,
+            "sizes": [
+              {
+                "value": "23671",
+                "phase": "fresh",
+                "same_score": true,
+                "limits": 1
+              },
+              {
+                "value": "30000",
+                "phase": "fresh",
+                "same_score": true,
+                "limits": 1
+              },
+              {
+                "value": "500000",
+                "phase": "fresh",
+                "same_score": true,
+                "limits": 1
+              },
+              {
+                "value": "100000000000",
+                "phase": "fresh",
+                "same_score": true,
+                "limits": 1
+              }
+            ],
+            "sweep": [
+              {
+                "field": "number_of_vehicles_involved",
+                "side": "max",
+                "entered": 3004,
+                "used": 4,
+                "score": 61.33523708982159,
+                "ok": true
+              },
+              {
+                "field": "bodily_injuries",
+                "side": "max",
+                "entered": 2002,
+                "used": 2,
+                "score": 59.83309414600553,
+                "ok": true
+              },
+              {
+                "field": "witnesses",
+                "side": "max",
+                "entered": 3003,
+                "used": 3,
+                "score": 60.06885723818909,
+                "ok": true
+              },
+              {
+                "field": "injury_claim",
+                "side": "max",
+                "entered": 21471450,
+                "used": 21450,
+                "score": 42.03541911391221,
+                "ok": true
+              },
+              {
+                "field": "property_claim",
+                "side": "max",
+                "entered": 23693670,
+                "used": 23670,
+                "score": 54.36961703305201,
+                "ok": true
+              },
+              {
+                "field": "vehicle_claim",
+                "side": "min",
+                "entered": 0,
+                "used": 70,
+                "score": 34.597893932182664,
+                "ok": true
+              },
+              {
+                "field": "vehicle_claim",
+                "side": "max",
+                "entered": 79569560,
+                "used": 79560,
+                "score": 69.49544144557646,
+                "ok": true
+              },
+              {
+                "field": "months_as_customer",
+                "side": "max",
+                "entered": 479479,
+                "used": 479,
+                "score": 58.330817032566216,
+                "ok": true
+              },
+              {
+                "field": "policy_deductable",
+                "side": "min",
+                "entered": 0,
+                "used": 500,
+                "score": 56.58683885378475,
+                "ok": true
+              },
+              {
+                "field": "policy_deductable",
+                "side": "max",
+                "entered": 1502000,
+                "used": 2000,
+                "score": 60.4868505312,
+                "ok": true
+              },
+              {
+                "field": "policy_annual_premium",
+                "side": "min",
+                "entered": 0,
+                "used": 433.33,
+                "score": 61.68632932906466,
+                "ok": true
+              },
+              {
+                "field": "policy_annual_premium",
+                "side": "max",
+                "entered": 1616307.59,
+                "used": 2047.59,
+                "score": 55.35101174811604,
+                "ok": true
+              },
+              {
+                "field": "umbrella_limit",
+                "side": "max",
+                "entered": 11010000000,
+                "used": 10000000,
+                "score": 77.65816682289088,
+                "ok": true
+              },
+              {
+                "field": "capital-gains",
+                "side": "max",
+                "entered": 100600500,
+                "used": 100500,
+                "score": 56.18604205916042,
+                "ok": true
+              },
+              {
+                "field": "capital-loss",
+                "side": "min",
+                "entered": -111211100,
+                "used": -111100,
+                "score": 65.93676237291626,
+                "ok": true
+              }
+            ]
+          }
+        },
+        {
+          "id": "U23",
+          "title": "모델 평가 화면: ‘두 모델의 결과가 비슷한 이유’의 표와 문장이 평가 폴드 자료와 일치",
+          "pass": true,
+          "detail": {
+            "fold_counts_as_expected": true,
+            "panel_shown": true,
+            "table_head": true,
+            "table_rows": true,
+            "reasons": true,
+            "insight": true,
+            "differences": true,
+            "not_new_validation": true,
+            "pointer_from_mean_panel": true,
+            "wording": true,
+            "no_horizontal_scroll": true,
+            "levels": [
+              {
+                "label": "큰 손상",
+                "rows": 63,
+                "fraud_labels": 40,
+                "severity_model_score": 0.5875455744243394,
+                "logistic_median": 0.5299305608164423
+              },
+              {
+                "label": "전손",
+                "rows": 55,
+                "fraud_labels": 3,
+                "severity_model_score": 0.14801702849753764,
+                "logistic_median": 0.14435840816482137
+              },
+              {
+                "label": "경미한 손상",
+                "rows": 66,
+                "fraud_labels": 6,
+                "severity_model_score": 0.11317764962124094,
+                "logistic_median": 0.08141441715272768
+              },
+              {
+                "label": "아주 작은 손상",
+                "rows": 16,
+                "fraud_labels": 1,
+                "severity_model_score": 0.08038237310898708,
+                "logistic_median": 0.05579050129173384
+              }
+            ],
+            "top40_of_logistic_in_top_level": 40,
+            "fraud_labels_in_those": 24
+          }
+        },
+        {
           "id": "R1",
           "title": "실제 키 입력: 값을 고치면 재분석 필요 상태가 되고, Enter로 재분석됨",
           "pass": true,
@@ -708,7 +934,7 @@
             "has_inputs_and_score": true,
             "has_review_record": true,
             "file": "DEMO-001_DEMO-001-P0004_result.json",
-            "bytes": 7327
+            "bytes": 7560
           }
         },
         {
@@ -723,6 +949,18 @@
         },
         {
           "id": "R6",
+          "title": "실제 키 입력: 학습 범위 밖 금액(재물 청구액 1000000)을 넣어도 점수가 0점으로 떨어지지 않음",
+          "pass": true,
+          "detail": {
+            "analysed_as_typed": true,
+            "score_not_zero": true,
+            "explained_on_screen": true,
+            "shown_score": "54.4",
+            "score_if_engine_got_the_raw_value": 0.00023325364466765175
+          }
+        },
+        {
+          "id": "R7",
           "title": "외부 네트워크 요청 없음 (요청 기록 확인)",
           "pass": true,
           "detail": {
@@ -735,7 +973,7 @@
           }
         },
         {
-          "id": "R7",
+          "id": "R8",
           "title": "페이지 오류와 콘솔 오류 없음",
           "pass": true,
           "detail": {
@@ -744,7 +982,76 @@
           }
         }
       ],
-      "screenshots": null
+      "screenshots": {
+        "analysis": {
+          "page_height": 2491,
+          "files": [
+            "pc-1-analysis-01.png",
+            "pc-1-analysis-02.png",
+            "pc-1-analysis-03.png"
+          ]
+        },
+        "stale": {
+          "page_height": 2648,
+          "files": [
+            "pc-2-stale-01.png",
+            "pc-2-stale-02.png"
+          ]
+        },
+        "blocked": {
+          "page_height": 1976,
+          "files": [
+            "pc-3-blocked-01.png",
+            "pc-3-blocked-02.png"
+          ]
+        },
+        "manual": {
+          "page_height": 2740,
+          "files": [
+            "pc-4-manual-01.png",
+            "pc-4-manual-02.png"
+          ]
+        },
+        "range_limit": {
+          "page_height": 2786,
+          "files": [
+            "pc-9-range-limit-01.png",
+            "pc-9-range-limit-02.png"
+          ]
+        },
+        "detail": {
+          "page_height": 4031,
+          "files": [
+            "pc-5-detail-01.png",
+            "pc-5-detail-02.png",
+            "pc-5-detail-03.png",
+            "pc-5-detail-04.png",
+            "pc-5-detail-05.png"
+          ]
+        },
+        "evaluation": {
+          "page_height": 2774,
+          "files": [
+            "pc-6-evaluation-01.png",
+            "pc-6-evaluation-02.png",
+            "pc-6-evaluation-03.png"
+          ]
+        },
+        "handoff": {
+          "page_height": 3203,
+          "files": [
+            "pc-7-handoff-01.png",
+            "pc-7-handoff-02.png",
+            "pc-7-handoff-03.png",
+            "pc-7-handoff-04.png"
+          ]
+        },
+        "help": {
+          "files": [
+            "pc-8-help.png"
+          ]
+        }
+      }
     },
     {
       "name": "모바일 390×844 (기기 에뮬레이션)",
@@ -754,7 +1061,7 @@
         "device_pixel_ratio": 2,
         "emulated_mobile": true
       },
-      "passed": 28,
+      "passed": 31,
       "failed": 0,
       "page_errors": [],
       "results": [
@@ -1145,7 +1452,7 @@
                 "ok": true,
                 "offenders": [],
                 "crushed_table_cells": 0,
-                "table_scroll_hints": 1
+                "table_scroll_hints": 2
               },
               {
                 "state": "연결 데이터",
@@ -1207,7 +1514,7 @@
             ],
             "warning": {
               "phase": "fresh",
-              "text": "관련 차량 수 값이 학습 자료에서 본 범위 밖입니다. 입력과 예측 결과를 주의해서 확인하세요. (학습 자료 범위: 1~4)",
+              "text": "관련 차량 수 값이 학습 자료에서 본 범위 밖입니다. 입력과 예측 결과를 주의해서 확인하세요. (학습 자료 범위: 1~4)계산에는 입력한 9대 대신 학습 범위의 최댓값(4대)을 사용했습니다.범위를 제한하지 않고 입력한 값 그대로 계산하면 66.8점입니다. 학습 자료에 없던 크기의 값에 계수를 그대로 곱한 결과여서 모델 점수로 쓰지 않습니다.",
               "chip": "경고 1건"
             }
           }
@@ -1270,7 +1577,8 @@
             "added_context_keys": [
               "input_source",
               "inputs_match_sample",
-              "modified_fields"
+              "modified_fields",
+              "numeric_range_policy"
             ]
           }
         },
@@ -1397,6 +1705,231 @@
           }
         },
         {
+          "id": "U22",
+          "title": "학습 범위 밖 숫자는 범위 끝값으로 계산: 점수가 0점·100점으로 쏠리지 않고, 입력한 값과 바꾸지 않았을 때의 계산값을 남김",
+          "pass": true,
+          "detail": {
+            "engine_alone_goes_to_zero": true,
+            "scored_at_range_end": true,
+            "entered_value_kept": true,
+            "notice_next_to_score": true,
+            "warning_explains": true,
+            "does_not_claim_all_inputs_used_as_is": true,
+            "table_shows_both_values": true,
+            "no_horizontal_scroll": true,
+            "export_records_limit": true,
+            "data_view_notes_limit": true,
+            "review_record_keeps_entered_value": true,
+            "any_size_same_score": true,
+            "huge_value_handled": true,
+            "range_end_itself_untouched": true,
+            "two_fields": true,
+            "every_numeric_field_and_side": true,
+            "in_range_inputs_untouched": true,
+            "validation_first": true,
+            "score_at_range_end": 54.36961703305201,
+            "engine_alone_at_1000000": 0.00023325364466765175,
+            "sizes": [
+              {
+                "value": "23671",
+                "phase": "fresh",
+                "same_score": true,
+                "limits": 1
+              },
+              {
+                "value": "30000",
+                "phase": "fresh",
+                "same_score": true,
+                "limits": 1
+              },
+              {
+                "value": "500000",
+                "phase": "fresh",
+                "same_score": true,
+                "limits": 1
+              },
+              {
+                "value": "100000000000",
+                "phase": "fresh",
+                "same_score": true,
+                "limits": 1
+              }
+            ],
+            "sweep": [
+              {
+                "field": "number_of_vehicles_involved",
+                "side": "max",
+                "entered": 3004,
+                "used": 4,
+                "score": 61.33523708982159,
+                "ok": true
+              },
+              {
+                "field": "bodily_injuries",
+                "side": "max",
+                "entered": 2002,
+                "used": 2,
+                "score": 59.83309414600553,
+                "ok": true
+              },
+              {
+                "field": "witnesses",
+                "side": "max",
+                "entered": 3003,
+                "used": 3,
+                "score": 60.06885723818909,
+                "ok": true
+              },
+              {
+                "field": "injury_claim",
+                "side": "max",
+                "entered": 21471450,
+                "used": 21450,
+                "score": 42.03541911391221,
+                "ok": true
+              },
+              {
+                "field": "property_claim",
+                "side": "max",
+                "entered": 23693670,
+                "used": 23670,
+                "score": 54.36961703305201,
+                "ok": true
+              },
+              {
+                "field": "vehicle_claim",
+                "side": "min",
+                "entered": 0,
+                "used": 70,
+                "score": 34.597893932182664,
+                "ok": true
+              },
+              {
+                "field": "vehicle_claim",
+                "side": "max",
+                "entered": 79569560,
+                "used": 79560,
+                "score": 69.49544144557646,
+                "ok": true
+              },
+              {
+                "field": "months_as_customer",
+                "side": "max",
+                "entered": 479479,
+                "used": 479,
+                "score": 58.330817032566216,
+                "ok": true
+              },
+              {
+                "field": "policy_deductable",
+                "side": "min",
+                "entered": 0,
+                "used": 500,
+                "score": 56.58683885378475,
+                "ok": true
+              },
+              {
+                "field": "policy_deductable",
+                "side": "max",
+                "entered": 1502000,
+                "used": 2000,
+                "score": 60.4868505312,
+                "ok": true
+              },
+              {
+                "field": "policy_annual_premium",
+                "side": "min",
+                "entered": 0,
+                "used": 433.33,
+                "score": 61.68632932906466,
+                "ok": true
+              },
+              {
+                "field": "policy_annual_premium",
+                "side": "max",
+                "entered": 1616307.59,
+                "used": 2047.59,
+                "score": 55.35101174811604,
+                "ok": true
+              },
+              {
+                "field": "umbrella_limit",
+                "side": "max",
+                "entered": 11010000000,
+                "used": 10000000,
+                "score": 77.65816682289088,
+                "ok": true
+              },
+              {
+                "field": "capital-gains",
+                "side": "max",
+                "entered": 100600500,
+                "used": 100500,
+                "score": 56.18604205916042,
+                "ok": true
+              },
+              {
+                "field": "capital-loss",
+                "side": "min",
+                "entered": -111211100,
+                "used": -111100,
+                "score": 65.93676237291626,
+                "ok": true
+              }
+            ]
+          }
+        },
+        {
+          "id": "U23",
+          "title": "모델 평가 화면: ‘두 모델의 결과가 비슷한 이유’의 표와 문장이 평가 폴드 자료와 일치",
+          "pass": true,
+          "detail": {
+            "fold_counts_as_expected": true,
+            "panel_shown": true,
+            "table_head": true,
+            "table_rows": true,
+            "reasons": true,
+            "insight": true,
+            "differences": true,
+            "not_new_validation": true,
+            "pointer_from_mean_panel": true,
+            "wording": true,
+            "no_horizontal_scroll": true,
+            "levels": [
+              {
+                "label": "큰 손상",
+                "rows": 63,
+                "fraud_labels": 40,
+                "severity_model_score": 0.5875455744243394,
+                "logistic_median": 0.5299305608164423
+              },
+              {
+                "label": "전손",
+                "rows": 55,
+                "fraud_labels": 3,
+                "severity_model_score": 0.14801702849753764,
+                "logistic_median": 0.14435840816482137
+              },
+              {
+                "label": "경미한 손상",
+                "rows": 66,
+                "fraud_labels": 6,
+                "severity_model_score": 0.11317764962124094,
+                "logistic_median": 0.08141441715272768
+              },
+              {
+                "label": "아주 작은 손상",
+                "rows": 16,
+                "fraud_labels": 1,
+                "severity_model_score": 0.08038237310898708,
+                "logistic_median": 0.05579050129173384
+              }
+            ],
+            "top40_of_logistic_in_top_level": 40,
+            "fraud_labels_in_those": 24
+          }
+        },
+        {
           "id": "R1",
           "title": "실제 키 입력: 값을 고치면 재분석 필요 상태가 되고, Enter로 재분석됨",
           "pass": true,
@@ -1437,7 +1970,7 @@
             "has_inputs_and_score": true,
             "has_review_record": true,
             "file": "DEMO-001_DEMO-001-P0004_result.json",
-            "bytes": 7327
+            "bytes": 7560
           }
         },
         {
@@ -1452,6 +1985,18 @@
         },
         {
           "id": "R6",
+          "title": "실제 키 입력: 학습 범위 밖 금액(재물 청구액 1000000)을 넣어도 점수가 0점으로 떨어지지 않음",
+          "pass": true,
+          "detail": {
+            "analysed_as_typed": true,
+            "score_not_zero": true,
+            "explained_on_screen": true,
+            "shown_score": "54.4",
+            "score_if_engine_got_the_raw_value": 0.00023325364466765175
+          }
+        },
+        {
+          "id": "R7",
           "title": "외부 네트워크 요청 없음 (요청 기록 확인)",
           "pass": true,
           "detail": {
@@ -1464,7 +2009,7 @@
           }
         },
         {
-          "id": "R7",
+          "id": "R8",
           "title": "페이지 오류와 콘솔 오류 없음",
           "pass": true,
           "detail": {
@@ -1473,7 +2018,91 @@
           }
         }
       ],
-      "screenshots": null
+      "screenshots": {
+        "analysis": {
+          "page_height": 4979,
+          "files": [
+            "mobile-1-analysis-01.png",
+            "mobile-1-analysis-02.png",
+            "mobile-1-analysis-03.png",
+            "mobile-1-analysis-04.png",
+            "mobile-1-analysis-05.png"
+          ]
+        },
+        "stale": {
+          "page_height": 5229,
+          "files": [
+            "mobile-2-stale-01.png",
+            "mobile-2-stale-02.png",
+            "mobile-2-stale-03.png",
+            "mobile-2-stale-04.png",
+            "mobile-2-stale-05.png"
+          ]
+        },
+        "blocked": {
+          "page_height": 3885,
+          "files": [
+            "mobile-3-blocked-01.png",
+            "mobile-3-blocked-02.png",
+            "mobile-3-blocked-03.png",
+            "mobile-3-blocked-04.png"
+          ]
+        },
+        "manual": {
+          "page_height": 5234,
+          "files": [
+            "mobile-4-manual-01.png",
+            "mobile-4-manual-02.png"
+          ]
+        },
+        "range_limit": {
+          "page_height": 5396,
+          "files": [
+            "mobile-9-range-limit-01.png",
+            "mobile-9-range-limit-02.png",
+            "mobile-9-range-limit-03.png",
+            "mobile-9-range-limit-04.png",
+            "mobile-9-range-limit-05.png"
+          ]
+        },
+        "detail": {
+          "page_height": 6787,
+          "files": [
+            "mobile-5-detail-01.png",
+            "mobile-5-detail-02.png",
+            "mobile-5-detail-03.png",
+            "mobile-5-detail-04.png",
+            "mobile-5-detail-05.png",
+            "mobile-5-detail-06.png",
+            "mobile-5-detail-07.png"
+          ]
+        },
+        "evaluation": {
+          "page_height": 5163,
+          "files": [
+            "mobile-6-evaluation-01.png",
+            "mobile-6-evaluation-02.png",
+            "mobile-6-evaluation-03.png",
+            "mobile-6-evaluation-04.png",
+            "mobile-6-evaluation-05.png"
+          ]
+        },
+        "handoff": {
+          "page_height": 5338,
+          "files": [
+            "mobile-7-handoff-01.png",
+            "mobile-7-handoff-02.png",
+            "mobile-7-handoff-03.png",
+            "mobile-7-handoff-04.png",
+            "mobile-7-handoff-05.png"
+          ]
+        },
+        "help": {
+          "files": [
+            "mobile-8-help.png"
+          ]
+        }
+      }
     }
   ]
 }

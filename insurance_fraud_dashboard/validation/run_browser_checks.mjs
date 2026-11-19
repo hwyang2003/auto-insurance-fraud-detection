@@ -231,11 +231,28 @@ async function runProfile(cdp, profile, url, uiSource, sampleResult, downloadDir
     const facts = { had_record_before: before >= 1, records_gone: after.records === 0 && after.count === '0', default_state: after.case_id === 'DEMO-001' && after.threshold === 10 && after.score === '57.9' };
     return { pass: allTrue(facts), detail: facts };
   });
-  await check('R6', '외부 네트워크 요청 없음 (요청 기록 확인)', async () => {
+  await check('R6', '실제 키 입력: 학습 범위 밖 금액(재물 청구액 1000000)을 넣어도 점수가 0점으로 떨어지지 않음', async () => {
+    await page.type('#field-property_claim', '1000000');
+    await page.pressEnter();
+    const after = await page.evaluate(`(() => {
+      const s = ClaimDashboard.state, c = s.current, base = PAYLOAD.cases.find(x => x.id === 'DEMO-001').inputs, notice = document.getElementById('rangeNotice');
+      return { case_id: s.caseId, phase: s.phase, entered: c.inputs.property_claim, shown: document.getElementById('scoreValue').textContent, score: c.score,
+        at_range_end: analyzeCase({ ...base, property_claim: PAYLOAD.model.spec.property_claim.max }).score, engine_alone: analyzeCase({ ...base, property_claim: 1000000 }).score,
+        notice: notice.hidden ? '' : notice.textContent, warnings: document.getElementById('rangeWarnings').textContent, pill: document.getElementById('recommendation').textContent.trim(),
+        save_disabled: document.getElementById('saveReview').disabled };
+    })()`);
+    const facts = {
+      analysed_as_typed: after.case_id === 'DEMO-001' && after.phase === 'fresh' && after.entered === 1000000 && !after.save_disabled,
+      score_not_zero: after.shown === '54.4' && after.score === after.at_range_end && after.engine_alone < 0.001 && after.pill === '추가 확인 권고',
+      explained_on_screen: after.notice.includes('재물 청구액 1,000,000 → 23,670') && after.warnings.includes('학습 자료 범위: 0~23,670') && after.warnings.includes('최댓값(23,670)')
+    };
+    return { pass: allTrue(facts), detail: { ...facts, shown_score: after.shown, score_if_engine_got_the_raw_value: after.engine_alone } };
+  });
+  await check('R7', '외부 네트워크 요청 없음 (요청 기록 확인)', async () => {
     const external = page.log.requests.filter(request => !/^(file:|data:|blob:|about:)/.test(request));
     return { pass: external.length === 0 && page.log.requests.some(request => request.startsWith('file:')), detail: { external_requests: external, request_kinds: [...new Set(page.log.requests.map(request => request.split(':')[0]))], total_requests: page.log.requests.length } };
   });
-  await check('R7', '페이지 오류와 콘솔 오류 없음', async () => ({ pass: page.log.exceptions.length === 0 && page.log.console_errors.length === 0, detail: { exceptions: page.log.exceptions, console_errors: page.log.console_errors } }));
+  await check('R8', '페이지 오류와 콘솔 오류 없음', async () => ({ pass: page.log.exceptions.length === 0 && page.log.console_errors.length === 0, detail: { exceptions: page.log.exceptions, console_errors: page.log.console_errors } }));
 
   // 3) 화면 캡처 (선택)
   let shots = null;
@@ -251,6 +268,9 @@ async function runProfile(cdp, profile, url, uiSource, sampleResult, downloadDir
     shots.blocked = await page.captureSegments(`${key}-3-blocked`, segment, profile.mobile ? 5 : 2);
     await page.evaluate(`(() => { document.getElementById('newManual').click(); document.activeElement.blur(); window.scrollTo(0, 0); })()`);
     shots.manual = await page.captureSegments(`${key}-4-manual`, segment, 2);
+    await page.reload();
+    await page.evaluate(`(() => { const n = document.getElementById('field-property_claim'); n.value = '1000000'; n.dispatchEvent(new Event('input', { bubbles: true })); document.getElementById('analyzeButton').click(); document.activeElement.blur(); window.scrollTo(0, 0); })()`);
+    shots.range_limit = await page.captureSegments(`${key}-9-range-limit`, segment, profile.mobile ? 6 : 2);
     await page.reload();
     await page.evaluate(`(() => { ClaimDashboard.loadCase('DEMO-002'); document.getElementById('allDetails').open = true; document.querySelector('label[for="review-additional"]').click(); const note = document.getElementById('reviewNote'); note.value = '충돌 방향과 경찰 보고서 확보 여부를 확인한 뒤 다시 검토'; note.dispatchEvent(new Event('input', { bubbles: true })); document.getElementById('saveReview').click(); window.scrollTo(0, 0); })()`);
     shots.detail = await page.captureSegments(`${key}-5-detail`, segment, 8);
