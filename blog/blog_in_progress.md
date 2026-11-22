@@ -1,6 +1,6 @@
 # Predictive Analytics for Auto Insurance Fraud Detection: A Machine Learning Benchmark and Resource Optimization Study
 
-> **Blog in progress** — ITE351 group project (Option A), draft of 19 November 2026.
+> **Blog in progress** — ITE351 group project (Option A), draft of 22 November 2026.
 > Sections I, II and IV describe what we have done so far. Sections III, V and VI are outlines that we will complete as the remaining experiments finish.
 
 ## Members
@@ -40,7 +40,7 @@ This project studies auto insurance fraud detection from that resource-constrain
 
 ## II. Datasets
 
-We use a public auto insurance claims dataset from Kaggle. **[TODO: add the dataset name and link.]**
+We use the public Kaggle dataset *Auto Insurance Claims Data*: [https://www.kaggle.com/datasets/buntyshah/auto-insurance-claims-data](https://www.kaggle.com/datasets/buntyshah/auto-insurance-claims-data)
 
 - The data has 1,000 claims, one row per claim.
 - Each claim carries a fraud label recorded in the dataset. 247 claims (24.7%) are labeled as fraud and 753 are not.
@@ -77,7 +77,7 @@ We use a public auto insurance claims dataset from Kaggle. **[TODO: add the data
 
 ### Things we noticed in the data
 
-- **Unknown values.** `collision_type`, `property_damage` and `police_report_available` contain unknown entries. We keep *unknown* as its own category instead of replacing it with a guessed value. **[TODO: add how many rows are unknown in each column.]**
+- **Unknown values.** Three features contain unknown entries: `collision_type` in 178 of the 1,000 rows (17.8%), `property_damage` in 360 (36.0%) and `police_report_available` in 343 (34.3%). We keep *unknown* as its own category instead of replacing it with a guessed value.
 - **"None" is not missing.** `authorities_contacted` has a category `None`, which means that no authority was contacted. That is real information, so we keep it separate from missing values. In the same way, a numeric 0 (for example zero witnesses) is a value and is not treated as blank.
 - **Units.** Claim amounts, premium, deductible, umbrella limit and capital gains or losses are in the dataset's original units. We do not convert them to KRW.
 - **Signs.** `capital-loss` is stored as a negative number (from -111,100 to 0).
