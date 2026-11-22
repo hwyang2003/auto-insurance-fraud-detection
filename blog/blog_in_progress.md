@@ -1,7 +1,7 @@
 # Predictive Analytics for Auto Insurance Fraud Detection: A Machine Learning Benchmark and Resource Optimization Study
 
 > **Blog in progress** — ITE351 group project (Option A), draft of 22 November 2026.
-> Sections I, II and IV describe what we have done so far. Sections III, V and VI are outlines that we will complete as the remaining experiments finish.
+> Sections I to V describe what we have done so far. Section VI is a preliminary conclusion that we will revise for the final version.
 
 ## Members
 
@@ -35,8 +35,8 @@ This project studies auto insurance fraud detection from that resource-constrain
 | Logistic regression and a severity-only baseline | Done |
 | Repeated cross-validation with top-K and threshold analysis | First version done (Section IV) |
 | Review-support dashboard prototype | Working prototype (Section III) |
-| Additional classifiers (SVC, Random Forest, XGBoost, LightGBM) | Planned in the proposal **[TODO: update status]** |
-| Comparison of missing-value handling methods | Planned in the proposal **[TODO: update status]** |
+| Additional classifiers | Completed. We evaluated SVC, Random Forest, XGBoost and LightGBM on the same five test folds as the two baselines (Section IV). |
+| Missing-value handling | Completed. We compared three ways of handling unknown entries with Random Forest and Gradient Boosting (Section IV). |
 
 ## II. Datasets
 
@@ -44,7 +44,7 @@ We use the public Kaggle dataset *Auto Insurance Claims Data*: [https://www.kagg
 
 - The data has 1,000 claims, one row per claim.
 - Each claim carries a fraud label recorded in the dataset. 247 claims (24.7%) are labeled as fraud and 753 are not.
-- So far we use 24 input features: 13 numeric (5 of them integer-valued) and 11 categorical. They are listed in Table 1. **[TODO: describe the remaining columns of the raw file and why they are not used yet.]**
+- So far we use 24 input features: 13 numeric (5 of them integer-valued) and 11 categorical. They are listed in Table 1, and the columns we left out are listed after it.
 
 *Table 1. The 24 input features used so far.*
 
@@ -75,9 +75,19 @@ We use the public Kaggle dataset *Auto Insurance Claims Data*: [https://www.kagg
 | Insured profile | `capital-gains` | numeric | 0 to 100,500 (median 0) |
 | Insured profile | `capital-loss` | numeric | -111,100 to 0 (median -23,250) |
 
+The raw file contains 40 columns. We used 24 as inputs and one (`fraud_reported`) as the outcome. For the other 15 columns we followed the exclusion list of the original notebook, the Kaggle notebook we started from (Section V):
+
+| Columns omitted | Description and reason |
+|---|---|
+| `policy_number`, `_c39` | A unique policy identifier and an entirely empty column. |
+| `total_claim_amount`, `age` | The total equals the sum of the three claim amounts in every row. Age also overlaps strongly with customer tenure (correlation about 0.92). |
+| `policy_bind_date`, `incident_date` | Policy start and accident dates. We kept dates out of the baseline inputs and used the accident date separately for a chronological evaluation. |
+| `policy_state`, `insured_zip`, `incident_location`, `incident_state`, `incident_city` | Policyholder and accident location fields. We retained the original notebook's baseline choice. |
+| `insured_hobbies`, `auto_make`, `auto_model`, `auto_year` | Hobbies and vehicle details. We kept these out of the baseline and tested hobbies separately. |
+
 ### Things we noticed in the data
 
-- **Unknown values.** Three features contain unknown entries: `collision_type` in 178 of the 1,000 rows (17.8%), `property_damage` in 360 (36.0%) and `police_report_available` in 343 (34.3%). We keep *unknown* as its own category instead of replacing it with a guessed value.
+- **Unknown values.** Three features contain unknown entries: `collision_type` in 178 of the 1,000 rows (17.8%), `property_damage` in 360 (36.0%) and `police_report_available` in 343 (34.3%). We keep *unknown* as its own category instead of replacing it with a guessed value, and Section IV compares this choice with two alternatives.
 - **"None" is not missing.** `authorities_contacted` has a category `None`, which means that no authority was contacted. That is real information, so we keep it separate from missing values. In the same way, a numeric 0 (for example zero witnesses) is a value and is not treated as blank.
 - **Units.** Claim amounts, premium, deductible, umbrella limit and capital gains or losses are in the dataset's original units. We do not convert them to KRW.
 - **Signs.** `capital-loss` is stored as a negative number (from -111,100 to 0).
@@ -86,14 +96,13 @@ We use the public Kaggle dataset *Auto Insurance Claims Data*: [https://www.kagg
 
 The fraud label is the label that comes with the dataset. We take it as given and cannot verify how it was assigned.
 
-## III. Methodology (outline)
+## III. Methodology
 
-This section is still being written. The following parts are already fixed.
-
-- **Preprocessing.** For numeric features, missing values are filled with the training median and the feature is standardized with the training mean and standard deviation. Categorical features get one coefficient per category, with *unknown* as a separate category where it occurs.
-- **Models so far.** (1) Logistic regression on the 24 features. It is a transparent starting point: its score decomposes exactly into per-feature contributions in log-odds. (2) A baseline that uses only `incident_severity`.
+- **Preprocessing for the logistic regression.** For numeric features, missing values are filled with the training median and the feature is standardized with the training mean and standard deviation. Categorical features get one coefficient per category, with *unknown* as a separate category where it occurs.
+- **Baseline models.** (1) Logistic regression on the 24 features. It is a transparent starting point: its score decomposes exactly into per-feature contributions in log-odds. (2) A baseline that uses only `incident_severity`.
 - **Evaluation protocol.** 5-fold cross-validation repeated 3 times, which gives 15 train/test runs. Each run trains on 800 claims and tests on the other 200. Claims in the test fold are ranked by predicted score, and we count how many fraud labels fall in the top K.
-- **To be added.** SVC, Random Forest, XGBoost and LightGBM, their hyperparameters, and the missing-value handling variants. **[TODO]**
+- **Additional classifiers.** We ran SVC, Random Forest, XGBoost and LightGBM with fixed settings on the five folds of the first repeat (800 training and 200 test claims per fold). SVC used an RBF kernel with C = 1 and gamma = scale. Random Forest used 140 trees with maximum depth 10 and entropy splits. XGBoost used 100 trees with maximum depth 3. LightGBM used 100 trees with up to 15 leaves. Both boosting models used a learning rate of 0.1.
+- **Missing-value variants.** For the three columns containing unknown entries, we compared filling with the most common training value, keeping an unknown category, and dropping all three columns. We fitted Random Forest and Gradient Boosting on the same five splits and counted false positives at a score threshold of 0.50.
 
 ### Prototype: a review-support dashboard
 
@@ -112,25 +121,25 @@ We built a single-file, offline dashboard (HTML, CSS and JavaScript; no server).
 All numbers below come from cross-validation predictions on claims that the model did not see during training. They are computed on three different scopes, and we name the scope each time.
 
 - **Scope A** is one evaluation fold: 200 test claims, 50 of them labeled fraud.
-- **Scope B** is the first repeat of cross-validation: out-of-fold predictions for all 1,000 claims, 247 of them labeled fraud.
+- **Scope B** is the first repeat of cross-validation: out-of-fold predictions for all 1,000 claims, 247 of them labeled fraud. Its five test folds are also the folds used for the classifier benchmark and the missing-value comparison.
 - **Scope C** is the mean over all 15 runs, with 200 test claims per run.
 
 ### 1. How many fraud labels are in the top K? (Scope C)
 
 We rank the 200 test claims by score, select the top K, and count the fraud labels among them. Random selection is expected to find K × 24.7%.
 
-*Table 2. Fraud labels among the K highest-scored claims, mean over 15 runs.*
+*Table 2. Fraud labels among the K highest-scored claims: mean ± sample standard deviation over 15 runs.*
 
 | Claims selected (K) | Share of test fold | Logistic regression (24 features) | Severity-only baseline | Random selection (expected) |
 |--:|--:|--:|--:|--:|
-| 10 | 5% | 6.00 (60.0%) | 6.07 (60.7%) | 2.47 |
-| 20 | 10% | 12.20 (61.0%) | 11.80 (59.0%) | 4.94 |
-| 40 | 20% | 24.20 (60.5%) | 24.27 (60.7%) | 9.88 |
-| 60 | 30% | 32.93 (54.9%) | 33.47 (55.8%) | 14.82 |
+| 10 | 5% | 6.00 ± 1.41 (60.0%) | 6.07 ± 1.67 (60.7%) | 2.47 |
+| 20 | 10% | 12.20 ± 1.82 (61.0%) | 11.80 ± 2.01 (59.0%) | 4.94 |
+| 40 | 20% | 24.20 ± 2.37 (60.5%) | 24.27 ± 2.46 (60.7%) | 9.88 |
+| 60 | 30% | 32.93 ± 1.49 (54.9%) | 33.47 ± 1.68 (55.8%) | 14.82 |
 
-The percentage in parentheses is the share of the selected claims that are labeled fraud (precision in the top K).
+Each entry is the mean number of fraud labels found ± the sample standard deviation across the 15 test folds. The same 1,000 claims recur across repeats, so the standard deviation describes variation across splits. The percentage in parentheses is the share of the selected claims that are labeled fraud (precision in the top K).
 
-Selecting the 40 highest-scored claims out of 200 captures about 24 fraud labels, where random selection would be expected to find about 10. For K up to 40 both models find roughly 2.4 to 2.5 times as many as random selection, and 2.2 to 2.3 times at K = 60. The two models are practically indistinguishable: 24.20 against 24.27 at K = 40.
+Selecting the 40 highest-scored claims out of 200 captures about 24 fraud labels, where random selection would be expected to find about 10. For K up to 40 both models find roughly 2.4 to 2.5 times as many as random selection, and 2.2 to 2.3 times at K = 60. The two models are practically indistinguishable: 24.20 against 24.27 at K = 40. At every K the two means differ by about half a label or less, which is smaller than the fold-to-fold standard deviations (1.4 to 2.5 labels).
 
 ### 2. Cumulative gain on one fold (Scope A)
 
@@ -183,21 +192,62 @@ We grouped the 200 test claims of one fold by `incident_severity`.
 
 So both models select the same kind of claim first, and the number of fraud labels in the top K comes out nearly the same. The 24-feature model does give every claim its own score (200 distinct scores in this fold, against 4 for the baseline) and an explanation of which inputs moved it. On this evaluation data, however, we have no evidence that it finds more fraud labels than the one-feature baseline.
 
-### 5. What this means and what is next
+### 5. Classifier benchmark at a threshold of 0.50 (Scope B folds)
 
-- A one-feature baseline is hard to beat on this dataset. We plan to compare every further model with the severity-only baseline and not only with random selection.
-- The useful question for the remaining models is whether they can rank claims inside the Major Damage group better than chance.
-- The results we have so far are means over 15 runs. We will add the spread across runs before reading anything into small differences.
-- The precision, recall and F1 benchmark across classifiers and the comparison of missing-value handling methods are still to come. **[TODO]**
+Precision, recall and F1 below are means of five test-fold scores at a threshold of 0.50. Both baselines were evaluated on the same five folds for this comparison. Table 4 pools the 1,000 predictions before computing its metrics (precision 60.5% for logistic regression at 0.50), whereas Table 6 averages the five per-fold values (0.617), so the two differ slightly.
 
-**Limitations so far.** The same 1,000 claims are re-split many times, so this is not a test on new data. The fraud label is the dataset's label and not the outcome of an investigation. Scores are model outputs and not calibrated probabilities. We cannot yet tell whether the other 23 features carry little signal or whether 1,000 rows are too few to find a weak one.
+*Table 6. Precision, recall and F1 at a threshold of 0.50, mean of five test folds.*
 
-## V. Related Work (to be written)
+| Model | Precision | Recall | F1 |
+|---|--:|--:|--:|
+| Logistic regression (24 features) | 0.617 | 0.490 | 0.541 |
+| Severity-only baseline | 0.608 | 0.676 | 0.637 |
+| SVC | 0.592 | 0.442 | 0.495 |
+| Random Forest | 0.589 | 0.434 | 0.493 |
+| XGBoost | 0.583 | 0.429 | 0.484 |
+| LightGBM | 0.595 | 0.462 | 0.512 |
 
-Tools used so far: Python for the modeling **[TODO: list the libraries]**. The dashboard is plain HTML, CSS and JavaScript built into a single file by a script that uses only the Python standard library, and its behavior is checked with Node.js and headless Chrome.
+At the 0.50 threshold, the severity-only baseline had the highest mean F1 of the six models shown (0.637), and the highest F1 in each of the five folds. Among the four additional classifiers, LightGBM had the highest mean F1 (0.512).
 
-**[TODO: add the papers, blogs and documentation we relied on.]**
+Two things should be kept in mind when reading Table 6. First, at this threshold the baseline amounts to flagging the Major Damage claims: it flags 276 of the 1,000 claims, the number of Major Damage claims in the data, whereas the other five models flag between 184 and 200. Its higher recall therefore comes with more claims to review. Second, the F1 of each additional classifier varies widely from fold to fold (for example from 0.41 to 0.59 for XGBoost), far more than the gap between their means (0.484 to 0.512), so we do not rank the four against each other.
 
-## VI. Conclusion: Discussion (to be written)
+### 6. Missing-value handling and false positives (Scope B)
 
-To be written after the benchmark is complete. A preliminary observation is that, for deciding which claims to review first, the severity of the incident carries most of the signal in this dataset, and a more complex model has to prove its value against that simple rule.
+For the three columns with unknown entries we compared three ways of handling them (Section III). Each row of Table 7 covers the same 1,000 held-out predictions from the first repeat, including 753 claims without a fraud label. A false positive is one of those 753 claims flagged for review at a threshold of 0.50. F1 is the mean across the five folds.
+
+*Table 7. False positives under three ways of handling unknown entries, at a threshold of 0.50.*
+
+| Model | Handling of unknowns | False positives / 753 | False-positive rate | Mean F1 |
+|---|---|--:|--:|--:|
+| Random Forest | Most common value | 78 / 753 | 10.4% | 0.449 |
+| Random Forest | Unknown category | 77 / 753 | 10.2% | 0.493 |
+| Random Forest | Drop the three columns | 78 / 753 | 10.4% | 0.499 |
+| Gradient Boosting | Most common value | 83 / 753 | 11.0% | 0.511 |
+| Gradient Boosting | Unknown category | 87 / 753 | 11.6% | 0.495 |
+| Gradient Boosting | Drop the three columns | 89 / 753 | 11.8% | 0.510 |
+
+Random Forest flagged 77 or 78 non-fraud-labeled claims across the three methods. For Gradient Boosting, filling with the most common training value produced the fewest false positives (83), compared with 87 for the unknown category and 89 after dropping the columns. The largest gap between methods is 6 claims out of 753 (0.8 percentage points), and mean F1 does not favor the same method for both models, so we do not see a clear effect of the handling method on this data.
+
+### 7. What this means and what is next
+
+- A one-feature baseline is hard to beat on this dataset. At a threshold of 0.50 none of the four additional classifiers reached the mean F1 of the severity-only baseline (Table 6), so we compare every model with that baseline and not only with random selection.
+- Table 6 compares the classifiers at a single threshold. The next test is whether the additional classifiers can rank claims inside the Major Damage group better than chance, using the same top-K evaluation as Table 2.
+- Table 2 shows the spread across the 15 runs, and the differences between the two baselines are smaller than that spread. Tables 6 and 7 are means over five folds and should be read with the same caution.
+
+**Limitations so far.** The same 1,000 claims are re-split many times, so this is not a test on new data. The fraud label is the dataset's label and not the outcome of an investigation. Scores are model outputs and not calibrated probabilities. The additional classifiers were run with fixed settings and compared at one threshold. We cannot yet tell whether the other 23 features carry little signal or whether 1,000 rows are too few to find a weak one.
+
+## V. Related Work
+
+### Tools and libraries
+
+We used pandas and NumPy for data preparation, scikit-learn for preprocessing and cross-validation, and XGBoost, LightGBM and CatBoost for additional classifiers. We used Matplotlib, seaborn and missingno for plots and missing-data inspection. The benchmark runs behind Tables 6 and 7 used Python 3.12 with scikit-learn 1.9.1, XGBoost 3.4.1 and LightGBM 4.7.0.
+
+The dashboard is plain HTML, CSS and JavaScript built into a single file by a script that uses only the Python standard library, and its behavior is checked with Node.js and headless Chrome.
+
+### Sources we relied on
+
+We used [Nitesh Yadav's Kaggle notebook](https://www.kaggle.com/code/niteshyadav3103/insurance-fraud-detection-using-12-models) as our starting point. The [Fraud Detection Handbook](https://fraud-detection-handbook.github.io/fraud-detection-handbook/Chapter_4_PerformanceMetrics/TopKBased.html) informed our choice to evaluate a fixed review budget. We followed scikit-learn's guidance on [fitting preprocessing within training folds](https://scikit-learn.org/stable/common_pitfalls.html) and [choosing a decision threshold](https://scikit-learn.org/stable/modules/classification_threshold.html).
+
+## VI. Conclusion: Discussion (preliminary)
+
+With capacity to review 40 of 200 claims, the 24-feature model and the severity-only baseline each selected about 24 fraud labels on average, compared with about 10 expected from random review. For deciding which claims to review first, the severity of the incident carries most of the signal in this dataset, and a more complex model has to prove its value against that simple rule. A useful next test is whether the additional classifiers can rank claims within the Major Damage group more effectively.

@@ -202,6 +202,7 @@ table { width: 100%; margin: 6pt 0 12pt; border-collapse: collapse; font-size: 9
 th, td { padding: 4pt 6pt; border: 1px solid #c3ccd1; text-align: left; vertical-align: top; }
 th { background: #f0f3f4; font-weight: 650; }
 tr { break-inside: avoid; }
+td[style*="text-align:right"] { white-space: nowrap; }
 table.keep { break-inside: avoid; }
 code { padding: 0 3pt; border-radius: 3px; background: #eef2f3; font: 8.5pt ui-monospace, Menlo, Consolas, monospace; }
 blockquote { margin: 0 0 10pt; padding: 7pt 10pt; border-left: 3px solid #a9d2c6; background: #f3f8f6; color: #23483f; }
