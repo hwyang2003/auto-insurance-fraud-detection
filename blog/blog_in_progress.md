@@ -1,6 +1,6 @@
 # Predictive Analytics for Auto Insurance Fraud Detection: A Machine Learning Benchmark and Resource Optimization Study
 
-> **Blog in progress** — ITE351 group project (Option A), draft of 22 November 2026.
+> **Blog in progress** — ITE351 group project (Option A), draft of 23 November 2026.
 > Sections I to V describe what we have done so far. Section VI is a preliminary conclusion that we will revise for the final version.
 
 ## Members
@@ -102,7 +102,7 @@ The fraud label is the label that comes with the dataset. We take it as given an
 - **Baseline models.** (1) Logistic regression on the 24 features. It is a transparent starting point: its score decomposes exactly into per-feature contributions in log-odds. (2) A baseline that uses only `incident_severity`.
 - **Evaluation protocol.** 5-fold cross-validation repeated 3 times, which gives 15 train/test runs. Each run trains on 800 claims and tests on the other 200. Claims in the test fold are ranked by predicted score, and we count how many fraud labels fall in the top K.
 - **Additional classifiers.** We ran SVC, Random Forest, XGBoost and LightGBM with fixed settings on the five folds of the first repeat (800 training and 200 test claims per fold). SVC used an RBF kernel with C = 1 and gamma = scale. Random Forest used 140 trees with maximum depth 10 and entropy splits. XGBoost used 100 trees with maximum depth 3. LightGBM used 100 trees with up to 15 leaves. Both boosting models used a learning rate of 0.1.
-- **Missing-value variants.** For the three columns containing unknown entries, we compared filling with the most common training value, keeping an unknown category, and dropping all three columns. We fitted Random Forest and Gradient Boosting on the same five splits and counted false positives at a score threshold of 0.50.
+- **Missing-value variants.** For the three columns containing unknown entries, we compared filling with the most common training value, keeping an unknown category, and dropping all three columns. We fitted Random Forest and Gradient Boosting on the same five splits and counted false positives at a score threshold of 0.50. For all three missing-value variants, we used scikit-learn's GradientBoostingClassifier with 100 boosting stages, maximum tree depth 2, learning rate 0.1, log loss, full-sample boosting (subsample = 1.0) and random_state = 42.
 
 ### Prototype: a review-support dashboard
 
@@ -118,10 +118,10 @@ We built a single-file, offline dashboard (HTML, CSS and JavaScript; no server).
 
 ## IV. Evaluation & Analysis
 
-All numbers below come from cross-validation predictions on claims that the model did not see during training. They are computed on three different scopes, and we name the scope each time.
+All numbers below come from predictions on claims that the model did not see during training. Apart from the chronological split in subsection 7, they are cross-validation predictions on three different scopes, and we name the scope each time.
 
 - **Scope A** is one evaluation fold: 200 test claims, 50 of them labeled fraud.
-- **Scope B** is the first repeat of cross-validation: out-of-fold predictions for all 1,000 claims, 247 of them labeled fraud. Its five test folds are also the folds used for the classifier benchmark and the missing-value comparison.
+- **Scope B** is the first repeat of cross-validation: out-of-fold predictions for all 1,000 claims, 247 of them labeled fraud. Its five test folds are also the folds used for the classifier benchmark, the missing-value comparison and the hobbies check.
 - **Scope C** is the mean over all 15 runs, with 200 test claims per run.
 
 ### 1. How many fraud labels are in the top K? (Scope C)
@@ -139,7 +139,7 @@ We rank the 200 test claims by score, select the top K, and count the fraud labe
 
 Each entry is the mean number of fraud labels found ± the sample standard deviation across the 15 test folds. The same 1,000 claims recur across repeats, so the standard deviation describes variation across splits. The percentage in parentheses is the share of the selected claims that are labeled fraud (precision in the top K).
 
-Selecting the 40 highest-scored claims out of 200 captures about 24 fraud labels, where random selection would be expected to find about 10. For K up to 40 both models find roughly 2.4 to 2.5 times as many as random selection, and 2.2 to 2.3 times at K = 60. The two models are practically indistinguishable: 24.20 against 24.27 at K = 40. At every K the two means differ by about half a label or less, which is smaller than the fold-to-fold standard deviations (1.4 to 2.5 labels).
+Selecting the 40 highest-scored claims out of 200 captures about 24 fraud labels, where random selection would be expected to find about 10. For K up to 40 both models find roughly 2.4 to 2.5 times as many as random selection, and 2.2 to 2.3 times at K = 60. Across the four review budgets, the two models differed by at most 0.54 fraud labels on average. At K = 40, the means were 24.20 and 24.27.
 
 ### 2. Cumulative gain on one fold (Scope A)
 
@@ -226,13 +226,19 @@ For the three columns with unknown entries we compared three ways of handling th
 | Gradient Boosting | Unknown category | 87 / 753 | 11.6% | 0.495 |
 | Gradient Boosting | Drop the three columns | 89 / 753 | 11.8% | 0.510 |
 
-Random Forest flagged 77 or 78 non-fraud-labeled claims across the three methods. For Gradient Boosting, filling with the most common training value produced the fewest false positives (83), compared with 87 for the unknown category and 89 after dropping the columns. The largest gap between methods is 6 claims out of 753 (0.8 percentage points), and mean F1 does not favor the same method for both models, so we do not see a clear effect of the handling method on this data.
+Random Forest flagged 77 or 78 non-fraud-labeled claims across the three methods. For Gradient Boosting, filling with the most common training value produced the fewest false positives (83), compared with 87 for the unknown category and 89 after dropping the columns. Within each model, the largest change in the false-positive rate across methods was 0.8 percentage points (6 of 753 claims, for Gradient Boosting). The method with the highest mean F1 differed between the two models.
 
-### 7. What this means and what is next
+### 7. Supplementary checks: accident dates and hobbies
+
+We trained logistic regression on 516 January 2015 claims and evaluated it on the next 484 claims (1 February to 1 March). Among the top 97 claims, the 24-feature model selected 55 of the 112 fraud labels and the severity-only baseline selected 56.
+
+Adding `insured_hobbies` to the 24 baseline inputs increased the mean number of fraud labels among the top 40 of 200 claims from 23.6 to 26.6 across the first five folds. This was an exploratory comparison on the same dataset. The dashboard uses the original 24 inputs.
+
+### 8. What this means and what is next
 
 - A one-feature baseline is hard to beat on this dataset. At a threshold of 0.50 none of the four additional classifiers reached the mean F1 of the severity-only baseline (Table 6), so we compare every model with that baseline and not only with random selection.
 - Table 6 compares the classifiers at a single threshold. The next test is whether the additional classifiers can rank claims inside the Major Damage group better than chance, using the same top-K evaluation as Table 2.
-- Table 2 shows the spread across the 15 runs, and the differences between the two baselines are smaller than that spread. Tables 6 and 7 are means over five folds and should be read with the same caution.
+- Table 2 shows the spread across the 15 runs. Table 6 reports five-fold means. Table 7 pools the false-positive counts and rates across the five folds and reports mean F1.
 
 **Limitations so far.** The same 1,000 claims are re-split many times, so this is not a test on new data. The fraud label is the dataset's label and not the outcome of an investigation. Scores are model outputs and not calibrated probabilities. The additional classifiers were run with fixed settings and compared at one threshold. We cannot yet tell whether the other 23 features carry little signal or whether 1,000 rows are too few to find a weak one.
 
@@ -240,7 +246,7 @@ Random Forest flagged 77 or 78 non-fraud-labeled claims across the three methods
 
 ### Tools and libraries
 
-We used pandas and NumPy for data preparation, scikit-learn for preprocessing and cross-validation, and XGBoost, LightGBM and CatBoost for additional classifiers. We used Matplotlib, seaborn and missingno for plots and missing-data inspection. The benchmark runs behind Tables 6 and 7 used Python 3.12 with scikit-learn 1.9.1, XGBoost 3.4.1 and LightGBM 4.7.0.
+We used pandas and NumPy for data preparation, scikit-learn for preprocessing, cross-validation and model fitting, and the XGBoost and LightGBM libraries for their respective classifiers. We used Matplotlib, seaborn and missingno for plots and missing-data inspection. The benchmark runs behind Tables 6 and 7 used Python 3.12 with scikit-learn 1.9.1, XGBoost 3.4.1 and LightGBM 4.7.0.
 
 The dashboard is plain HTML, CSS and JavaScript built into a single file by a script that uses only the Python standard library, and its behavior is checked with Node.js and headless Chrome.
 

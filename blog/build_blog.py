@@ -210,6 +210,7 @@ blockquote p:last-child { margin-bottom: 0; }
 figure { margin: 8pt 0 4pt; text-align: center; break-inside: avoid; }
 img { max-width: 100%; height: auto; }
 figure img { max-height: 100mm; border: 1px solid #dde3e6; }
+figure img[src$=".svg"] { max-height: 90mm; }
 hr { margin: 14pt 0; border: 0; border-top: 1px solid #dde3e6; }
 a { color: #0b5446; }
 strong.todo { color: #a8301f; }
