@@ -232,7 +232,7 @@ Random Forest flagged 77 or 78 non-fraud-labeled claims across the three methods
 
 We trained logistic regression on 516 January 2015 claims and evaluated it on the next 484 claims (1 February to 1 March). Among the top 97 claims, the 24-feature model selected 55 of the 112 fraud labels and the severity-only baseline selected 56.
 
-Adding `insured_hobbies` to the 24 baseline inputs increased the mean number of fraud labels among the top 40 of 200 claims from 23.6 to 26.6 across the first five folds. This was an exploratory comparison on the same dataset. The dashboard uses the original 24 inputs.
+Adding `insured_hobbies` to the 24 baseline inputs increased the mean number of fraud labels among the top 40 of 200 claims from 23.6 to 26.6 across the first five folds. On the chronological split above, the same addition raised the number of fraud labels among the top 97 claims from 55 to 63 (out of 112). These were exploratory comparisons on the same dataset. The dashboard uses the original 24 inputs.
 
 ### 8. What this means and what is next
 
